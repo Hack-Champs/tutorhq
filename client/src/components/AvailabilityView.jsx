@@ -1,8 +1,7 @@
 import React from 'react';
 import ReactDOM from 'react-dom';
-import DashboardView from './DashboardView.jsx';
 
-class App extends React.Component {
+class AvailabilityView extends React.Component {
   constructor(props) {
     super(props);
     this.state = {}
@@ -11,10 +10,9 @@ class App extends React.Component {
   render () {
     return (
       <div>
-        <DashboardView />
       </div>
     )
   }
 }
 
-export default App;
+export default AvailabilityView;

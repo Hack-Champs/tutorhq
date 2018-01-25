@@ -31,7 +31,8 @@
     "jquery": "^3.1.1",
     "mysql": "^2.15.0",
     "react": "^15.4.2",
-    "react-dom": "^15.4.2"
+    "react-dom": "^15.4.2",
+    "semantic-ui-react": "^0.77.2"
   },
   "bugs": {
     "url": "https://github.com/Hack-Champs/tutorhq/issues"
