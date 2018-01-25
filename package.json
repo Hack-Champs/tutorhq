@@ -4,6 +4,9 @@
   "description": "Everything a tutor needs to run a successful remote tutoring business.",
   "main": "server/index.js",
   "scripts": {
+    "test-client": "jest",
+    "test-server": "mocha spec/server/serverSpec",
+    "test": "npm run test-server && npm run test-client",
     "react": "webpack -d --watch",
     "server": "nodemon --inspect server/index.js",
     "build:production": "NODE_ENV=production webpack --config webpack.config.js",
@@ -19,19 +22,27 @@
   "author": "Hack-Champs",
   "license": "ISC",
   "devDependencies": {
-    "babel-core": "^6.23.1",
+    "babel-core": "^6.26.0",
+    "babel-jest": "^22.1.0",
     "babel-loader": "^6.3.2",
+    "babel-preset-env": "^1.6.1",
     "babel-preset-es2015": "^6.22.0",
     "babel-preset-react": "^6.23.0",
+    "jest": "^22.1.4",
+    "mocha": "^5.0.0",
+    "regenerator-runtime": "^0.11.1",
+    "supertest": "^3.0.0",
     "webpack": "^2.2.1"
   },
   "dependencies": {
     "body-parser": "^1.17.2",
+    "chai": "^4.1.2",
     "express": "^4.15.0",
     "jquery": "^3.1.1",
-    "mysql": "^2.15.0",
+    "mongoose": "^4.10.8",
     "react": "^15.4.2",
     "react-dom": "^15.4.2",
+    "request": "^2.83.0",
     "semantic-ui-react": "^0.77.2"
   },
   "bugs": {
