@@ -9,7 +9,7 @@ db.once('open', function() {
   console.log('Connected to mongo');
 });
 
-const UserSchema = new Schema({
+let UserSchema = mongoose.Schema({
   googleId: String,
   sessionID: String,
   username: String

@@ -4,6 +4,8 @@ var passport = require('passport');
 var GoogleStrategy = require('passport-google-oauth').OAuth2Strategy;
 var db = require('../database/index.js');
 var session = require('express-session');
+var MongoStore = require('connect-mongo')(session);
+require('dotenv').config();
 
 passport.serializeUser((user, done) => {
   done(null, user.id);
@@ -20,13 +22,13 @@ passport.use(new GoogleStrategy({
   clientSecret: process.env.GOOGLE_CLIENT_SECRET,
   callbackURL: process.env.URL + '/auth/google/redirect',
   passReqToCallback: true
-}), (req, accessToken, refreshToken, profile, done) => {
-  //passport callback function
-  db.findOrCreate({ googleId: profile.id, sessionID: req.sessionID, username: profile.email }, function (err, user) {
-    return done(err, user);
-  })
-
-})
+},
+  (req, accessToken, refreshToken, profile, done) => {
+    db.findOrCreate({ googleId: profile.id, sessionID: req.sessionID, username: profile.email }, function (err, user) {
+      return done(err, user);
+    });
+  }
+));
 
 var app = express();
 
