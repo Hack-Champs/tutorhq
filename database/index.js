@@ -9,7 +9,7 @@ db.once('open', function() {
   console.log('Connected to mongo');
 });
 
-const UserSchema = new Scehma({
+const UserSchema = new Schema({
   googleId: String,
   sessionID: String,
   username: String
