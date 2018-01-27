@@ -9,4 +9,32 @@ db.once('open', function() {
   console.log('Connected to mongo');
 });
 
+const UserSchema = new Scehma({
+  googleId: String,
+  sessionID: String,
+  username: String
+})
 
+const User = mongoose.model('User', UserSchema);
+
+const findOrCreate = (query, callback) => {
+  User.findOne({ googleID: query.googleID }, (err, user) => {
+    if (!user) {
+      let newUser = new User({
+        googleID: query.googleID,
+        sessionID: query.sessionID,
+        username: query.username
+      });
+      newUser.save(function(err, user) {
+        callback(err, user);
+      });
+    } else {
+      user.sessionID = query.sessionID;
+      user.save(function(err, user) {
+        callback(err, user);
+      });
+    }
+  });
+};
+
+module.exports.findOrCreate = findOrCreate;
