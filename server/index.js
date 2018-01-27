@@ -1,7 +1,10 @@
 var app = require('./app');
 var db = require('../database');
+var routes = require('./routes');
 
 var port = process.env.PORT || 3000;
+
+app.use('/', routes);
 
 if(!module.parent){
   app.listen(port, () => {

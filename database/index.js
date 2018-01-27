@@ -39,9 +39,17 @@ let ratingSchema = mongoose.Schema({
 //sum of ratings divided by the number of records
 //average rating
 
+const subjectSchema = new mongoose.Schema({
+  name: { type: String, unique: true },
+});
+
 const User = mongoose.model('User', UserSchema);
 
 const Booking = mongoose.model('Booking', bookingSchema);
+
+const Rating = mongoose.model('Rating', ratingSchema);
+
+const Subject = mongoose.model('Subject', subjectSchema);
 
 const findOrCreate = (query, callback) => {
   console.log('SAVING TO THE DATABASE');
@@ -69,3 +77,7 @@ const findOrCreate = (query, callback) => {
 
 
 module.exports.findOrCreate = findOrCreate;
+module.exports.Subject = Subject;
+module.exports.Rating = Rating;
+module.exports.Booking = Booking;
+module.exports.User = User;
