@@ -1,6 +1,7 @@
 import React from 'react';
 import ReactDOM from 'react-dom';
 import DashboardView from './DashboardView.jsx';
+import HomeView from './HomeView.jsx';
 import { Link, Route, Switch } from 'react-router-dom';
 import { Menu } from 'semantic-ui-react';
 
