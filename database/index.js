@@ -41,7 +41,7 @@ let ratingSchema = mongoose.Schema({
 
 const User = mongoose.model('User', UserSchema);
 
-const Booking = mongoose.mode('Booking', bookingSchema);
+const Booking = mongoose.model('Booking', bookingSchema);
 
 const findOrCreate = (query, callback) => {
   console.log('SAVING TO THE DATABASE');
