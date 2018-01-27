@@ -46,6 +46,7 @@ class AvailabilityView extends React.Component {
 
   addSession() {
     var newSession = {
+      // sessionID add unique number
       name: this.state.name,
       date: this.state.date.toLocaleDateString(),
       time: this.state.time
@@ -57,6 +58,7 @@ class AvailabilityView extends React.Component {
     })
     document.getElementById('nameInput').value = '';
     document.getElementById('timeInput').value = '';
+    // get /sessions
   }
 
   testFunction() {
