@@ -1,6 +1,7 @@
 import React from 'react';
 import ReactDOM from 'react-dom';
 import DashboardView from './DashboardView.jsx';
+import { Link, Route, Switch } from 'react-router-dom';
 import { Menu } from 'semantic-ui-react';
 
 class App extends React.Component {
@@ -8,6 +9,7 @@ class App extends React.Component {
     super(props);
     this.state = {
       activeItem: 'home',
+      tutors: '',
     };
     this.handleItemClick = this.handleItemClick.bind(this);
   }
@@ -24,14 +26,17 @@ class App extends React.Component {
     return (
       <div>
         <Menu pointing secondary>
-          <Menu.Item name='home' active={activeItem === 'home'} onClick={this.handleItemClick} />
-          <Menu.Item name='messages' active={activeItem === 'messages'} onClick={this.handleItemClick} />
-          <Menu.Item name='tutors' active={activeItem === 'tutors'} onClick={this.handleItemClick} />
+          <Menu.Item name='home' as={Link} to='/' active={activeItem === 'home'} onClick={this.handleItemClick} />
+          <Menu.Item name='dashboard' as={Link} to='/dashboard' active={activeItem === 'dashboard'} onClick={this.handleItemClick} />
+          <Menu.Item name='tutors' as={Link} to='/tutors' active={activeItem === 'tutors'} onClick={this.handleItemClick} />
           <Menu.Menu position='right'>
-            <Menu.Item name='logout' active={activeItem === 'logout'} onClick={this.handleItemClick} />
+            <Menu.Item name='logout' as={Link} to='/tutors' active={activeItem === 'logout'} onClick={this.handleItemClick} />
           </Menu.Menu>
         </Menu>
-        <DashboardView />
+        <Switch>
+          <Route exact path='/' component={HomeView} />
+          <Route path='/dashboard' component={DashboardView} />
+        </Switch>
       </div>
     );
   }

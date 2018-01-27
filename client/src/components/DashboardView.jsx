@@ -4,6 +4,7 @@ import { Link, Route, Switch } from 'react-router-dom';
 import { Container, Form, Header, Label, Segment } from 'semantic-ui-react';
 import { Icon, Button, Grid, Search, Rating } from 'semantic-ui-react';
 import AvailabilityView from './AvailabilityView.jsx';
+import HomeView from './HomeView.jsx';
 import axios from 'axios';
 import _ from 'lodash';
 
