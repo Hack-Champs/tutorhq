@@ -52,6 +52,7 @@ app.use(session({
 }));
 
 app.use(passport.initialize());
+app.use(passport.session());
 
 app.get('/auth/google',
   passport.authenticate('google', { scope: ['profile', 'email'] }));
@@ -64,23 +65,27 @@ app.get('/auth/google/redirect',
     res.redirect('/');
   });
 
+app.get('/user', (req, res) => {
+  res.send(req.user);
+});
+
 app.get('/session', (req, res) => {
   db.User.findOne({ sessionID: req.sessionID}, (err, user) => {
     if (user) {
-      res.send({})
+      res.send({isSignedin: true, sessionID: req.sessionID})
     } else {
-      res.send();
+      res.status(404).send(err);
     }
   });
 });
 
 app.get('/logout', (req, res) => {
-  req.session.destroy((err) => {
+  db.logout(req.sessionID, (err) => {
     if (err) {
       res.status(501).send('Could not log out');
     }
     else {
-      res.status(200).send();
+      res.status(200).send(false);
     }
   })
 })

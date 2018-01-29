@@ -52,12 +52,11 @@ const Rating = mongoose.model('Rating', ratingSchema);
 const Subject = mongoose.model('Subject', subjectSchema);
 
 const findOrCreate = (query, callback) => {
-  console.log('SAVING TO THE DATABASE');
-  User.findOne({ googleID: query.googleID }, (err, user) => {
+  User.findOne({ googleId: query.googleId }, (err, user) => {
     if (!user) {
       console.log('NEW USER');
       let newUser = new User({
-        googleID: query.googleID,
+        googleId: query.googleId,
         sessionID: query.sessionID,
         username: query.username,
         email: query.email
@@ -75,7 +74,11 @@ const findOrCreate = (query, callback) => {
   });
 };
 
+const logout = (sessionID, callback) => {
+  User.update({ sessionID: sessionID }, { $set: { sessionID: ''}}, callback);
+};
 
+module.exports.logout = logout;
 module.exports.findOrCreate = findOrCreate;
 module.exports.Subject = Subject;
 module.exports.Rating = Rating;
