@@ -22,21 +22,21 @@ class App extends React.Component {
   }
 
   render () {
-    const { activeItem } = this.state;
+    const activeItem = window.location.hash.slice(1);
 
     return (
       <div>
         <Menu pointing secondary>
-          <Menu.Item name='home' as={Link} to='/' active={activeItem === 'home'} onClick={this.handleItemClick} />
-          <Menu.Item name='dashboard' as={Link} to='/dashboard' active={activeItem === 'dashboard'} onClick={this.handleItemClick} />
-          <Menu.Item name='tutors' as={Link} to='/tutors' active={activeItem === 'tutors'} onClick={this.handleItemClick} />
+          <Menu.Item name='home' as={Link} to='/' active={activeItem === '/'} onClick={this.handleItemClick} replace />
+          <Menu.Item name='dashboard' as={Link} to='/dashboard' active={activeItem === '/dashboard'} onClick={this.handleItemClick} replace />
+          <Menu.Item name='tutors' as={Link} to='/tutors' active={activeItem === '/tutors'} onClick={this.handleItemClick} replace />
           <Menu.Menu position='right'>
-            <Menu.Item name='logout' as={Link} to='/tutors' active={activeItem === 'logout'} onClick={this.handleItemClick} />
+            <Menu.Item name='logout' as={Link} to='/tutors' active={activeItem === '/logout'} onClick={this.handleItemClick} replace />
           </Menu.Menu>
         </Menu>
         <Switch>
-          <Route exact path='/' component={HomeView} />
-          <Route path='/dashboard' component={DashboardView} />
+          <Route exact path='/' render={() => <HomeView />} />
+          <Route path='/dashboard' render={() => <DashboardView />} />
         </Switch>
       </div>
     );

@@ -53,6 +53,17 @@ class DashboardView extends React.Component {
 
   componentWillMount() {
     this.resetComponent();
+
+    axios.get('/dashboard')
+      .then((response) => {
+        console.log('getSubjects request response', response);
+        this.setState({
+          subjects: [...this.state.subjects, response.data],
+        });
+      })
+      .catch((error) => {
+        console.error('GET request error: ', error);
+      });
   }
 
   resetComponent() {
@@ -102,12 +113,12 @@ class DashboardView extends React.Component {
     this.setState({
       subjects: [...this.state.subjects, subject],
     });
-    // axios.post('/subjects', {
+    // axios.post('/dashboard', {
     //   subject: subject,
     // })
     //   .then((response) => {
     //     this.setState({
-    //       subjects: [...this.state.subjects, subject],
+    //       subjects: [...this.state.subjects, response.data],
     //     });
     //   })
     //   .catch((error) => {
@@ -164,7 +175,7 @@ class DashboardView extends React.Component {
           </Grid>
           <AvailabilityView />
           <Switch>
-            <Route path='/dashboard/:tutor' component={DashboardView} />
+            <Route path='/dashboard/:tutor' render={() => <DashboardView />} />
           </Switch>
         </Container>
       </div>
