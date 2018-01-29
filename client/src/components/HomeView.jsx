@@ -24,7 +24,25 @@ class HomeView extends React.Component {
 
     return (
       <div>
+        <div>
+          <h1 className = "ui inverted header">
+            Tutor HQ
+          </h1>
+        </div>
+        <br />
+        <center><h1>How it works</h1></center>
+        <div className = "ui equal width grid">
+          <div className = "column">
+            <center><img src="http://shashgrewal.com/wp-content/uploads/2015/05/default-placeholder-300x300.png" /></center>
+          </div>
+        <div className = "column">
+          <center><img src="http://shashgrewal.com/wp-content/uploads/2015/05/default-placeholder-300x300.png" /></center>
+        </div>
+        <div className = "column">
+          <center><img src="http://shashgrewal.com/wp-content/uploads/2015/05/default-placeholder-300x300.png" /></center>
+        </div>
       </div>
+    </div>
     );
   }
 }
