@@ -64,13 +64,23 @@ app.get('/auth/google/redirect',
     res.redirect('/');
   });
 
+app.get('/session', (req, res) => {
+  db.User.findOne({ sessionID: req.sessionID}, (err, user) => {
+    if (user) {
+      res.send({})
+    } else {
+      res.send();
+    }
+  });
+});
+
 app.get('/logout', (req, res) => {
   req.session.destroy((err) => {
     if (err) {
       res.status(501).send('Could not log out');
     }
     else {
-      res.status(200).send('Logged out successfully');
+      res.status(200).send();
     }
   })
 })
