@@ -21,7 +21,7 @@ exports.newSubject = (req, res) => {
 };
 
 exports.getTutor = (req, res) => {
-  database.User.find({ username: req.body.username })
+  database.User.find({ username: req.user.username })
     .then((tutor) => {
       res.json(foundItem);
     })
