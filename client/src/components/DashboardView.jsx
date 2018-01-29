@@ -42,6 +42,7 @@ class DashboardView extends React.Component {
       results: [],
       newSubject: '',
       rating: 3,
+      editing: false,
     };
     this.resetComponent = this.resetComponent.bind(this);
     this.handleResultSelect = this.handleResultSelect.bind(this);
@@ -49,6 +50,9 @@ class DashboardView extends React.Component {
     this.onSubmit = this.onSubmit.bind(this);
     this.addSubject = this.addSubject.bind(this);
     this.onRate = this.onRate.bind(this);
+    this.onEditClick = this.onEditClick.bind(this);
+    this.changeDescription = this.changeDescription.bind(this);
+    this.submitDescription = this.submitDescription.bind(this);
   }
 
   componentWillMount() {
@@ -132,8 +136,60 @@ class DashboardView extends React.Component {
     });
   }
 
+  onEditClick(e) {
+    e.preventDefault();
+    this.setState({
+      editing: true,
+    });
+  }
+
+  changeDescription(e) {
+    this.setState({
+      description: e.target.value,
+    });
+  }
+
+  submitDescription(e) {
+    e.preventDefault();
+    this.setState({
+      editing: false,
+    });
+    // axios.put('/dashboard/:tutor', {
+    //   description: this.state.description,
+    //   subjects: this.state.subjects,
+    // })
+    //   .then((response) => {
+    //     this.setState({
+    //       description: response.data.description,
+    //       subjects: response.data.subjects,
+    //     });
+    //   })
+    //   .catch((error) => {
+    //     console.error('PUT request error: ', error);
+    //   });
+  }
+
   render () {
     const { isLoading, results, newSubject } = this.state;
+    let descriptionSection;
+
+    if (this.state.editing) {
+      descriptionSection = (
+        <Form>
+          <Form.TextArea onChange={this.changeDescription} label='Description' placeholder='Please add a description' value={this.state.description} />
+          <Form.Button primary onClick={this.submitDescription}>Submit</Form.Button>
+        </Form>
+      );
+    } else {
+      descriptionSection = (
+        <div>
+          <Segment>
+            {this.state.description}
+          </Segment>
+          <Button primary onClick={this.onEditClick}>Edit</Button>
+        </div>
+      );
+    }
 
     return (
       <div>
@@ -146,9 +202,7 @@ class DashboardView extends React.Component {
             onRate={this.onRate}
             clearable
           />
-          <Segment>
-            This is a sample description.
-          </Segment>
+          {descriptionSection}
           <div>
             Subjects
             <div>
