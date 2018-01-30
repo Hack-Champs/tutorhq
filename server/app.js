@@ -27,7 +27,7 @@ passport.use(new GoogleStrategy({
   (req, accessToken, refreshToken, profile, done) => {
     console.log('THIS IS THE PROFILE: ', profile);
     const username=profile.emails[0].value.slice(0, profile.emails[0].value.indexOf('@'))
-    db.findOrCreate({ googleId: profile.id, sessionID: req.sessionID, email: profile.emails[0].value, username: username }, function (err, user) {
+    db.findOrCreate({ googleId: profile.id, sessionID: req.sessionID, email: profile.emails[0].value, username: username, description: req.description }, function (err, user) {
       return done(err, user);
     });
   }

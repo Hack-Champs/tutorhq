@@ -59,7 +59,8 @@ const findOrCreate = (query, callback) => {
         googleId: query.googleId,
         sessionID: query.sessionID,
         username: query.username,
-        email: query.email
+        email: query.email,
+        description: query.description,
       });
       newUser.save(function(err, user) {
         callback(err, user);

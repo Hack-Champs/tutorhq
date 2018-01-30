@@ -55,7 +55,7 @@ class App extends React.Component {
         activeItem: 'home',
         isSignedIn: res.data,
       })
-      this.props.history.push('/');
+      window.location.hash = '#/';
     })
     .catch((err) => {
 
@@ -77,25 +77,25 @@ class App extends React.Component {
   }
 
   render () {
-    const { activeItem } = this.state;
+    const activeItem = window.location.hash.slice(1);
 
     return (
       <div>
         <Menu pointing secondary>
-          <Menu.Item name='home' as={Link} to='/' active={activeItem === 'home'} onClick={this.handleItemClick} replace />
-          <Menu.Item name='dashboard' as={Link} to='/dashboard' active={activeItem === 'dashboard'} onClick={this.handleItemClick} replace />
-          <Menu.Item name='tutors' as={Link} to='/tutors' active={activeItem === 'tutors'} onClick={this.handleItemClick} replace />
+          <Menu.Item name='home' as={Link} to='/' active={activeItem === '/'} onClick={this.handleItemClick} replace />
+          <Menu.Item name='dashboard' as={Link} to='/dashboard' active={activeItem === '/dashboard'} onClick={this.handleItemClick} replace />
+          <Menu.Item name='tutors' as={Link} to='/tutors' active={activeItem === '/tutors'} onClick={this.handleItemClick} replace />
           <Menu.Menu position='right'>
             {this.state.isSignedIn ?
-              <Menu.Item name='logout' active={activeItem === 'logout'} onClick={this.logout} replace /> :
-              <a href='/auth/google'><Menu.Item name='login' active={activeItem === 'login'} onClick={this.login} replace /></a>
+              <Menu.Item name='logout' active={activeItem === '/logout'} onClick={this.logout} replace /> :
+              <a href='/auth/google'><Menu.Item name='login' active={activeItem === '/login'} onClick={this.login} replace /></a>
             }
 
           </Menu.Menu>
         </Menu>
         <Switch>
-          <Route exact path='/' component={HomeView} />
-          <Route path='/dashboard' component={DashboardView} />
+          <Route exact path='/' render={() => <HomeView />} />
+          <Route path='/dashboard' render={() => <DashboardView />} />
         </Switch>
       </div>
     );
