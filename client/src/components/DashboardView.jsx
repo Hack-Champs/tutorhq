@@ -36,7 +36,7 @@ class DashboardView extends React.Component {
     super(props);
     this.state = {
       description: '',
-      subjects: ['English', 'Mathematics', 'Science', 'Social Studies'],
+      subjects: [],
       tutor: '',
       isLoading: false,
       results: [],
@@ -58,11 +58,11 @@ class DashboardView extends React.Component {
   componentWillMount() {
     this.resetComponent();
 
-    axios.get('/dashboard')
+    axios.get(`/dashboard/${this.props.tutor}`)
       .then((response) => {
-        console.log('getSubjects request response', response);
         this.setState({
-          subjects: [...this.state.subjects, response.data],
+          description: response.data[0].description,
+          subjects: [...this.state.subjects, ...response.data[0].subjects]
         });
       })
       .catch((error) => {
@@ -114,20 +114,19 @@ class DashboardView extends React.Component {
   }
 
   addSubject(subject) {
-    this.setState({
+    axios.put(`/dashboard/${this.props.tutor}`, {
+      description: this.state.description,
       subjects: [...this.state.subjects, subject],
-    });
-    // axios.post('/dashboard', {
-    //   subject: subject,
-    // })
-    //   .then((response) => {
-    //     this.setState({
-    //       subjects: [...this.state.subjects, response.data],
-    //     });
-    //   })
-    //   .catch((error) => {
-    //     console.error('POST request error: ', error);
-    //   });
+    })
+      .then((response) => {
+        this.setState({
+          description: response.data.description,
+          subjects: response.data.subjects,
+        });
+      })
+      .catch((error) => {
+        console.error('PUT request error: ', error);
+      });
   }
 
   onRate(e, data) {
@@ -154,19 +153,18 @@ class DashboardView extends React.Component {
     this.setState({
       editing: false,
     });
-    // axios.put('/dashboard/:tutor', {
-    //   description: this.state.description,
-    //   subjects: this.state.subjects,
-    // })
-    //   .then((response) => {
-    //     this.setState({
-    //       description: response.data.description,
-    //       subjects: response.data.subjects,
-    //     });
-    //   })
-    //   .catch((error) => {
-    //     console.error('PUT request error: ', error);
-    //   });
+
+    axios.put(`/dashboard/${this.props.tutor}`, {
+      description: this.state.description,
+    })
+      .then((response) => {
+        this.setState({
+          description: response.data.description,
+        });
+      })
+      .catch((error) => {
+        console.error('PUT request error: ', error);
+      });
   }
 
   render () {
