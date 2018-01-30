@@ -9,12 +9,17 @@ db.once('open', function() {
   console.log('Connected to mongo');
 });
 
+
 let bookingSchema = mongoose.Schema({
   name: String,
   date: String,
-  time: String
+  time: String,
 });
 
+let sessionSchema = mongoose.Schema({
+  email: String,
+  sessions: [bookingSchema]
+});
 
 //.find({});
 let UserSchema = mongoose.Schema({
@@ -45,11 +50,50 @@ const subjectSchema = new mongoose.Schema({
 
 const User = mongoose.model('User', UserSchema);
 
+const Session = mongoose.model('Session', sessionSchema);
+
 const Booking = mongoose.model('Booking', bookingSchema);
 
 const Rating = mongoose.model('Rating', ratingSchema);
 
 const Subject = mongoose.model('Subject', subjectSchema);
+
+const createBooking = (email, query, callback) => {
+  Session.findOne({ email: email }, (err, user) => {
+    if (user) {
+      var booking = new Booking({
+        name: query.name,
+        date: query.date,
+        time: query.time,
+      });
+      booking.save((err, booking) => {
+        var newBooking = user.sessions.concat([booking]);
+        user.sessions = newBooking;
+        user.save(function(err, user) {
+          callback(err, user.sessions);
+        });
+      });
+    } else {
+      callback(err);
+    }
+  });
+};
+
+const deleteBooking = (email, bookingId, callback) => {
+  Session.findOne({ email: email }, (err, user) => {
+    if (user) {
+      user.sessions.findOneandRemove({ _id: bookingId }, (err, booking) => {
+        updatedBookings = user.sessions.filter((bookings) => {
+          return bookings !== booking;
+        });
+        user.sessions = updatedBookings;
+        user.save((err, user) => {
+          callback(err, user.sessions);
+        });
+      });
+    }
+  });
+};
 
 const findOrCreate = (query, callback) => {
   User.findOne({ googleId: query.googleId }, (err, user) => {
@@ -62,6 +106,11 @@ const findOrCreate = (query, callback) => {
         email: query.email,
         description: query.description,
       });
+      let newSession = new Session({
+        email: query.email,
+        sessions: [],
+      });
+      newSession.save();
       newUser.save(function(err, user) {
         callback(err, user);
       });
@@ -79,6 +128,7 @@ const logout = (sessionID, callback) => {
   User.update({ sessionID: sessionID }, { $set: { sessionID: ''}}, callback);
 };
 
+module.exports.createBooking = createBooking;
 module.exports.logout = logout;
 module.exports.findOrCreate = findOrCreate;
 module.exports.Subject = Subject;

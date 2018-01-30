@@ -83,11 +83,48 @@ app.get('/logout', (req, res) => {
   db.logout(req.sessionID, (err) => {
     if (err) {
       res.status(501).send('Could not log out');
-    }
-    else {
+    } else {
       res.status(200).send(false);
     }
-  })
-})
+  });
+});
 
+
+//POST A NEW SESSION BOOKING
+app.post('/users/:email/booking', (req, res) => {
+  var email = req.params.email;
+  var query = req.body;
+  db.createBooking(email, query, (err, sessions) => {
+    if (err) {
+      res.status(501).send('Could not create a booking');
+    } else {
+      res.send(sessions);
+    }
+  });
+});
+
+//GET ALL BOOKED SESSIONS
+app.get('/users/:email/bookings', (req, res) => {
+  var email = req.params.email;
+  db.Session.find({email: email}, (err, user) => {
+    if (err) {
+      res.status(501).send('Could not retrieve bookings');
+    } else {
+      res.send(user.sessions);
+    }
+  });
+});
+
+//DELETE A SESSION
+app.delete('/users/:email/booking/:bookingId', (req, res) => {
+  var email = req.params.email;
+  var bookingId = req.params.bookingId;
+  db.deleteBooking(email, booking, (err, sessions) => {
+    if (err) {
+      res.status(501).send('Could not delete that booking');
+    } else {
+      res.send(sessions);
+    }
+  });
+});
 module.exports = app;
