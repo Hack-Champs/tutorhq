@@ -66,17 +66,32 @@ const createBooking = (email, query, callback) => {
         date: query.date,
         time: query.time,
       });
-      var newBooking = user.sessions.concat([booking]);
-      user.sessions = newBooking;
-      user.save(function(err, user) {
-        callback(err, user.sessions);
+      booking.save((err, booking) => {
+        var newBooking = user.sessions.concat([booking]);
+        user.sessions = newBooking;
+        user.save(function(err, user) {
+          callback(err, user.sessions);
+        });
       });
-
+    } else {
+      callback(err);
     }
   });
+};
 
-  book.save(function(err, booking) {
-    callback(err, booking);
+const deleteBooking = (email, bookingId, callback) => {
+  Session.findOne({ email: email }, (err, user) => {
+    if (user) {
+      user.sessions.findOneandRemove({ _id: bookingId }, (err, booking) => {
+        updatedBookings = user.sessions.filter((bookings) => {
+          return bookings !== booking;
+        });
+        user.sessions = updatedBookings;
+        user.save((err, user) => {
+          callback(err, user.sessions);
+        });
+      });
+    }
   });
 };
 
@@ -91,7 +106,11 @@ const findOrCreate = (query, callback) => {
         email: query.email,
         description: query.description,
       });
-
+      let newSession = new Session({
+        email: query.email,
+        sessions: [],
+      });
+      newSession.save();
       newUser.save(function(err, user) {
         callback(err, user);
       });

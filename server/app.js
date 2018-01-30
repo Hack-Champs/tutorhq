@@ -94,11 +94,11 @@ app.get('/logout', (req, res) => {
 app.post('/users/:email/booking', (req, res) => {
   var email = req.params.email;
   var query = req.body;
-  db.createBooking(email, query, (err, booking) => {
+  db.createBooking(email, query, (err, sessions) => {
     if (err) {
       res.status(501).send('Could not create a booking');
     } else {
-      res.send(booking);
+      res.send(sessions);
     }
   });
 });
@@ -106,13 +106,25 @@ app.post('/users/:email/booking', (req, res) => {
 //GET ALL BOOKED SESSIONS
 app.get('/users/:email/bookings', (req, res) => {
   var email = req.params.email;
-  db.bookings.find({email: email}, (err, booking) => {
+  db.Session.find({email: email}, (err, user) => {
     if (err) {
       res.status(501).send('Could not retrieve bookings');
     } else {
-      res.send(booking);
+      res.send(user.sessions);
     }
   });
 });
 
+//DELETE A SESSION
+app.delete('/users/:email/booking/:bookingId', (req, res) => {
+  var email = req.params.email;
+  var bookingId = req.params.bookingId;
+  db.deleteBooking(email, booking, (err, sessions) => {
+    if (err) {
+      res.status(501).send('Could not delete that booking');
+    } else {
+      res.send(sessions);
+    }
+  });
+});
 module.exports = app;
