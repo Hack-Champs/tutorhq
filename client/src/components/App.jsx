@@ -65,6 +65,7 @@ class App extends React.Component {
   login() {
     axios.get('/user')
     .then((user) => {
+      console.log('current user', user);
       this.setState({
         isSignedIn: true,
         user: user.data,
@@ -95,7 +96,7 @@ class App extends React.Component {
         </Menu>
         <Switch>
           <Route exact path='/' render={() => <HomeView />} />
-          <Route path='/dashboard' render={() => <DashboardView />} />
+          <Route path='/dashboard' render={() => <DashboardView tutor={this.state.user.username} />} />
         </Switch>
       </div>
     );

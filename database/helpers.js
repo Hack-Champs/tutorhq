@@ -23,7 +23,7 @@ exports.newSubject = (req, res) => {
 exports.getTutor = (req, res) => {
   database.User.find({ username: req.user.username })
     .then((tutor) => {
-      res.json(foundItem);
+      res.json(tutor);
     })
     .catch((err) => {
       res.send(err);
@@ -43,8 +43,10 @@ exports.newTutor = (req, res) => {
 exports.updateTutor = (req, res) => {
   database.User.findOneAndUpdate(
     { username: req.user.username },
-    { description: req.body.description },
-    { $addToSet: { subjects: { $each: req.body.subjects } } },
+    {
+      description: req.body.description,
+      $addToSet: { subjects: { $each: req.body.subjects || [] } },
+    },
     { new: true }
   )
     .then((tutor) => {
