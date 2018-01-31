@@ -42,7 +42,7 @@ class DashboardView extends React.Component {
       results: [],
       newSubject: '',
       rating: 3,
-      editing: false,
+      editing: false
     };
     this.resetComponent = this.resetComponent.bind(this);
     this.handleResultSelect = this.handleResultSelect.bind(this);
@@ -53,11 +53,15 @@ class DashboardView extends React.Component {
     this.onEditClick = this.onEditClick.bind(this);
     this.changeDescription = this.changeDescription.bind(this);
     this.submitDescription = this.submitDescription.bind(this);
+    this.getTutorInfo = this.getTutorInfo.bind(this);
   }
 
-  componentWillMount() {
+  componentDidMount() {
     this.resetComponent();
+    this.getTutorInfo();
+  }
 
+  getTutorInfo() {
     axios.get(`/dashboard/${this.props.tutor}`)
       .then((response) => {
         this.setState({
@@ -66,7 +70,7 @@ class DashboardView extends React.Component {
         });
       })
       .catch((error) => {
-        console.error('GET request error: ', error);
+        console.error(`GET request error: ${error}`);
       });
   }
 
@@ -225,7 +229,9 @@ class DashboardView extends React.Component {
               </form>
             </Grid.Column>
           </Grid>
-          <AvailabilityView />
+          <AvailabilityView
+            tutor={ this.props.tutor }
+          />
           <Switch>
             <Route path='/dashboard/:tutor' render={() => <DashboardView />} />
           </Switch>
