@@ -7,6 +7,7 @@ var authCtrl = require('../database/controllers/authController.js');
 var bookingCtrl = require('../database/controllers/bookingController.js');
 var session = require('express-session');
 var MongoStore = require('connect-mongo')(session);
+var routes = require('./routes');
 
 var app = express();
 
@@ -107,5 +108,7 @@ app.delete('/users/:username/booking/:bookingID', (req, res) => {
     }
   });
 });
+
+app.use('/', routes);
 
 module.exports = app;
