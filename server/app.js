@@ -1,37 +1,12 @@
 var express = require('express');
 var bodyParser = require('body-parser');
 var passport = require('passport');
-var GoogleStrategy = require('passport-google-oauth20').Strategy;
-var db = require('../database/index.js');
+var passportConfig = require('./config/passport-config')
+var db = require('../database/models/index.js');
+var authCtrl = require('../database/controllers/authController.js');
+var bookingCtrl = require('../database/controllers/bookingController.js');
 var session = require('express-session');
 var MongoStore = require('connect-mongo')(session);
-
-require('dotenv').config();
-
-passport.serializeUser((user, done) => {
-  done(null, user.id);
-});
-
-passport.deserializeUser((_id, done) => {
-  db.User.findById(_id, function(err, user) {
-    done(err, user);
-  });
-});
-
-passport.use(new GoogleStrategy({
-  clientID: process.env.GOOGLE_CLIENT_ID,
-  clientSecret: process.env.GOOGLE_CLIENT_SECRET,
-  callbackURL: '/auth/google/redirect',
-  passReqToCallback: true
-},
-  (req, accessToken, refreshToken, profile, done) => {
-    console.log('THIS IS THE PROFILE: ', profile);
-    const username=profile.emails[0].value.slice(0, profile.emails[0].value.indexOf('@'))
-    db.findOrCreate({ googleId: profile.id, sessionID: req.sessionID, email: profile.emails[0].value, username: username, description: '' }, function (err, user) {
-      return done(err, user);
-    });
-  }
-));
 
 var app = express();
 
@@ -80,7 +55,7 @@ app.get('/session', (req, res) => {
 });
 
 app.get('/logout', (req, res) => {
-  db.logout(req.sessionID, (err) => {
+  authCtrl.logout(req.sessionID, (err) => {
     if (err) {
       res.status(501).send('Could not log out');
     } else {
@@ -89,42 +64,48 @@ app.get('/logout', (req, res) => {
   });
 });
 
-
-//POST A NEW SESSION BOOKING
-app.post('/users/:email/booking', (req, res) => {
-  var email = req.params.email;
-  var query = req.body;
-  db.createBooking(email, query, (err, sessions) => {
-    if (err) {
-      res.status(501).send('Could not create a booking');
-    } else {
-      res.send(sessions);
-    }
-  });
-});
-
-//GET ALL BOOKED SESSIONS
-app.get('/users/:email/bookings', (req, res) => {
-  var email = req.params.email;
-  db.Session.find({email: email}, (err, user) => {
+// Return list of tutor's current bookings
+app.get('/users/:username/bookings', (req, res) => {
+  console.log('get all bookings endpoint');
+  // var username = req.params.username;
+  var username = req.user.username;
+  console.log(username);
+  db.User.find({username: username}, (err, user) => {
     if (err) {
       res.status(501).send('Could not retrieve bookings');
     } else {
-      res.send(user.sessions);
+      console.log(user);
+      res.send(user);
     }
   });
 });
 
-//DELETE A SESSION
-app.delete('/users/:email/booking/:bookingId', (req, res) => {
-  var email = req.params.email;
-  var bookingId = req.params.bookingId;
-  db.deleteBooking(email, booking, (err, sessions) => {
+// Add new booking to tutor's profile
+app.post('/users/:username/booking', (req, res) => {
+  // var username = req.params.username;
+  var username = req.user.username;
+  var bookingInfo = req.body;
+  bookingCtrl.createBooking(username, bookingInfo, (err, bookings) => {
     if (err) {
-      res.status(501).send('Could not delete that booking');
+      res.status(501).send('Could not create a booking');
     } else {
-      res.send(sessions);
+      console.log(bookings);
+      res.send(bookings);
     }
   });
 });
+
+// Delete booking from tutor's profile
+app.delete('/users/:username/booking/:bookingID', (req, res) => {
+  var username = req.user.username;
+  var bookingID = req.params.bookingID;
+  bookingCtrl.deleteBooking(username, bookingID, (err, bookings) => {
+    if (err) {
+      res.status(501).send('Could not delete that booking');
+    } else {
+      res.send(bookings);
+    }
+  });
+});
+
 module.exports = app;

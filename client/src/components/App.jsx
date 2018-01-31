@@ -84,7 +84,9 @@ class App extends React.Component {
       <div>
         <Menu pointing secondary>
           <Menu.Item name='home' as={Link} to='/' active={activeItem === '/'} onClick={this.handleItemClick} replace />
-          <Menu.Item name='dashboard' as={Link} to='/dashboard' active={activeItem === '/dashboard'} onClick={this.handleItemClick} replace />
+            { this.state.isSignedIn &&
+              <Menu.Item name='dashboard' as={Link} to='/dashboard' active={activeItem === '/dashboard'} onClick={this.handleItemClick} replace />
+            }
           <Menu.Item name='tutors' as={Link} to='/tutors' active={activeItem === '/tutors'} onClick={this.handleItemClick} replace />
           <Menu.Menu position='right'>
             {this.state.isSignedIn ?

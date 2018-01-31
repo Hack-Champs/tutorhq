@@ -1,7 +1,7 @@
-const database = require('./index');
+const db = require('./models/index.js');
 
 exports.getSubjects = (req, res) => {
-  database.Subject.find()
+  db.Subject.find()
     .then((subjects) => {
       res.json(subjects);
     })
@@ -11,7 +11,7 @@ exports.getSubjects = (req, res) => {
 };
 
 exports.newSubject = (req, res) => {
-  database.Subject.create(req.body)
+  db.Subject.create(req.body)
     .then((subject) => {
       res.status(201).json(subject);
     })
@@ -21,7 +21,7 @@ exports.newSubject = (req, res) => {
 };
 
 exports.getTutor = (req, res) => {
-  database.User.find({ username: req.user.username })
+  db.User.find({ username: req.user.username })
     .then((tutor) => {
       res.json(tutor);
     })
@@ -31,7 +31,7 @@ exports.getTutor = (req, res) => {
 };
 
 exports.newTutor = (req, res) => {
-  database.User.create(req.body)
+  db.User.create(req.body)
     .then((tutor) => {
       res.status(201).json(tutor);
     })
@@ -41,7 +41,7 @@ exports.newTutor = (req, res) => {
 };
 
 exports.updateTutor = (req, res) => {
-  database.User.findOneAndUpdate(
+  db.User.findOneAndUpdate(
     { username: req.user.username },
     {
       description: req.body.description,

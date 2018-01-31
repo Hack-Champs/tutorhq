@@ -2,8 +2,8 @@ import React from 'react';
 import ReactDOM from 'react-dom';
 import DayPicker from 'react-day-picker';
 import BookingView from './BookingView.jsx'
+import axios from 'axios';
 import { Button, Container, Input } from 'semantic-ui-react';
-
 
 class AvailabilityView extends React.Component {
   constructor(props) {
@@ -11,64 +11,79 @@ class AvailabilityView extends React.Component {
     this.captureName = this.captureName.bind(this);
     this.captureTime = this.captureTime.bind(this);
     this.dateClick = this.dateClick.bind(this);
-    this.addSession = this.addSession.bind(this);
     this.testFunction = this.testFunction.bind(this);
+    this.getBookings = this.getBookings.bind(this);
+    this.addBooking = this.addBooking.bind(this);
+    this.deleteBooking = this.deleteBooking.bind(this);
     this.state = {
       name: '',
       date: '',
       time: '',
-      sessions: [{
-        name: 'add new users here',
-        date: '1/17/2018',
-        time: '3',
-      }]
+      bookings: []
     };
+  }
+
+  componentDidMount() {
+    this.getBookings();
+  }
+
+  getBookings() {
+    // losing this.props.tutor when directly refreshing dashboard, why?
+    console.log('tutor username: ' + this.props.tutor);
+    axios.get(`/users/${this.props.tutor}/bookings`)
+      .then(response => {
+        console.log(response);
+        this.setState({
+          bookings: response.data[0].bookings
+        })
+      })
+      .catch(error => {
+        console.log(`GET request error: ${error}`);
+      })
   }
 
   captureName(e) {
     this.setState({
       name: e.target.value
     })
-    console.log(this.state.name);
   }
-
 
   captureTime(e) {
     this.setState({
       time: e.target.value
     })
-    console.log(this.state.time);
   }
 
   dateClick(day) {
     this.setState({ date: day })
   }
 
-  addSession() {
+  addBooking() {
     var newSession = {
-      // sessionID add unique number
       name: this.state.name,
       date: this.state.date.toLocaleDateString(),
       time: this.state.time
     };
-    var newSessionList = this.state.sessions.slice();
-    newSessionList.push(newSession);
-    this.setState({
-      sessions: newSessionList
-    })
+    axios.post(`/users/${this.props.tutor}/booking`, newSession)
+      .then(() => {
+        this.getBookings();
+      })
     document.getElementById('nameInput').value = '';
     document.getElementById('timeInput').value = '';
-    // get /sessions
   }
 
+  deleteBooking(bookingID) {
+    axios.delete(`/users/${this.props.tutor}/booking/${bookingID}`)
+      .then(response => {
+        this.setState({
+          bookings: response.data.bookings
+        })
+      });
+  }
+
+  // button for debugging purposes, don't delete
   testFunction() {
-    var newSession = {
-      name: this.state.name,
-      date: this.state.date,
-      time: this.state.time
-    };
-    this.state.sessions.push(newSession);
-    console.log(this.state.sessions);
+
   }
 
   render () {
@@ -88,17 +103,15 @@ class AvailabilityView extends React.Component {
           )}
           <DayPicker onDayClick={ this.dateClick } />
         </div>
-        <Button primary onClick={ this.addSession }>Add Session</Button>
+        <Button primary onClick={ this.addBooking }>Add Booking</Button>
         <Button secondary onClick= { this.testFunction }>tester</Button>
-        <BookingView sessions={ this.state.sessions }/>
+        <BookingView
+          bookings={ this.state.bookings }
+          deleteBooking={ this.deleteBooking }
+        />
       </Container>
     );
   }
 }
 
 export default AvailabilityView;
-
-// (do not delete)
-// example: input field with dropdown calendar
-// import DayPickerInput from 'react-day-picker/DayPickerInput';
-// <DayPickerInput />

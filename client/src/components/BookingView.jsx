@@ -3,17 +3,24 @@ import ReactDOM from 'react-dom';
 import BookingViewEntry from './BookingViewEntry.jsx';
 import { Table } from 'semantic-ui-react';
 
-const BookingView = ({ sessions }) => (
+const BookingView = ({ bookings, deleteBooking }) => (
   <Table striped>
     <Table.Header>
       <Table.Row>
-      <Table.HeaderCell>Student</Table.HeaderCell>
-      <Table.HeaderCell>Date</Table.HeaderCell>
-      <Table.HeaderCell>Time</Table.HeaderCell>
+        <Table.HeaderCell>Student</Table.HeaderCell>
+        <Table.HeaderCell>Date</Table.HeaderCell>
+        <Table.HeaderCell>Time</Table.HeaderCell>
+        <Table.HeaderCell></Table.HeaderCell>
       </Table.Row>
     </Table.Header>
     <Table.Body>
-      { sessions.map(session => <BookingViewEntry session={ session }/> )}
+      { bookings.map(booking =>
+        <BookingViewEntry
+          booking={ booking }
+          deleteBooking={ deleteBooking }
+          key={ booking._id }
+        />
+      ) }
     </Table.Body>
   </Table>
 )
