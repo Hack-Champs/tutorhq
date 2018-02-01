@@ -67,3 +67,7 @@ h1.explanation {
 form {
   margin: 10px 0px 10px;
 }
+
+.formEntryTitle {
+  margin-top: 20px;
+}

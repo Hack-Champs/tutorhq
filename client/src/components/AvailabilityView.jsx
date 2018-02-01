@@ -4,6 +4,8 @@ import DayPicker from 'react-day-picker';
 import BookingView from './BookingView.jsx'
 import axios from 'axios';
 import { Grid, Button, Container, Input } from 'semantic-ui-react';
+import moment from 'moment';
+import TimePicker from 'rc-time-picker';
 
 class AvailabilityView extends React.Component {
   constructor(props) {
@@ -19,6 +21,8 @@ class AvailabilityView extends React.Component {
       name: '',
       date: '',
       time: '',
+      now: moment().hour(12).minute(0),
+      format: 'h:mm a',
       bookings: []
     };
   }
@@ -48,9 +52,10 @@ class AvailabilityView extends React.Component {
     })
   }
 
-  captureTime(e) {
+  captureTime(value) {
+    var selectedTime = value && value.format(this.state.format);
     this.setState({
-      time: e.target.value
+      time: selectedTime
     })
   }
 
@@ -82,7 +87,7 @@ class AvailabilityView extends React.Component {
   }
 
   // button for debugging purposes, don't delete
-  testFunction() {
+  testFunction(value) {
 
   }
 
@@ -94,9 +99,16 @@ class AvailabilityView extends React.Component {
             <Grid.Column width={5} className="timeInput">
               <div>
                 <p>Name</p>
-                <Input id="nameInput" onChange={ this.captureName }></Input>
-                <p>Time</p>
-                <Input id="timeInput" onChange={ this.captureTime }></Input>
+                <Input id="nameInput" placeholder="Student name" onChange={ this.captureName }></Input>
+                <p className="formEntryTitle">Time</p>
+                <TimePicker
+                  showSecond={ false }
+                  defaultValue={ this.state.now }
+                  className="xxx"
+                  onChange={ this.captureTime }
+                  format={ this.state.format }
+                  use12Hours
+                />
               </div>
             </Grid.Column>
             <Grid.Column width={5} className="dateInput">

@@ -41,7 +41,7 @@ class DashboardView extends React.Component {
       isLoading: false,
       results: [],
       newSubject: '',
-      rating: 3,
+      rating: 5,
       editing: false
     };
     this.resetComponent = this.resetComponent.bind(this);
