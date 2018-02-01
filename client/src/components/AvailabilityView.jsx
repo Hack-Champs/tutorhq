@@ -3,7 +3,7 @@ import ReactDOM from 'react-dom';
 import DayPicker from 'react-day-picker';
 import BookingView from './BookingView.jsx'
 import axios from 'axios';
-import { Button, Container, Input } from 'semantic-ui-react';
+import { Grid, Button, Container, Input } from 'semantic-ui-react';
 
 class AvailabilityView extends React.Component {
   constructor(props) {
@@ -89,26 +89,37 @@ class AvailabilityView extends React.Component {
   render () {
     return (
       <Container>
-        <div>
-          <p>Name</p>
-          <Input id="nameInput" onChange={ this.captureName }></Input>
-          <p>Time</p>
-          <Input id="timeInput" onChange={ this.captureTime }></Input>
-        </div>
-        <div>
-          { this.state.date ? (
-            <p>You picked { this.state.date.toLocaleDateString()}</p>
-          ) : (
-            <p>Choose a date</p>
-          )}
-          <DayPicker onDayClick={ this.dateClick } />
-        </div>
-        <Button primary onClick={ this.addBooking }>Add Booking</Button>
-        <Button secondary onClick= { this.testFunction }>tester</Button>
-        <BookingView
-          bookings={ this.state.bookings }
-          deleteBooking={ this.deleteBooking }
-        />
+        <Grid stackable>
+          <Grid.Row columns={3}>
+            <Grid.Column width={5} className="timeInput">
+              <div>
+                <p>Name</p>
+                <Input id="nameInput" onChange={ this.captureName }></Input>
+                <p>Time</p>
+                <Input id="timeInput" onChange={ this.captureTime }></Input>
+              </div>
+            </Grid.Column>
+            <Grid.Column width={5} className="dateInput">
+              <div>
+                { this.state.date ? (
+                  <p>You picked { this.state.date.toLocaleDateString()}</p>
+                ) : (
+                  <p align="right">Choose a date</p>
+                )}
+                <DayPicker onDayClick={ this.dateClick } />
+              </div>
+              <Button primary onClick={ this.addBooking }>Add Booking</Button>
+              <Button secondary onClick= { this.testFunction }>tester</Button>
+            </Grid.Column>
+            <Grid.Column width={5} className="bookings">
+              <BookingView
+                bookings={ this.state.bookings }
+                deleteBooking={ this.deleteBooking }
+              />
+            </Grid.Column>
+          </Grid.Row>
+        </Grid>
+
       </Container>
     );
   }

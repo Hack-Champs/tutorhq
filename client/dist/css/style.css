@@ -1,4 +1,4 @@
-div.ui.container.home.masthead {
+.ui.container.home.masthead {
   min-height: 600px;
   width: 100%;
   background-image: url('/img/Background.png');
@@ -18,6 +18,10 @@ div.ui.container.home.masthead {
   font-size: 4em;
   font-weight: normal;
   text-transform: uppercase;
+
+}
+.profileheader {
+  text-align: center;
 
 }
 
@@ -43,10 +47,23 @@ h1.explanation {
   min-height: 200px;
 }
 
-div.six.wide.column {
+.six.wide.column {
   text-align: right;
 }
 
 .tutorDescription {
   padding-top: 70px;
+}
+.five.wide.column.dateInput {
+  text-align: center;
+}
+.five.wide.column.timeInput {
+  text-align: left;
+}
+.five.wide.column.bookings {
+  text-align: right;
+  padding-left: 60px;
+}
+form {
+  margin: 10px 0px 10px;
 }

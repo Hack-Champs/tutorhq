@@ -179,16 +179,16 @@ class DashboardView extends React.Component {
       descriptionSection = (
         <Form>
           <Form.TextArea onChange={this.changeDescription} label='Description' placeholder='Please add a description' value={this.state.description} />
-          <Form.Button primary onClick={this.submitDescription}>Submit</Form.Button>
+          <Form.Button basic color="blue" floated="right" onClick={this.submitDescription}>Save</Form.Button>
         </Form>
       );
     } else {
       descriptionSection = (
         <div>
-          <Segment>
+          <Segment color="blue">
             {this.state.description}
           </Segment>
-          <Button primary onClick={this.onEditClick}>Edit</Button>
+          <Button basic color="blue" floated="right" onClick={this.onEditClick}>Edit</Button>
         </div>
       );
     }
@@ -196,7 +196,7 @@ class DashboardView extends React.Component {
     return (
       <div>
         <Container>
-          <Header as='h2'>Tutor Profile</Header>
+          <Header as='h2' className="profileheader">Tutor Profile</Header>
           <Rating
             icon='star'
             rating={this.state.rating}
@@ -205,30 +205,29 @@ class DashboardView extends React.Component {
             clearable
           />
           {descriptionSection}
+        </Container>
+        <Container>
+          <h2>Subjects</h2>
+          <form onSubmit={this.onSubmit}>
+            Add a subject
+            <Search
+              input={{ icon: 'search', iconPosition: 'left' }}
+              loading={isLoading}
+              onResultSelect={this.handleResultSelect}
+              onSearchChange={this.handleSearchChange}
+              results={results}
+              value={newSubject}
+              {...this.props}
+            />
+          </form>
           <div>
-            Subjects
-            <div>
-              {this.state.subjects.map((subject, i) => {
-                return <Label key={i} as='subject' basic>{subject}</Label>;
-              })}
-            </div>
+            {this.state.subjects.map((subject, i) => {
+              return <Label key={i} as='subject' basic>{subject}</Label>;
+            })}
           </div>
-          <Grid>
-            <Grid.Column width={16}>
-              <form onSubmit={this.onSubmit}>
-                Add a subject
-                <Search
-                  input={{ icon: 'search', iconPosition: 'left' }}
-                  loading={isLoading}
-                  onResultSelect={this.handleResultSelect}
-                  onSearchChange={this.handleSearchChange}
-                  results={results}
-                  value={newSubject}
-                  {...this.props}
-                />
-              </form>
-            </Grid.Column>
-          </Grid>
+
+        </Container>
+        <Container>
           <AvailabilityView
             tutor={ this.props.tutor }
           />
