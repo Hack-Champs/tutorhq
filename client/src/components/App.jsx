@@ -2,6 +2,7 @@ import React from 'react';
 import ReactDOM from 'react-dom';
 import DashboardView from './DashboardView.jsx';
 import HomeView from './HomeView.jsx';
+import TutorsView from './TutorsView.jsx';
 import { Link, Route, Switch } from 'react-router-dom';
 import { Menu } from 'semantic-ui-react';
 import axios from 'axios';
@@ -89,7 +90,7 @@ class App extends React.Component {
         <Menu pointing secondary>
           <Menu.Item name='home' as={Link} to='/' active={activeItem === '/'} onClick={this.handleItemClick} replace />
             { this.state.isSignedIn &&
-              <Menu.Item name='dashboard' as={Link} to='/dashboard' active={activeItem === '/dashboard'} onClick={this.handleItemClick} replace />
+              <Menu.Item name='dashboard' as={Link} to='/dashboard' active={activeItem === '/dashboard' || activeItem.includes('/tutors/')} onClick={this.handleItemClick} replace />
             }
           <Menu.Item name='tutors' as={Link} to='/tutors' active={activeItem === '/tutors'} onClick={this.handleItemClick} replace />
           <Menu.Menu position='right'>
@@ -103,6 +104,9 @@ class App extends React.Component {
         <Switch>
           <Route exact path='/' render={() => <HomeView />} />
           <Route path='/dashboard' render={() => <DashboardView tutor={this.state.user.username} />} />
+          <Route exact path='/tutors' render={() => <TutorsView />} />
+          <Route path='/tutors/:tutor' render={() => <DashboardView tutor={this.state.user.username} />} />
+          <Route path='/dashboard/:tutor' render={() => <DashboardView tutor={this.state.user.username} />} />
         </Switch>
       </div>
     );

@@ -232,9 +232,6 @@ class DashboardView extends React.Component {
           <AvailabilityView
             tutor={ this.props.tutor }
           />
-          <Switch>
-            <Route path='/dashboard/:tutor' render={() => <DashboardView />} />
-          </Switch>
         </Container>
       </div>
     );
