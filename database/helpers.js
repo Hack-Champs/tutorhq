@@ -57,4 +57,14 @@ exports.updateTutor = (req, res) => {
     });
 };
 
+exports.getTutors = (req, res) => {
+  database.User.find()
+    .then((tutors) => {
+      res.json(tutors);
+    })
+    .catch((err) => {
+      res.send(err);
+    });
+};
+
 module.exports = exports;

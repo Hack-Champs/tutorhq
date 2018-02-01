@@ -25,6 +25,7 @@ let sessionSchema = mongoose.Schema({
 let UserSchema = mongoose.Schema({
   googleId: String,
   sessionID: String,
+  name: String,
   username: String,
   description: String,
   subjects: [String],
@@ -102,6 +103,7 @@ const findOrCreate = (query, callback) => {
       let newUser = new User({
         googleId: query.googleId,
         sessionID: query.sessionID,
+        name: query.name,
         username: query.username,
         email: query.email,
         description: query.description,
