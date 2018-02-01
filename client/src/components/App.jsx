@@ -6,7 +6,6 @@ import { Link, Route, Switch } from 'react-router-dom';
 import { Menu } from 'semantic-ui-react';
 import axios from 'axios';
 import browserHistory from 'react-router-dom';
-import ScrollableAnchor from 'react-scrollable-anchor';
 import AOS from 'aos';
 
 class App extends React.Component {

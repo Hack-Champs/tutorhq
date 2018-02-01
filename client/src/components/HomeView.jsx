@@ -3,7 +3,6 @@ import ReactDOM from 'react-dom';
 import DashboardView from './DashboardView.jsx';
 import { Link, Route, Switch } from 'react-router-dom';
 import { Menu } from 'semantic-ui-react';
-import ScrollableAnchor from 'react-scrollable-anchor';
 import AOS from 'aos';
 
 class HomeView extends React.Component {
@@ -30,7 +29,7 @@ class HomeView extends React.Component {
           <h1 className="ui inverted header">
           Tutor HQ
           </h1>
-          <button href="#description" className="ui white button">TUTORS</button>
+          <button className="ui white button">TUTORS</button>
         </div>
         <h1 className="explanation">How it works</h1>
         <br/>
@@ -74,34 +73,14 @@ class HomeView extends React.Component {
           </div>
         </div>
 
-        <ScrollableAnchor id={'description'}>
-          <div className="ui container">
-            <div className="ui grid">
-              <div className="ten wide column">
-                <p className="tutorDescription" data-aos="fade-down">Lorem ipsum dolor sit amet, consectetur adipiscing elit. Mauris in tellus sit amet tortor pellentesque consequat. Duis ex ante, pharetra nec molestie bibendum, porttitor et urna. Cras nisl ante, rhoncus at elit sit amet, blandit semper quam. Fusce id commodo nunc. Fusce vestibulum porta ornare. Maecenas efficitur posuere mollis. </p>
-              </div>
-              <div className="six wide column">
-                <img data-aos="fade-left" src="http://semantic-ui-forest.com/static/images/templates/semantic-ui/wireframe/square-image.png" />
-              </div>
-            </div>
-          </div>
-        </ScrollableAnchor>
 
-        <div className="ui inverted vertical footer segment">
-          <div className="ui container">
-            <div className="ui stackable inverted divided equal height stackable grid">
-              <div className="four wide column">
-                <h4 className="ui inverted header">Grant<br/>Scrum Master</h4>
-              </div>
-              <div className="four wide column">
-                <h4 className="ui inverted header">Zay<br/>Product Owner</h4>
-              </div>
-              <div className="four wide column">
-                <h4 className="ui inverted header">Luna<br/>Software Engineer</h4>
-              </div>
-              <div className="four wide column">
-                <h4 className="ui inverted header">Henry<br/>Software Engineer</h4>
-              </div>
+        <div className="ui container">
+          <div className="ui grid">
+            <div className="ten wide column">
+              <p className="tutorDescription" data-aos="fade-down">Lorem ipsum dolor sit amet, consectetur adipiscing elit. Mauris in tellus sit amet tortor pellentesque consequat. Duis ex ante, pharetra nec molestie bibendum, porttitor et urna. Cras nisl ante, rhoncus at elit sit amet, blandit semper quam. Fusce id commodo nunc. Fusce vestibulum porta ornare. Maecenas efficitur posuere mollis. </p>
+            </div>
+            <div className="six wide column">
+              <img data-aos="fade-left" src="http://semantic-ui-forest.com/static/images/templates/semantic-ui/wireframe/square-image.png" />
             </div>
           </div>
         </div>
