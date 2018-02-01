@@ -1,4 +1,52 @@
-.ui.inverted.header {
-  background-color: #000;
-  min-height: 300px;
+div.ui.container.home.masthead {
+  min-height: 600px;
+  width: 100%;
+  background-image: url('/img/Background.png');
+  background-size: cover;
+  background-repeat: no-repeat;
+  background-position: center;
+  vertical-align: middle;
+  text-align: center;
+  margin-bottom: 30px;
+}
+.masthead h1.ui.header {
+  display: block;
+  padding-top: 260px;
+  vertical-align: middle;
+  margin-left: auto;
+  margin-right: auto;
+  font-size: 4em;
+  font-weight: normal;
+  text-transform: uppercase;
+
+}
+
+h1.explanation {
+  text-align: center;
+  margin-bottom: -50px;
+}
+.ui.inverted.vertical.footer.segment {
+  text-align: center;
+  padding-top: 100px;
+  margin-top: 50px;
+  min-height: 200px;
+}
+
+.info {
+  min-height: 200px;
+  text-align: center;
+  vertical-align: middle;
+}
+
+.ui.grid {
+  margin-top: 40px;
+  min-height: 200px;
+}
+
+div.six.wide.column {
+  text-align: right;
+}
+
+.tutorDescription {
+  padding-top: 70px;
 }

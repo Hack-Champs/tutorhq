@@ -6,6 +6,7 @@ import { Link, Route, Switch } from 'react-router-dom';
 import { Menu } from 'semantic-ui-react';
 import axios from 'axios';
 import browserHistory from 'react-router-dom';
+import AOS from 'aos';
 
 class App extends React.Component {
   constructor(props) {
@@ -27,6 +28,9 @@ class App extends React.Component {
   componentDidMount() {
     console.log('The user: ',this.state);
     this.checkSession();
+    AOS.init({
+      duration: 1200,
+    });
   }
 
   checkSession() {
