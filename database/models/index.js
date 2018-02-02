@@ -11,9 +11,9 @@ db.once('open', function() {
   Student.findOne({}, (err, student) => {
     if (!student) {
       Student.create({
-        name: 'Hank',
-        email: 'hank@theprank.com',
-        notes: ''
+        name: 'Test Student',
+        email: 'test@student.com',
+        notes: 'Some notes'
       });
     } else {
       User.findOne({}, (err, user) => {
