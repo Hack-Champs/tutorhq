@@ -16,7 +16,7 @@ class BookingViewEntry extends React.Component {
   render() {
     return (
       <Table.Row>
-        <Table.Cell>{this.props.booking.name}</Table.Cell>
+        <Table.Cell>{this.props.booking.studentName}</Table.Cell>
         <Table.Cell>{this.props.booking.date}</Table.Cell>
         <Table.Cell>{this.props.booking.time}</Table.Cell>
         <Table.Cell>

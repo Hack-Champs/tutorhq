@@ -2,7 +2,8 @@ const db = require('../models/index.js')
 
 const createBooking = (username, bookingInfo, callback) => {
   var booking = new db.Booking({
-    name: bookingInfo.name,
+    student: bookingInfo.student,
+    studentName: bookingInfo.student.name,
     date: bookingInfo.date,
     time: bookingInfo.time
   });
