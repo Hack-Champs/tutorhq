@@ -31,6 +31,12 @@ const ratingSchema = mongoose.Schema({
   rating: Number,
 });
 
+const studentSchema = mongoose.Schema({
+  name: { type: String, unique: true, required: true },
+  email: { type: String, unique: true, required: true },
+  notes: String
+});
+
 const subjectSchema = new mongoose.Schema({
   name: { type: String, unique: true },
 });
@@ -39,8 +45,10 @@ const User = mongoose.model('User', userSchema);
 const Booking = mongoose.model('Booking', bookingSchema);
 const Rating = mongoose.model('Rating', ratingSchema);
 const Subject = mongoose.model('Subject', subjectSchema);
+const Student = mongoose.model('Student', studentSchema);
 
 module.exports.Subject = Subject;
 module.exports.Rating = Rating;
 module.exports.Booking = Booking;
 module.exports.User = User;
+module.exports.Student = Student;
