@@ -7,13 +7,38 @@ const db = mongoose.connection;
 db.on('error', console.error.bind(console, 'connection error:'));
 db.once('open', function() {
   console.log('Connected to mongo');
+  // For initial test setup: Add single student to tutor if there aren't any.
+  Student.findOne({}, (err, student) => {
+    if (!student) {
+      Student.create({
+        name: 'Hank',
+        email: 'hank@theprank.com',
+        notes: ''
+      });
+    } else {
+      User.findOne({}, (err, user) => {
+        if (!user.students.length) {
+          user.students.push(student);
+          user.save();
+        }
+      });
+    }
+  });
 });
 
 const bookingSchema = mongoose.Schema({
-  name: String,
+  student: { type: mongoose.Schema.Types.ObjectId, ref: 'Student' },
+  studentName: String,
   date: String,
   time: String,
 });
+
+const studentSchema = mongoose.Schema({
+  name: { type: String, unique: false, required: true },
+  email: { type: String, unique: false, required: true },
+  notes: String
+});
+
 
 const userSchema = mongoose.Schema({
   googleId: String,
@@ -23,7 +48,8 @@ const userSchema = mongoose.Schema({
   subjects: [String],
   tutor: String,
   email: String,
-  bookings: [bookingSchema]
+  bookings: [bookingSchema],
+  students: [studentSchema]
 });
 
 const ratingSchema = mongoose.Schema({
@@ -39,8 +65,10 @@ const User = mongoose.model('User', userSchema);
 const Booking = mongoose.model('Booking', bookingSchema);
 const Rating = mongoose.model('Rating', ratingSchema);
 const Subject = mongoose.model('Subject', subjectSchema);
+const Student = mongoose.model('Student', studentSchema);
 
 module.exports.Subject = Subject;
 module.exports.Rating = Rating;
 module.exports.Booking = Booking;
 module.exports.User = User;
+module.exports.Student = Student;
