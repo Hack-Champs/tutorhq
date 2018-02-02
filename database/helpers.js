@@ -58,7 +58,7 @@ exports.updateTutor = (req, res) => {
 };
 
 exports.getTutors = (req, res) => {
-  database.User.find()
+  db.User.find()
     .then((tutors) => {
       res.json(tutors);
     })

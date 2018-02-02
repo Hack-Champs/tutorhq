@@ -183,14 +183,24 @@ class DashboardView extends React.Component {
         </Form>
       );
     } else {
-      descriptionSection = (
-        <div>
-          <Segment color="blue">
-            {this.state.description}
-          </Segment>
-          <Button basic color="blue" floated="right" onClick={this.onEditClick}>Edit</Button>
-        </div>
-      );
+      if (this.props.tutor) {
+        descriptionSection = (
+          <div>
+            <Segment color="blue">
+              {this.state.description}
+            </Segment>
+            <Button basic color="blue" floated="right" onClick={this.onEditClick}>Edit</Button>
+          </div>
+        );
+      } else {
+        descriptionSection = (
+          <div>
+            <Segment color="blue">
+              {this.state.description}
+            </Segment>
+          </div>
+        );
+      }
     }
 
     return (

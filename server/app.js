@@ -70,12 +70,12 @@ app.get('/users/:username/bookings', (req, res) => {
   // var username = req.params.username;
   var username = req.user.username;
   console.log(username);
-  db.User.find({username: username}, (err, user) => {
+  db.User.findOne({username: username}, (err, user) => {
     if (err) {
       res.status(501).send('Could not retrieve bookings');
     } else {
       console.log(user);
-      res.send(user);
+      res.send(user.bookings);
     }
   });
 });
@@ -85,12 +85,12 @@ app.post('/users/:username/booking', (req, res) => {
   // var username = req.params.username;
   var username = req.user.username;
   var bookingInfo = req.body;
-  bookingCtrl.createBooking(username, bookingInfo, (err, bookings) => {
+  bookingCtrl.createBooking(username, bookingInfo, (err, user) => {
     if (err) {
       res.status(501).send('Could not create a booking');
     } else {
-      console.log(bookings);
-      res.send(bookings);
+      console.log(user.bookings);
+      res.send(user.bookings);
     }
   });
 });
@@ -104,6 +104,19 @@ app.delete('/users/:username/booking/:bookingID', (req, res) => {
       res.status(501).send('Could not delete that booking');
     } else {
       res.send(bookings);
+    }
+  });
+});
+
+app.get('/users/:username/students', (req, res) => {
+  console.log('get tutor students endpoint');
+  var username = req.user.username;
+  console.log(username);
+  db.User.findOne({username: username}, (err, user) => {
+    if (err) {
+      res.status(501).send('Could not retrieve students');
+    } else {
+      res.send(user.students);
     }
   });
 });
