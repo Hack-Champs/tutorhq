@@ -11,8 +11,8 @@ db.once('open', function() {
   // Student.findOne({}, (err, student) => {
   //   if (!student) {
   //     Student.create({
-  //       name: 'Hank',
-  //       email: 'hank@theprank.com',
+  //       name: 'John',
+  //       email: 'John@gmail.com',
   //       notes: ''
   //     });
   //   } else {
