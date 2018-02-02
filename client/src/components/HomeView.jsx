@@ -29,7 +29,7 @@ class HomeView extends React.Component {
           <h1 className="ui inverted header">
           Tutor HQ
           </h1>
-          <button className="ui white button">Get Started</button>
+          <Button id="getStartedButton" primary>Get Started</Button>
         </div>
         <h1 className="explanation">How It Works</h1>
         <br/>

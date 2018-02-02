@@ -71,3 +71,10 @@ form {
 .formEntryTitle {
   margin-top: 20px;
 }
+
+#getStartedButton {
+  width: 150px !important;
+  height: 50px !important;
+  background-color: #0fd392 !important;
+  font-size: 15px !important;
+}
