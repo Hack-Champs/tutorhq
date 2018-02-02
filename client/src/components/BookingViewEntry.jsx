@@ -16,9 +16,10 @@ class BookingViewEntry extends React.Component {
   render() {
     return (
       <Table.Row>
-        <Table.Cell>{this.props.booking.name}</Table.Cell>
+        <Table.Cell>{this.props.booking.studentName}</Table.Cell>
         <Table.Cell>{this.props.booking.date}</Table.Cell>
         <Table.Cell>{this.props.booking.time}</Table.Cell>
+        <Table.Cell><a href={`http://localhost:8000/room/${this.props.booking.channel}`} target="_blank">Link</a></Table.Cell>
         <Table.Cell>
           <Button
             id={ this.props.booking._id }

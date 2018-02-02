@@ -15,20 +15,24 @@ class AvailabilityView extends React.Component {
     this.dateClick = this.dateClick.bind(this);
     this.testFunction = this.testFunction.bind(this);
     this.getBookings = this.getBookings.bind(this);
+    this.getStudents = this.getStudents.bind(this);
     this.addBooking = this.addBooking.bind(this);
     this.deleteBooking = this.deleteBooking.bind(this);
+    this.selectStudent = this.selectStudent.bind(this);
     this.state = {
-      name: '',
       date: '',
       time: '',
       now: moment().hour(12).minute(0),
       format: 'h:mm a',
-      bookings: []
+      bookings: [],
+      students: [],
+      selectedStudent: null
     };
   }
 
   componentDidMount() {
     this.getBookings();
+    this.getStudents();
   }
 
   getBookings() {
@@ -38,7 +42,20 @@ class AvailabilityView extends React.Component {
       .then(response => {
         console.log(response);
         this.setState({
-          bookings: response.data[0].bookings
+          bookings: response.data
+        })
+      })
+      .catch(error => {
+        console.log(`GET request error: ${error}`);
+      })
+  }
+
+  getStudents() {
+    axios.get(`/users/${this.props.tutor}/students`)
+      .then(response => {
+        console.log(response);
+        this.setState({
+          students: response.data
         })
       })
       .catch(error => {
@@ -65,16 +82,20 @@ class AvailabilityView extends React.Component {
 
   addBooking() {
     var newSession = {
-      name: this.state.name,
+      student: this.state.selectedStudent,
       date: this.state.date.toLocaleDateString(),
       time: this.state.time
     };
     axios.post(`/users/${this.props.tutor}/booking`, newSession)
-      .then(() => {
-        this.getBookings();
+      .then((response) => {
+        console.log(response);
+        this.setState({
+          bookings: response.data
+        })
       })
     document.getElementById('nameInput').value = '';
     document.getElementById('timeInput').value = '';
+    this.setState({selectedStudent: null});
   }
 
   deleteBooking(bookingID) {
@@ -86,9 +107,15 @@ class AvailabilityView extends React.Component {
       });
   }
 
+  selectStudent() {
+    const student = this.state.students[0];
+    this.setState({selectedStudent: student});
+    document.getElementById('nameInput').value = student.name;
+  }
+
   // button for debugging purposes, don't delete
   testFunction(value) {
-
+    this.selectStudent();
   }
 
   render () {
@@ -96,7 +123,7 @@ class AvailabilityView extends React.Component {
       <Container>
         <Grid stackable>
           <Grid.Row columns={3}>
-            <Grid.Column width={5} className="timeInput">
+            <Grid.Column width={5} className="timeInput" id="timeInput" >
               <div>
                 <p>Name</p>
                 <Input id="nameInput" placeholder="Student name" onChange={ this.captureName }></Input>

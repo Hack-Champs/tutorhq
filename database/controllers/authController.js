@@ -7,6 +7,7 @@ const findOrCreate = (query, callback) => {
       let newUser = new db.User({
         googleId: query.googleId,
         sessionID: query.sessionID,
+        name: query.name,
         username: query.username,
         email: query.email,
         description: query.description,
