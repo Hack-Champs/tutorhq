@@ -8,22 +8,22 @@ db.on('error', console.error.bind(console, 'connection error:'));
 db.once('open', function() {
   console.log('Connected to mongo');
   // For initial test setup: Add single student to tutor if there aren't any.
-  Student.findOne({}, (err, student) => {
-    if (!student) {
-      Student.create({
-        name: 'Hank',
-        email: 'hank@theprank.com',
-        notes: ''
-      });
-    } else {
-      User.findOne({}, (err, user) => {
-        if (user && !user.students.length) {
-          user.students.push(student);
-          user.save();
-        }
-      });
-    }
-  });
+  // Student.findOne({}, (err, student) => {
+  //   if (!student) {
+  //     Student.create({
+  //       name: 'Hank',
+  //       email: 'hank@theprank.com',
+  //       notes: ''
+  //     });
+  //   } else {
+  //     User.findOne({}, (err, user) => {
+  //       if (user && !user.students.length) {
+  //         user.students.push(student);
+  //         user.save();
+  //       }
+  //     });
+  //   }
+  // });
 });
 
 const bookingSchema = mongoose.Schema({
@@ -47,6 +47,7 @@ const studentSchema = mongoose.Schema({
 const userSchema = mongoose.Schema({
   googleId: String,
   sessionID: String,
+  name: String,
   username: String,
   description: String,
   subjects: [String],
