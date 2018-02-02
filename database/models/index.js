@@ -17,7 +17,7 @@ db.once('open', function() {
       });
     } else {
       User.findOne({}, (err, user) => {
-        if (!user.students.length) {
+        if (user && !user.students.length) {
           user.students.push(student);
           user.save();
         }
