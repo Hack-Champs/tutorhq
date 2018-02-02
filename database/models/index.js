@@ -31,6 +31,10 @@ const bookingSchema = mongoose.Schema({
   studentName: String,
   date: String,
   time: String,
+  channel: { type: mongoose.Schema.Types.ObjectId, ref: 'Channel' },
+});
+
+const channelSchema = mongoose.Schema({
 });
 
 const studentSchema = mongoose.Schema({
@@ -66,9 +70,11 @@ const Booking = mongoose.model('Booking', bookingSchema);
 const Rating = mongoose.model('Rating', ratingSchema);
 const Subject = mongoose.model('Subject', subjectSchema);
 const Student = mongoose.model('Student', studentSchema);
+const Channel = mongoose.model('Channel', channelSchema);
 
 module.exports.Subject = Subject;
 module.exports.Rating = Rating;
 module.exports.Booking = Booking;
 module.exports.User = User;
 module.exports.Student = Student;
+module.exports.Channel = Channel;

@@ -10,6 +10,7 @@ const BookingView = ({ bookings, deleteBooking }) => (
         <Table.HeaderCell>Student</Table.HeaderCell>
         <Table.HeaderCell>Date</Table.HeaderCell>
         <Table.HeaderCell>Time</Table.HeaderCell>
+        <Table.HeaderCell>Room</Table.HeaderCell>
         <Table.HeaderCell></Table.HeaderCell>
       </Table.Row>
     </Table.Header>
