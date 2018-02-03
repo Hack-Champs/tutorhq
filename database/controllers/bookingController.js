@@ -2,16 +2,25 @@ const db = require('../models/index.js');
 
 const createBooking = (username, bookingInfo, callback) => {
   var channel = new db.Channel({});
-  var booking = new db.Booking({
-    student: bookingInfo.student,
-    studentName: bookingInfo.student.name,
-    date: bookingInfo.date,
-    time: bookingInfo.time,
-    channel: channel
-  });
-
-  db.User.findOneAndUpdate({ username: username }, { $push: { bookings: booking } }, { new: true }, (err, data) => {
-    callback(err, data);
+  channel.save((err, channel) => {
+    if (err) {
+      return callback(err);
+    }
+    var booking = new db.Booking({
+      student: bookingInfo.student,
+      studentName: bookingInfo.student.name,
+      date: bookingInfo.date,
+      time: bookingInfo.time,
+      channel: channel
+    });
+    booking.save((err, booking) => {
+      if (err) {
+        return callback(err);
+      }
+      db.User.findOneAndUpdate({ username: username }, { $push: { bookings: booking } }, { new: true }, (err, data) => {
+        callback(err, data);
+      });
+    });
   });
 };
 

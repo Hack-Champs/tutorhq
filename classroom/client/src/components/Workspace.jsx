@@ -47,9 +47,9 @@ class Workspace extends Component {
   joinChannel(channelId) {
     var context = this;
     if (channelId) {
-      this.socket.emit('client:joinChannel', channelId, (err, channel, messages)=>{
-        if (channel) {
-          context.setState({channelId: channel._id, messages: messages});
+      this.socket.emit('client:joinChannel', channelId, (err, messages)=>{
+        if (!err) {
+          context.setState({channelId: channelId, messages: messages});
         } else {
           alert('Unknown channel id. Please check that you have the correct url');
           this.socket.disconnect();
