@@ -43,10 +43,9 @@ io.on('connection', (socket) => {
         callback(err);
       }
       if (booking) {
-        const channel = booking.channel;
-        socket.join(channel);
-        Message.getMessages(channel, (err, messages)=>{
-          callback(err, channel, messages);
+        socket.join(channelId);
+        Message.getMessages(channelId, (err, messages)=>{
+          callback(err, messages);
         });
       }
     });
