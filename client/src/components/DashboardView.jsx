@@ -205,6 +205,7 @@ class DashboardView extends React.Component {
 
     return (
       <div>
+        <Button icon='list layout' />
         <Container>
           <Header as='h2' className="profileheader">Tutor Profile</Header>
           <Rating
