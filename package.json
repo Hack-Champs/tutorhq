@@ -8,7 +8,7 @@
     "test-server": "mocha spec/server/serverSpec",
     "test": "npm run test-server && npm run test-client",
     "react": "webpack -d --watch",
-    "server": "nodemon --inspect server/index.js",
+    "server": "nodemon server/index.js",
     "build:production": "NODE_ENV=production webpack --config webpack.config.js",
     "start": "node server/index.js"
   },
@@ -47,6 +47,7 @@
     "lodash": "^4.17.4",
     "moment": "^2.20.1",
     "mongoose": "^4.13.9",
+    "nodemailer": "^4.4.2",
     "passport": "^0.4.0",
     "passport-google-oauth": "^1.0.0",
     "passport-google-oauth20": "^1.0.0",

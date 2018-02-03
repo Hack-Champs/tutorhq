@@ -37,12 +37,30 @@ const bookingSchema = mongoose.Schema({
 const channelSchema = mongoose.Schema({
 });
 
+const messageSchema = mongoose.Schema({
+  channelId: {
+    type: String,
+    unique: false,
+    required: true
+  },
+  name: {
+    type: String,
+    unique: false,
+    required: true
+  },
+  body: {
+    type: String,
+    required: true,
+    minlength: 1,
+    trim: true
+  }
+});
+
 const studentSchema = mongoose.Schema({
   name: { type: String, unique: false, required: true },
   email: { type: String, unique: false, required: true },
   notes: String
 });
-
 
 const userSchema = mongoose.Schema({
   googleId: String,
@@ -66,6 +84,7 @@ const subjectSchema = new mongoose.Schema({
   name: { type: String, unique: true },
 });
 
+const Message = mongoose.model('message', messageSchema);
 const User = mongoose.model('User', userSchema);
 const Booking = mongoose.model('Booking', bookingSchema);
 const Rating = mongoose.model('Rating', ratingSchema);
@@ -79,3 +98,4 @@ module.exports.Booking = Booking;
 module.exports.User = User;
 module.exports.Student = Student;
 module.exports.Channel = Channel;
+module.exports.Message = Message;

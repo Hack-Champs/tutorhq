@@ -4,9 +4,9 @@ const mongoose = require('mongoose');
 const express = require('express');
 const socketIO = require('socket.io');
 const bodyParser = require('body-parser');
-const Message = require('./database/message');
-const Channel = require('./database/channel');
-const mailer = require('../mailServer/mailer');
+const Message = require('../../database/controllers/messageController');
+const BookingController = require('../../database/controllers/bookingController');
+const mailer = require('../../mailServer/mailer');
 const cors = require('cors');
 
 const app = express();
@@ -17,20 +17,6 @@ app.use(cors());
 app.use(bodyParser.urlencoded({ extended: false }));
 app.use(bodyParser.json());
 app.use(express.static(`${__dirname}/../client/dist`));
-
-
-let url = process.env.MONGODB_URI || 'mongodb://localhost/classroom';
-mongoose.connect(url);
-let db = mongoose.connection;
-
-db.on('error', () => {
-  console.error('Connection error!');
-});
-
-db.once('open', () => {
-  console.log('Connected to mongo');
-  Channel.makeFirstChannel();
-});
 
 app.post('/sendLink', (req, res) => {
   var tutorName = req.body.tutorName;
@@ -45,29 +31,32 @@ app.post('/sendLink', (req, res) => {
   }
 });
 
-app.get('*', function (req, res){
+app.get('*', function (req, res) {
   res.sendFile('index.html', { root: path.join(__dirname, '../client/dist') });
-})
+});
 
 io.on('connection', (socket) => {
   console.log('New user connected');
   socket.on('client:joinChannel', (channelId, callback) => {
-    Channel.getChannel(channelId, (err, channel) => {
-      if (err) callback(err);
-      if (channel) {
-        socket.join(channelId);
-        Message.getMessages(channelId, (err, messages)=>{
+    BookingController.getBookingFromChannelId(channelId, (err, booking) => {
+      if (err) {
+        callback(err);
+      }
+      if (booking) {
+        const channel = booking.channel;
+        socket.join(channel);
+        Message.getMessages(channel, (err, messages)=>{
           callback(err, channel, messages);
         });
       }
-    })
+    });
   });
 
   socket.on('client:createMessage', (message, callback) => {
     var message = {
-        channelId: message.channelId,
-        body: message.body,
-        name: message.name
+      channelId: message.channelId,
+      body: message.body,
+      name: message.name
     };
     Message.saveMessage(message, (err, savedMessage) => {
       if (err) {
@@ -79,7 +68,7 @@ io.on('connection', (socket) => {
   });
 
   socket.on('drawing', (data) => {
-    socket.broadcast.to(data.channelId).emit('drawing', data)
+    socket.broadcast.to(data.channelId).emit('drawing', data);
   });
 
   socket.on('client:updateCode', (data) => {
@@ -95,5 +84,5 @@ io.on('connection', (socket) => {
 
 const port = process.env.PORT || 8000;
 server.listen(port, () => {
-    console.log(`Server is up on port ${port}`);
+  console.log(`Server is up on port ${port}`);
 });
