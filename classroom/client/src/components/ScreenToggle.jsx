@@ -10,11 +10,9 @@ class ScreenToggle extends Component {
     this.timer = null;
     this.state = {
       totalSeconds: 0,
-      seconds: '',
-      minutes: '',
-      hours: '',
+      timeString: '',
       timerRunning: false
-    }
+    };
   }
 
   handleClick(component) {
@@ -36,20 +34,27 @@ class ScreenToggle extends Component {
     this.setState({
       totalSeconds: this.state.totalSeconds + 1
     });
-    var seconds = this.pad(this.state.totalSeconds % 60);
-    var minutes = this.pad(parseInt(this.state.totalSeconds / 60));
-    var hours = this.pad(parseInt(this.state.totalSeconds / 3600));
+    var timeString = this.getTimeString();
     this.setState({
-      seconds: seconds,
-      minutes: minutes,
-      hours: hours
+      timeString: timeString
     });
   }
 
+  getTimeString() {
+    var timeString = '';
+    if (this.state.totalSeconds > 0) {
+      var seconds = this.pad(this.state.totalSeconds % 60);
+      var minutes = this.pad(parseInt(this.state.totalSeconds / 60));
+      var hours = this.pad(parseInt(this.state.totalSeconds / 3600));
+      timeString = `${hours}:${minutes}:${seconds}`;
+    }
+    return timeString;
+  }
+
   pad(val) {
-    var valString = val + "";
+    var valString = '' + val;
     if (valString.length < 2) {
-      return "0" + valString;
+      return '0' + valString;
     } else {
       return valString;
     }
@@ -59,7 +64,7 @@ class ScreenToggle extends Component {
     var $chat = $('#chat').removeClass('primary');
     var $whiteboard = $('#whiteboard').removeClass('primary');
     var $editor = $('#editor').removeClass('primary');
-    var toggleButton = $('#'+component);
+    var toggleButton = $('#' + component);
     toggleButton.addClass('primary');
   }
 
@@ -74,7 +79,7 @@ class ScreenToggle extends Component {
           <button id ="editor" className="ui button" name="editor" onClick={this.handleClick.bind(this, 'editor')}>Editor</button>
 
         </div>
-        <button id ="timer" className="ui button basic mini positive" name="timer" onClick={this.handleTimerClick.bind(this)}>{ this.state.timerRunning ? 'Stop' : 'Start' } Timer</button><span>{ `${this.state.hours}:${this.state.minutes}:${this.state.seconds}` }</span>
+        <button id ="timer" className="ui button basic mini positive" name="timer" onClick={this.handleTimerClick.bind(this)}>{ this.state.timerRunning ? 'Stop' : 'Start' } Timer</button><span>{ `${this.state.timeString}` }</span>
       </div>
     );
   }
