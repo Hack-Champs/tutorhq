@@ -120,7 +120,7 @@ class AvailabilityView extends React.Component {
 
   render () {
     return (
-      <Container>
+      <div>
         <Grid stackable>
           <Grid.Row columns={3}>
             <Grid.Column width={5} className="timeInput" id="timeInput" >
@@ -159,7 +159,7 @@ class AvailabilityView extends React.Component {
           </Grid.Row>
         </Grid>
 
-      </Container>
+      </div>
     );
   }
 }

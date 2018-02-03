@@ -18,6 +18,7 @@ class App extends React.Component {
       isSignedIn: false,
       username: '',
       user: {},
+      students: [],
     };
 
     this.handleItemClick = this.handleItemClick.bind(this);
@@ -27,7 +28,7 @@ class App extends React.Component {
   }
 
   componentDidMount() {
-    console.log('The user: ',this.state);
+    console.log('The user: ', this.state);
     this.checkSession();
     AOS.init({
       duration: 1200,
@@ -36,15 +37,15 @@ class App extends React.Component {
 
   checkSession() {
     axios.get('/session')
-    .then((response) => {
+      .then((response) => {
         this.login();
-    })
-    .catch((err) => {
-      this.setState({
-        isSignedIn: false,
-        user: {},
       })
-    });
+      .catch((err) => {
+        this.setState({
+          isSignedIn: false,
+          user: {},
+        });
+      });
   }
 
   handleItemClick(e, { name }) {
@@ -55,31 +56,45 @@ class App extends React.Component {
 
   logout() {
     axios.get('/logout')
-    .then((res) => {
-      this.setState({
-        activeItem: 'home',
-        isSignedIn: res.data,
+      .then((res) => {
+        this.setState({
+          activeItem: 'home',
+          isSignedIn: res.data,
+        });
+        window.location.hash = '#/';
       })
-      window.location.hash = '#/';
-    })
-    .catch((err) => {
+      .catch((err) => {
 
-    })
+      });
   }
 
   login() {
     axios.get('/user')
-    .then((user) => {
-      console.log('current user', user);
-      this.setState({
-        isSignedIn: true,
-        user: user.data,
+      .then((user) => {
+        console.log('current user', user);
+        this.setState({
+          isSignedIn: true,
+          user: user.data,
+        });
+        getStudents();
       })
-    })
-    .catch(() => {
-      console.log('could not sign in');
-    })
+      .catch(() => {
+        console.log('could not sign in');
+      });
 
+  }
+
+  getStudents() {
+    axios.get('/user/' + this.state.username + '/students')
+      .then((res) => {
+        this.setState({
+          students: res.data.students,
+        });
+      })
+      .catch((err) => {
+        console.log(err);
+
+      });
   }
 
   render () {
@@ -89,9 +104,9 @@ class App extends React.Component {
       <div>
         <Menu pointing secondary>
           <Menu.Item name='home' as={Link} to='/' active={activeItem === '/'} onClick={this.handleItemClick} replace />
-            { this.state.isSignedIn &&
-              <Menu.Item name='dashboard' as={Link} to='/dashboard' active={activeItem === '/dashboard' || activeItem.includes('/tutors/')} onClick={this.handleItemClick} replace />
-            }
+          { this.state.isSignedIn &&
+            <Menu.Item name='dashboard' as={Link} to='/dashboard' active={activeItem === '/dashboard' || activeItem.includes('/tutors/')} onClick={this.handleItemClick} replace />
+          }
           <Menu.Item name='tutors' as={Link} to='/tutors' active={activeItem === '/tutors'} onClick={this.handleItemClick} replace />
           <Menu.Menu position='right'>
             {this.state.isSignedIn ?
@@ -103,7 +118,9 @@ class App extends React.Component {
         </Menu>
         <Switch>
           <Route exact path='/' render={() => <HomeView />} />
-          <Route path='/dashboard' render={() => <DashboardView tutor={this.state.user.username} />} />
+          <Route path='/dashboard' render={() => <DashboardView tutor={this.state.user.username} students={this.state.user.students}/>} />
+          <Route path='/dashboard/students' render={() => <StudentsView tutor={this.state.user.username} students={this.state.user.students} />} />
+          <Route path='/dashboard/profile' render={() => <ProfileView tutor={this.state.user.username} />} />
           <Route exact path='/tutors' render={() => <TutorsView />} />
           <Route path='/tutors/:tutor' render={() => <DashboardView tutor={this.state.user.username} />} />
           <Route path='/dashboard/:tutor' render={() => <DashboardView tutor={this.state.user.username} />} />

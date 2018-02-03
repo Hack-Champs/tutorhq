@@ -78,3 +78,7 @@ form {
   background-color: #0fd392 !important;
   font-size: 15px !important;
 }
+
+.dashboardviews {
+  min-height: 500px;
+}
