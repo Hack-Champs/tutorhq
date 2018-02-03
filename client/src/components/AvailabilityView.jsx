@@ -43,11 +43,11 @@ class AvailabilityView extends React.Component {
         console.log(response);
         this.setState({
           bookings: response.data
-        })
+        });
       })
       .catch(error => {
         console.log(`GET request error: ${error}`);
-      })
+      });
   }
 
   getStudents() {
@@ -56,28 +56,28 @@ class AvailabilityView extends React.Component {
         console.log(response);
         this.setState({
           students: response.data
-        })
+        });
       })
       .catch(error => {
         console.log(`GET request error: ${error}`);
-      })
+      });
   }
 
   captureName(e) {
     this.setState({
       name: e.target.value
-    })
+    });
   }
 
   captureTime(value) {
     var selectedTime = value && value.format(this.state.format);
     this.setState({
       time: selectedTime
-    })
+    });
   }
 
   dateClick(day) {
-    this.setState({ date: day })
+    this.setState({ date: day });
   }
 
   addBooking() {
@@ -91,8 +91,8 @@ class AvailabilityView extends React.Component {
         console.log(response);
         this.setState({
           bookings: response.data
-        })
-      })
+        });
+      });
     document.getElementById('nameInput').value = '';
     document.getElementById('timeInput').value = '';
     this.setState({selectedStudent: null});
@@ -103,7 +103,7 @@ class AvailabilityView extends React.Component {
       .then(response => {
         this.setState({
           bookings: response.data.bookings
-        })
+        });
       });
   }
 
