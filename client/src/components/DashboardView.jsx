@@ -3,6 +3,7 @@ import ReactDOM from 'react-dom';
 import { Link, Route, Switch } from 'react-router-dom';
 import { Container, Form, Header, Label, Segment } from 'semantic-ui-react';
 import { Icon, Button, Grid, Search, Rating } from 'semantic-ui-react';
+import { Sidebar, Menu, Image} from 'semantic-ui-react';
 import AvailabilityView from './AvailabilityView.jsx';
 import HomeView from './HomeView.jsx';
 import axios from 'axios';
@@ -42,7 +43,9 @@ class DashboardView extends React.Component {
       results: [],
       newSubject: '',
       rating: 5,
-      editing: false
+      editing: false,
+      visible: false,
+      view: 'dashboard',
     };
     this.resetComponent = this.resetComponent.bind(this);
     this.handleResultSelect = this.handleResultSelect.bind(this);
@@ -54,6 +57,8 @@ class DashboardView extends React.Component {
     this.changeDescription = this.changeDescription.bind(this);
     this.submitDescription = this.submitDescription.bind(this);
     this.getTutorInfo = this.getTutorInfo.bind(this);
+    this.toggleVisibility = this.toggleVisibility.bind(this);
+    this.setView = this.setView.bind(this);
   }
 
   componentDidMount() {
@@ -171,9 +176,19 @@ class DashboardView extends React.Component {
       });
   }
 
+  toggleVisibility () {
+    this.setState({ visible: !this.state.visible });
+  }
+
+  setView(e) {
+    this.setState({view: e});
+    console.log('Current view: ', this.state.view);
+  }
+
   render () {
-    const { isLoading, results, newSubject } = this.state;
+    const { isLoading, results, newSubject, visible, view } = this.state;
     let descriptionSection;
+    let currentView;
 
     if (this.state.editing) {
       descriptionSection = (
@@ -203,46 +218,85 @@ class DashboardView extends React.Component {
       }
     }
 
+    if (this.state.view === 'dashboard') {
+      currentView = (
+        <div className="dashboardviews">
+          <Container >
+            <AvailabilityView
+              tutor={ this.props.tutor }
+            />
+          </Container>
+        </div>
+      );
+    } else if (this.state.view === 'students') {
+      currentView = (
+        <div className="dashboardviews">
+        </div>
+      );
+    } else {
+      currentView = (
+        <div className="dashboardviews">
+          <Container>
+            <Header as='h2' className="profileheader">Tutor Profile</Header>
+            <Rating
+              icon='star'
+              rating={this.state.rating}
+              maxRating={5}
+              onRate={this.onRate}
+              clearable
+            />
+            {descriptionSection}
+          </Container>
+          <Container>
+            <h2>Subjects</h2>
+            <form onSubmit={this.onSubmit}>
+              Add a subject
+              <Search
+                input={{ icon: 'search', iconPosition: 'left' }}
+                loading={isLoading}
+                onResultSelect={this.handleResultSelect}
+                onSearchChange={this.handleSearchChange}
+                results={results}
+                value={newSubject}
+                {...this.props}
+              />
+            </form>
+            <div>
+              {this.state.subjects.map((subject, i) => {
+                return <Label key={i} as='subject' basic>{subject}</Label>;
+              })}
+            </div>
+
+          </Container>
+        </div>
+      );
+    }
+
+    console.log('visible: ', visible);
     return (
       <div>
-        <Button icon='list layout' />
-        <Container>
-          <Header as='h2' className="profileheader">Tutor Profile</Header>
-          <Rating
-            icon='star'
-            rating={this.state.rating}
-            maxRating={5}
-            onRate={this.onRate}
-            clearable
-          />
-          {descriptionSection}
-        </Container>
-        <Container>
-          <h2>Subjects</h2>
-          <form onSubmit={this.onSubmit}>
-            Add a subject
-            <Search
-              input={{ icon: 'search', iconPosition: 'left' }}
-              loading={isLoading}
-              onResultSelect={this.handleResultSelect}
-              onSearchChange={this.handleSearchChange}
-              results={results}
-              value={newSubject}
-              {...this.props}
-            />
-          </form>
-          <div>
-            {this.state.subjects.map((subject, i) => {
-              return <Label key={i} as='subject' basic>{subject}</Label>;
-            })}
-          </div>
+        <Button icon='list layout' onClick={this.toggleVisibility} />
+        <Sidebar.Pushable as={Segment}>
+          <Sidebar as={Menu} animation='overlay' width='thin' visible={visible} icon='labeled' vertical inverted>
+            <Menu.Item name='dashboard' href="/#/dashboard" onClick={this.setView.bind(name, 'dashboard')}>
+              <Icon name='calendar' />
+              Dashboard
+            </Menu.Item>
+            <Menu.Item name='profile' href="/#/dashboard" onClick={this.setView.bind(name, 'profile')}>
+              <Icon name='user circle outline' />
+              Profile
+            </Menu.Item>
+            <Menu.Item name='students' href="/#/dashboard" onClick={this.setView.bind(name, 'students')}>
+              <Icon name='users' />
+              Students
+            </Menu.Item>
+          </Sidebar>
+          <Sidebar.Pusher>
 
-        </Container>
-        <Container>
-          <AvailabilityView
-            tutor={ this.props.tutor }
-          />
-        </Container>
+            {currentView}
+
+          </Sidebar.Pusher>
+        </Sidebar.Pushable>
       </div>
     );
   }
