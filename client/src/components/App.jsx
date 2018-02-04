@@ -118,11 +118,11 @@ class App extends React.Component {
         </Menu>
         <Switch>
           <Route exact path='/' render={() => <HomeView />} />
-          <Route path='/dashboard' render={() => <DashboardView tutor={this.state.user.username} students={this.state.user.students}/>} />
+          <Route path='/dashboard' render={() => <DashboardView tutor={this.state.user.username} students={this.state.user.students} email={this.state.user.email} />} />
           <Route path='/dashboard/students' render={() => <StudentsView tutor={this.state.user.username} students={this.state.user.students} />} />
           <Route path='/dashboard/profile' render={() => <ProfileView tutor={this.state.user.username} />} />
           <Route exact path='/tutors' render={() => <TutorsView />} />
-          <Route path='/tutors/:tutor' render={() => <DashboardView tutor={this.state.user.username} />} />
+          <Route path='/tutors/:tutor' render={() => <DashboardView tutor={this.state.user.username} email={this.state.user.email} />} />
           <Route path='/dashboard/:tutor' render={() => <DashboardView tutor={this.state.user.username} />} />
         </Switch>
       </div>
