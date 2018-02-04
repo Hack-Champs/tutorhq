@@ -5,7 +5,7 @@ import { Container, Form, Header, Label, Segment } from 'semantic-ui-react';
 import { Icon, Button, Grid, Search, Rating } from 'semantic-ui-react';
 import { Sidebar, Menu, Image} from 'semantic-ui-react';
 import AvailabilityView from './AvailabilityView.jsx';
-import HomeView from './HomeView.jsx';
+import ProfileView from './ProfileView.jsx';
 import axios from 'axios';
 import _ from 'lodash';
 
@@ -266,7 +266,7 @@ class DashboardView extends React.Component {
                 return <Label key={i} as='subject' basic>{subject}</Label>;
               })}
             </div>
-
+            <ProfileView />
           </Container>
         </div>
       );
