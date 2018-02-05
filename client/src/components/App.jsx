@@ -25,6 +25,7 @@ class App extends React.Component {
     this.logout = this.logout.bind(this);
     this.checkSession = this.checkSession.bind(this);
     this.login = this.login.bind(this);
+    this.createStudent = this.createStudent.bind(this);
   }
 
   componentDidMount() {
@@ -97,6 +98,22 @@ class App extends React.Component {
       });
   }
 
+  createStudent(username, name, email, notes) {
+    axios.post('/users/' + username + '/students', {
+      name: name,
+      email: email,
+      notes: notes
+    })
+      .then((res) => {
+        this.setState({
+          user: {students: res.data.students}
+        });
+      })
+      .catch((err) => {
+        console.log(err);
+      });
+  }
+
   render () {
     const activeItem = window.location.hash.slice(1);
 
@@ -118,9 +135,8 @@ class App extends React.Component {
         </Menu>
         <Switch>
           <Route exact path='/' render={() => <HomeView />} />
-          <Route path='/dashboard' render={() => <DashboardView tutor={this.state.user.username} students={this.state.user.students} email={this.state.user.email} />} />
-          <Route path='/dashboard/students' render={() => <StudentsView tutor={this.state.user.username} students={this.state.user.students} />} />
-          <Route path='/dashboard/profile' render={() => <ProfileView tutor={this.state.user.username} />} />
+
+          <Route path='/dashboard' render={() => <DashboardView tutor={this.state.user.username} students={this.state.user.students} email={this.state.user.email} createstudent={this.createStudent} />} />
           <Route exact path='/tutors' render={() => <TutorsView />} />
           <Route path='/tutors/:tutor' render={() => <DashboardView tutor={this.state.user.username} email={this.state.user.email} />} />
           <Route path='/dashboard/:tutor' render={() => <DashboardView tutor={this.state.user.username} />} />

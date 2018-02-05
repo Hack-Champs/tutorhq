@@ -182,7 +182,6 @@ class DashboardView extends React.Component {
 
   setView(e) {
     this.setState({view: e});
-    console.log('Current view: ', this.state.view);
   }
 
   render () {
@@ -231,6 +230,12 @@ class DashboardView extends React.Component {
     } else if (this.state.view === 'students') {
       currentView = (
         <div className="dashboardviews">
+          <Container>
+            <StudentsView
+              students= { this.props.students }
+              createstudent={this.props.createstudent}
+            />
+          </Container>
         </div>
       );
     } else {
@@ -273,7 +278,6 @@ class DashboardView extends React.Component {
       );
     }
 
-    console.log('visible: ', visible);
     return (
       <div>
         <Button icon='list layout' onClick={this.toggleVisibility} />
