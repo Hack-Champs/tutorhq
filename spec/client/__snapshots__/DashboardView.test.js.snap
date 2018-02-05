@@ -1,0 +1,68 @@
+// Jest Snapshot v1, https://goo.gl/fbAQLP
+
+exports[`DashboardView should render correctly 1`] = `
+<div>
+  <Button
+    as="button"
+    icon="list layout"
+    onClick={[Function]}
+  />
+  <SidebarPushable
+    as={[Function]}
+  >
+    <Sidebar
+      animation="overlay"
+      as={[Function]}
+      direction="left"
+      icon="labeled"
+      inverted={true}
+      vertical={true}
+      visible={false}
+      width="thin"
+    >
+      <MenuItem
+        href="/#/dashboard"
+        name="dashboard"
+        onClick={[Function]}
+      >
+        <Icon
+          as="i"
+          name="calendar"
+        />
+        Dashboard
+      </MenuItem>
+      <MenuItem
+        href="/#/dashboard"
+        name="profile"
+        onClick={[Function]}
+      >
+        <Icon
+          as="i"
+          name="user circle outline"
+        />
+        Profile
+      </MenuItem>
+      <MenuItem
+        href="/#/dashboard"
+        name="students"
+        onClick={[Function]}
+      >
+        <Icon
+          as="i"
+          name="users"
+        />
+        Students
+      </MenuItem>
+    </Sidebar>
+    <SidebarPusher>
+      <div
+        className="dashboardviews"
+      >
+        <Container>
+          <AvailabilityView />
+        </Container>
+      </div>
+    </SidebarPusher>
+  </SidebarPushable>
+</div>
+`;
