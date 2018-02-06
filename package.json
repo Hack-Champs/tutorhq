@@ -11,7 +11,7 @@
     "test:coverage": "jest --coverage",
     "react": "webpack -d --watch",
     "server": "nodemon server/index.js",
-    "build:production": "NODE_ENV=production webpack --config webpack.config.js",
+    "build": "NODE_ENV=production webpack --config webpack.config.js",
     "start": "node server/index.js",
     "postinstall": "npm run build"
   },
