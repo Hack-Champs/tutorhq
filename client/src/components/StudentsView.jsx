@@ -5,13 +5,9 @@ import CreateStudentView from './CreateStudentView.jsx';
 import { List, Container, Grid, Table, Button } from 'semantic-ui-react';
 
 class StudentsView extends React.Component {
-
   constructor(props) {
     super(props);
-
   }
-
-
   render () {
 
     return (
@@ -22,13 +18,11 @@ class StudentsView extends React.Component {
             <StudentsViewEntry key={ i } student = { student } />
           )}
         </List>
+
       </div>
     );
   }
-
-
 }
-
 
 export default StudentsView;
 

@@ -1,9 +1,9 @@
 import React from 'react';
 import ReactDOM from 'react-dom';
 import DayPicker from 'react-day-picker';
-import BookingView from './BookingView.jsx'
+import BookingView from './BookingView.jsx';
 import axios from 'axios';
-import { Grid, Button, Container, Input } from 'semantic-ui-react';
+import { Dropdown, Grid, Button, Container, Input } from 'semantic-ui-react';
 import moment from 'moment';
 import TimePicker from 'rc-time-picker';
 
@@ -26,7 +26,7 @@ class AvailabilityView extends React.Component {
       format: 'h:mm a',
       bookings: [],
       students: [],
-      selectedStudent: null
+      selectedStudent: null,
     };
   }
 
@@ -64,9 +64,15 @@ class AvailabilityView extends React.Component {
   }
 
   captureName(e) {
-    this.setState({
-      name: e.target.value
+    console.log('The e', e);
+    var selected = this.state.students.find((student) => {
+      return student.name === e.currentTarget.textContent;
     });
+
+    this.setState({
+      selectedStudent: selected
+    });
+    console.log('Current student: ', this.state.selectedStudent);
   }
 
   captureTime(value) {
@@ -86,12 +92,16 @@ class AvailabilityView extends React.Component {
       date: this.state.date.toLocaleDateString(),
       time: this.state.time
     };
+    console.log('New Session: ', newSession);
     axios.post(`/users/${this.props.tutor}/booking`, newSession)
       .then((response) => {
         console.log(response);
         this.setState({
           bookings: response.data
         });
+      })
+      .catch(err => {
+        console.log(err);
       });
     document.getElementById('nameInput').value = '';
     document.getElementById('timeInput').value = '';
@@ -104,6 +114,9 @@ class AvailabilityView extends React.Component {
         this.setState({
           bookings: response.data
         });
+      })
+      .catch(err => {
+        console.log(err);
       });
   }
 
@@ -119,14 +132,23 @@ class AvailabilityView extends React.Component {
   }
 
   render () {
+    const options = [];
+    var students = this.state.students;
+    students.forEach((student) => {
+      options.push({text: student.name, value: student.name});
+    });
+
+    console.log('List of the students ', options);
+
     return (
       <div>
         <Grid stackable>
           <Grid.Row columns={3}>
             <Grid.Column width={5} className="timeInput" id="timeInput" >
               <div>
+
                 <p>Name</p>
-                <Input id="nameInput" placeholder="Student name" onChange={ this.captureName }></Input>
+                <Dropdown placeholder='Student' search selection options={options} onChange={ this.captureName.bind(options.value) }/>
                 <p className="formEntryTitle">Time</p>
                 <TimePicker
                   showSecond={ false }
