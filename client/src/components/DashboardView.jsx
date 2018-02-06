@@ -6,6 +6,8 @@ import { Icon, Button, Grid, Search, Rating } from 'semantic-ui-react';
 import { Sidebar, Menu, Image} from 'semantic-ui-react';
 import AvailabilityView from './AvailabilityView.jsx';
 import ProfileView from './ProfileView.jsx';
+import StudentsView from './StudentsView.jsx';
+import HomeView from './HomeView.jsx';
 import axios from 'axios';
 import _ from 'lodash';
 
