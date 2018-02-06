@@ -26,7 +26,7 @@ class AvailabilityView extends React.Component {
       format: 'h:mm a',
       bookings: [],
       students: [],
-      selectedStudent: ''
+      selectedStudent: null,
     };
   }
 
@@ -64,8 +64,13 @@ class AvailabilityView extends React.Component {
   }
 
   captureName(e) {
+    console.log('The e', e);
+    var selected = this.state.students.find((student) => {
+      return student.name === e.currentTarget.textContent;
+    });
+
     this.setState({
-      selectedStudent: e.currentTarget.textContent
+      selectedStudent: selected
     });
     console.log('Current student: ', this.state.selectedStudent);
   }
@@ -100,7 +105,7 @@ class AvailabilityView extends React.Component {
       });
     document.getElementById('nameInput').value = '';
     document.getElementById('timeInput').value = '';
-    this.setState({selectedStudent: ''});
+    this.setState({selectedStudent: null});
   }
 
   deleteBooking(bookingID) {
