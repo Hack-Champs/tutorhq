@@ -6,6 +6,7 @@ import ScreenToggle from './ScreenToggle.jsx';
 import Video from './Video.jsx';
 import axios from 'axios';
 import io from 'socket.io-client';
+import qs from 'qs';
 
 class Workspace extends Component {
   constructor(props) {
@@ -19,16 +20,23 @@ class Workspace extends Component {
       bookingId: '',
       userId: '',
       name: '',
+      isTutor: false,
       messages: [],
       togglableComponent: 'chat'
     };
   }
 
   componentDidMount() {
-    if (!this.state.name.length) {
-      this.getName();
-    }
     const channelId = this.props.match.params.id;
+    const query = qs.parse(this.props.location.search, { ignoreQueryPrefix: true });
+    const tutorName = query.tutor;
+    if (tutorName) {
+      this.setState({name: tutorName, isTutor: true});
+    } else {
+      if (!this.state.name.length) {
+        this.getName();
+      }
+    }
     var context = this;
     this.socket.on('connect', () => {
       console.log('Socket io connected');
@@ -116,6 +124,7 @@ class Workspace extends Component {
             <ScreenToggle
               handleClick={this.handleClick}
               handleEndSession={this.handleEndSession}
+              isTutor={this.state.isTutor}
             />
             {togglableComponent}
           </div>
