@@ -12,8 +12,12 @@ class Workspace extends Component {
     super(props);
     this.socket = io.connect(`http://localhost:8000`);
     this.handleClick = this.handleClick.bind(this);
+    this.handleEndSession = this.handleEndSession.bind(this);
     this.state = {
       channelId: '',
+      billingId: '',
+      bookingId: '',
+      userId: '',
       name: '',
       messages: [],
       togglableComponent: 'chat'
@@ -25,7 +29,6 @@ class Workspace extends Component {
       this.getName();
     }
     const channelId = this.props.match.params.id;
-    console.log(channelId);
     var context = this;
     this.socket.on('connect', () => {
       console.log('Socket io connected');
@@ -47,9 +50,9 @@ class Workspace extends Component {
   joinChannel(channelId) {
     var context = this;
     if (channelId) {
-      this.socket.emit('client:joinChannel', channelId, (err, messages)=>{
+      this.socket.emit('client:joinChannel', channelId, (err, messages, bookingId, userId)=>{
         if (!err) {
-          context.setState({channelId: channelId, messages: messages});
+          context.setState({userId: userId, channelId: channelId, bookingId: bookingId, messages: messages});
         } else {
           alert('Unknown channel id. Please check that you have the correct url');
           this.socket.disconnect();
@@ -69,6 +72,15 @@ class Workspace extends Component {
 
   handleClick(screen) {
     this.setState({togglableComponent: screen});
+  }
+
+  handleEndSession(totalSeconds) {
+    this.socket.emit('client:endSession', this.state.bookingId, totalSeconds, (err) => {
+      if (err) {
+        console.log('Error when ending session');
+      }
+    });
+    close();
   }
 
   render() {
@@ -103,6 +115,7 @@ class Workspace extends Component {
           <div className="column">
             <ScreenToggle
               handleClick={this.handleClick}
+              handleEndSession={this.handleEndSession}
             />
             {togglableComponent}
           </div>

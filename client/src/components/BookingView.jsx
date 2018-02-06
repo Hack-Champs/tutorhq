@@ -24,6 +24,6 @@ const BookingView = ({ bookings, deleteBooking }) => (
       ) }
     </Table.Body>
   </Table>
-)
+);
 
 export default BookingView;

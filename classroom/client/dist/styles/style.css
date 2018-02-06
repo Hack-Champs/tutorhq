@@ -154,3 +154,6 @@ textarea::-webkit-scrollbar {
 #timer {
   margin-left: 5px;
 }
+#timeString {
+  color: #21BA45;
+}

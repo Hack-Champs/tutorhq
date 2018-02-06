@@ -1,51 +1,98 @@
 const db = require('../models/index.js');
+const Message = require('../../database/controllers/messageController');
+
+const getBookingsForUser = (username, cb) => {
+  db.User.findOne({username: username}, (err, user) => {
+    if (err) {
+      return cb(err);
+    } else {
+      db.Booking.find({'userId': user.id}, (err, bookings) => {
+        cb(null, bookings);
+      });
+    }
+  });
+};
 
 const createBooking = (username, bookingInfo, callback) => {
-  var channel = new db.Channel({});
-  channel.save((err, channel) => {
+  db.User.findOne({ username: username }, (err, user) => {
     if (err) {
       return callback(err);
     }
-    var booking = new db.Booking({
-      student: bookingInfo.student,
-      studentName: bookingInfo.student.name,
-      date: bookingInfo.date,
-      time: bookingInfo.time,
-      channel: channel
-    });
-    booking.save((err, booking) => {
+    var channel = new db.Channel({});
+    channel.save((err, channel) => {
       if (err) {
         return callback(err);
       }
-      db.User.findOneAndUpdate({ username: username }, { $push: { bookings: booking } }, { new: true }, (err, data) => {
-        callback(err, data);
+      var booking = new db.Booking({
+        channelId: channel.id,
+        userId: user.id,
+        studentId: bookingInfo.student.id,
+        studentName: bookingInfo.student.name,
+        date: bookingInfo.date,
+        time: bookingInfo.time,
+      });
+      booking.save((err, booking) => {
+        if (err) {
+          return callback(err);
+        }
+        getBookingsForUser(username, callback);
       });
     });
   });
 };
 
-const getBookingFromChannelId = (channelId, cb) => {
-  db.Booking.findOne({ channel: channelId }, function (err, booking) {
+const updateWithBillableTime = (bookingId, billableTime, cb) => {
+  db.Booking.findById(bookingId, function(err, booking) {
     if (err) {
-      console.error(err);
+      return cb(error);
     }
-    cb(err, booking);
+    booking.billableTime = billableTime;
+    booking.save(err => {
+      cb(err);
+    });
   });
 };
 
 const deleteBooking = (username, bookingID, callback) => {
-  var newBookings;
-  db.User.findOne({ username: username }, (err, user) => {
-    // TODO: Delete channel
-    newBookings = user.bookings.filter(booking => booking._id.toString() !== bookingID);
-  }).then(() => {
-    db.User.findOneAndUpdate({ username: username }, { bookings: newBookings }, { new: true }, (err, user) => {
-      console.log(user);
-      callback(err, user);
+  db.Booking.remove({ _id: bookingID }, function (err) {
+    if (err) {
+      return callback(err);
+    } else {
+      db.User.findOne({username: username}, (err, user) => {
+        if (err) {
+          return callback(err);
+        } else {
+          db.Booking.find({userId: user.id}, (err, bookings) => {
+            if (err) {
+              return callback(err);
+            } else {
+              callback(null, bookings);
+            }
+          });
+        }
+      });
+    }
+  });
+};
+
+const getChannelDetails = (channelId, cb) => {
+  db.Booking.findOne({ channelId: channelId }, function (err, booking) {
+    if (err) {
+      return cb(err);
+    }
+    db.User.findById(booking.userId, (err, user) => {
+      if (err) {
+        return cb(err);
+      }
+      Message.getMessages(channelId, (err, messages) => {
+        cb(null, messages, booking.id, user.id);
+      });
     });
   });
 };
 
 module.exports.createBooking = createBooking;
+module.exports.getBookingsForUser = getBookingsForUser;
 module.exports.deleteBooking = deleteBooking;
-module.exports.getBookingFromChannelId = getBookingFromChannelId;
+module.exports.updateWithBillableTime = updateWithBillableTime;
+module.exports.getChannelDetails = getChannelDetails;
