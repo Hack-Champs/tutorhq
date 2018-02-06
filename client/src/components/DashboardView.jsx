@@ -225,6 +225,7 @@ class DashboardView extends React.Component {
           <Container >
             <AvailabilityView
               tutor={ this.props.tutor }
+              students={ this.props.students }
             />
           </Container>
         </div>
