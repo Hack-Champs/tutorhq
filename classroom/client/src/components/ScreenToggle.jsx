@@ -85,6 +85,15 @@ class ScreenToggle extends Component {
   }
 
   render() {
+    var controls = '';
+    if (this.props.isTutor) {
+      controls = (
+        <span>
+          <button id ="timer" className="ui button basic positive" name="timer" onClick={this.handleTimerClick.bind(this)}>{ this.state.timerRunning ? 'Stop' : 'Start' } Timer <span id="timeString">{ `${this.state.timeString}` }</span></button>
+          <button id ="end" className="ui button basic positive negative" name="end" onClick={this.handleEndSessionClick.bind(this)}>End Session</button>
+          </span>
+      );
+    }
     return (
       <div className="screenToggle">
         <div className="ui buttons">
@@ -95,8 +104,7 @@ class ScreenToggle extends Component {
           <button id ="editor" className="ui button" name="editor" onClick={this.handleClick.bind(this, 'editor')}>Editor</button>
 
         </div>
-        <button id ="timer" className="ui button basic positive" name="timer" onClick={this.handleTimerClick.bind(this)}>{ this.state.timerRunning ? 'Stop' : 'Start' } Timer <span id="timeString">{ `${this.state.timeString}` }</span></button>
-        <button id ="end" className="ui button basic positive negative" name="end" onClick={this.handleEndSessionClick.bind(this)}>End Session</button>
+        {controls}
       </div>
     );
   }

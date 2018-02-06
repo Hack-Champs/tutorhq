@@ -29,7 +29,6 @@ class App extends React.Component {
   }
 
   componentDidMount() {
-    console.log('The user: ', this.state);
     this.checkSession();
     AOS.init({
       duration: 1200,
@@ -76,6 +75,8 @@ class App extends React.Component {
         this.setState({
           isSignedIn: true,
           user: user.data,
+        }, () => {
+          console.log('User', this.state);
         });
         getStudents();
       })
@@ -134,7 +135,7 @@ class App extends React.Component {
         </Menu>
         <Switch>
           <Route exact path='/' render={() => <HomeView />} />
-          <Route path='/dashboard' render={() => <DashboardView tutor={this.state.user.username} students={this.state.user.students} email={this.state.user.email} createstudent={this.createStudent} />} />
+          <Route path='/dashboard' render={() => <DashboardView displayName={this.state.user.name} tutor={this.state.user.username} students={this.state.user.students} email={this.state.user.email} createstudent={this.createStudent} />} />
           <Route exact path='/tutors' render={() => <TutorsView />} />
           <Route path='/tutors/:tutor' render={() => <DashboardView tutor={this.state.user.username} email={this.state.user.email} />} />
           <Route path='/dashboard/:tutor' render={() => <DashboardView tutor={this.state.user.username} />} />

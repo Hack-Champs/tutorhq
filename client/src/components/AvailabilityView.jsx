@@ -176,6 +176,7 @@ class AvailabilityView extends React.Component {
               <BookingView
                 bookings={ this.state.bookings }
                 deleteBooking={ this.deleteBooking }
+                displayName={ this.props.displayName }
               />
             </Grid.Column>
           </Grid.Row>

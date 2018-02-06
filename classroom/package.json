@@ -5,7 +5,7 @@
   "main": "webpack.config.js",
   "scripts": {
     "start": "node server/index.js",
-    "client": "webpack -d --watch",
+    "react": "webpack -d --watch",
     "server": "nodemon server/index.js"
   },
   "repository": {
@@ -33,6 +33,7 @@
     "cors": "^2.8.4",
     "express": "^4.16.2",
     "mongoose": "^5.0.1",
+    "qs": "^6.5.1",
     "react": "^16.2.0",
     "react-ace": "^5.9.0",
     "react-dom": "^16.2.0",
