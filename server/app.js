@@ -20,11 +20,12 @@ app.get('/test', function(req, res) {
   res.end();
 });
 
+let url = process.env.MONGODB_URI || 'mongodb://localhost/tutorhq';
 app.use(session({
   secret: 'keyboard cat',
   resave: false,
   saveUninitialized: true,
-  store: new MongoStore({ url: `mongodb://localhost/tutorhq`})
+  store: new MongoStore({ url: url})
 }));
 
 app.use(passport.initialize());

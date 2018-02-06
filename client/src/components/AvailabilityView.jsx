@@ -102,7 +102,7 @@ class AvailabilityView extends React.Component {
     axios.delete(`/users/${this.props.tutor}/booking/${bookingID}`)
       .then(response => {
         this.setState({
-          bookings: response.data.bookings
+          bookings: response.data
         });
       });
   }
