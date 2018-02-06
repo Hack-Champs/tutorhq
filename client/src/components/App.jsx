@@ -130,12 +130,10 @@ class App extends React.Component {
               <Menu.Item name='logout' active={activeItem === '/logout'} onClick={this.logout} replace /> :
               <a href='/auth/google'><Menu.Item name='login' active={activeItem === '/login'} onClick={this.login} replace /></a>
             }
-
           </Menu.Menu>
         </Menu>
         <Switch>
           <Route exact path='/' render={() => <HomeView />} />
-
           <Route path='/dashboard' render={() => <DashboardView tutor={this.state.user.username} students={this.state.user.students} email={this.state.user.email} createstudent={this.createStudent} />} />
           <Route exact path='/tutors' render={() => <TutorsView />} />
           <Route path='/tutors/:tutor' render={() => <DashboardView tutor={this.state.user.username} email={this.state.user.email} />} />
