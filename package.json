@@ -13,7 +13,7 @@
     "server": "nodemon server/index.js",
     "start": "node server/index.js",
     "build": "webpack --config webpack.config.js --progress --colors",
-    "postinstall": "npm run build",
+    "postinstall": "npm run build"
   },
   "repository": {
     "type": "git",
