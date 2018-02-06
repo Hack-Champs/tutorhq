@@ -6,6 +6,7 @@ class ScreenToggle extends Component {
     super(props);
     this.handleClick = this.handleClick.bind(this);
     this.handleTimerClick = this.handleTimerClick.bind(this);
+    this.handleEndSessionClick = this.handleEndSessionClick.bind(this);
     this.setTime = this.setTime.bind(this);
     this.timer = null;
     this.state = {
@@ -42,11 +43,21 @@ class ScreenToggle extends Component {
 
   getTimeString() {
     var timeString = '';
-    if (this.state.totalSeconds > 0) {
-      var seconds = this.pad(this.state.totalSeconds % 60);
-      var minutes = this.pad(parseInt(this.state.totalSeconds / 60));
-      var hours = this.pad(parseInt(this.state.totalSeconds / 3600));
-      timeString = `${hours}:${minutes}:${seconds}`;
+    var seconds = '';
+    var minutes = '';
+    var hours = '';
+    if (this.state.totalSeconds >= 3600) {
+      seconds = this.pad(this.state.totalSeconds % 60);
+      minutes = this.pad(parseInt(this.state.totalSeconds / 60));
+      hours = this.pad(parseInt(this.state.totalSeconds / 3600));
+      timeString = `${hours}.${minutes}.${seconds}`;
+    } else if (this.state.totalSeconds >= 60) {
+      seconds = this.pad(this.state.totalSeconds % 60);
+      minutes = this.pad(parseInt(this.state.totalSeconds / 60));
+      timeString = `${minutes}.${seconds}`;
+    } else if (this.state.totalSeconds > 0) {
+      seconds = this.pad(this.state.totalSeconds % 60);
+      timeString = `0.${seconds}`;
     }
     return timeString;
   }
@@ -68,6 +79,11 @@ class ScreenToggle extends Component {
     toggleButton.addClass('primary');
   }
 
+  handleEndSessionClick() {
+    this.handleTimerClick();
+    this.props.handleEndSession(this.state.totalSeconds);
+  }
+
   render() {
     return (
       <div className="screenToggle">
@@ -79,7 +95,8 @@ class ScreenToggle extends Component {
           <button id ="editor" className="ui button" name="editor" onClick={this.handleClick.bind(this, 'editor')}>Editor</button>
 
         </div>
-        <button id ="timer" className="ui button basic mini positive" name="timer" onClick={this.handleTimerClick.bind(this)}>{ this.state.timerRunning ? 'Stop' : 'Start' } Timer</button><span>{ `${this.state.timeString}` }</span>
+        <button id ="timer" className="ui button basic positive" name="timer" onClick={this.handleTimerClick.bind(this)}>{ this.state.timerRunning ? 'Stop' : 'Start' } Timer <span id="timeString">{ `${this.state.timeString}` }</span></button>
+        <button id ="end" className="ui button basic positive negative" name="end" onClick={this.handleEndSessionClick.bind(this)}>End Session</button>
       </div>
     );
   }

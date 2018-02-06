@@ -5,34 +5,6 @@ mongoose.connect(url, { useMongoClient: true });
 
 const db = mongoose.connection;
 db.on('error', console.error.bind(console, 'connection error:'));
-db.once('open', function() {
-  console.log('Connected to mongo');
-  // For initial test setup: Add single student to tutor if there aren't any.
-  // Student.findOne({}, (err, student) => {
-  //   if (!student) {
-  //     Student.create({
-  //       name: 'John',
-  //       email: 'John@gmail.com',
-  //       notes: ''
-  //     });
-  //   } else {
-  //     User.findOne({}, (err, user) => {
-  //       if (user && !user.students.length) {
-  //         user.students.push(student);
-  //         user.save();
-  //       }
-  //     });
-  //   }
-  // });
-});
-
-const bookingSchema = mongoose.Schema({
-  student: { type: mongoose.Schema.Types.ObjectId, ref: 'Student' },
-  studentName: String,
-  date: String,
-  time: String,
-  channel: { type: mongoose.Schema.Types.ObjectId, ref: 'Channel' },
-});
 
 const channelSchema = mongoose.Schema({
 });
@@ -62,6 +34,16 @@ const studentSchema = mongoose.Schema({
   notes: String
 });
 
+const bookingSchema = mongoose.Schema({
+  channelId: String,
+  userId: String,
+  studentId: String,
+  studentName: String,
+  date: String,
+  time: String,
+  billableTime: String
+});
+
 const userSchema = mongoose.Schema({
   googleId: String,
   sessionID: String,
@@ -69,9 +51,7 @@ const userSchema = mongoose.Schema({
   username: String,
   description: String,
   subjects: [String],
-  tutor: String,
   email: String,
-  bookings: [bookingSchema],
   students: [studentSchema]
 });
 
@@ -91,6 +71,28 @@ const Rating = mongoose.model('Rating', ratingSchema);
 const Subject = mongoose.model('Subject', subjectSchema);
 const Student = mongoose.model('Student', studentSchema);
 const Channel = mongoose.model('Channel', channelSchema);
+
+db.once('open', function() {
+  console.log('Connected to mongo');
+  // For initial test setup: Add single student to tutor if there aren't any.
+  User.findOne({}, (err, user) => {
+    if (user) {
+      Student.findOne({}, (err, student) => {
+        if (!student) {
+          student = new Student({
+            name: 'John',
+            email: 'John@gmail.com',
+            notes: ''
+          });
+          student.save((err, student) => {
+            user.students.push(student);
+            user.save();
+          });
+        }
+      });
+    }
+  });
+});
 
 module.exports.Subject = Subject;
 module.exports.Rating = Rating;

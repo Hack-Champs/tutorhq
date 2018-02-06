@@ -48,7 +48,7 @@ app.get('/user', (req, res) => {
 app.get('/session', (req, res) => {
   db.User.findOne({ sessionID: req.sessionID}, (err, user) => {
     if (user) {
-      res.send({isSignedin: true, sessionID: req.sessionID})
+      res.send({isSignedin: true, sessionID: req.sessionID});
     } else {
       res.status(404).send(err);
     }
@@ -70,28 +70,24 @@ app.get('/users/:username/bookings', (req, res) => {
   console.log('get all bookings endpoint');
   // var username = req.params.username;
   var username = req.user.username;
-  console.log(username);
-  db.User.findOne({username: username}, (err, user) => {
+  bookingCtrl.getBookingsForUser(username, (err, bookings) => {
     if (err) {
-      res.status(501).send('Could not retrieve bookings');
+      res.status(501).send('Could not get bookings');
     } else {
-      console.log(user);
-      res.send(user.bookings);
+      res.send(bookings);
     }
   });
 });
 
 // Add new booking to tutor's profile
 app.post('/users/:username/booking', (req, res) => {
-  // var username = req.params.username;
   var username = req.user.username;
   var bookingInfo = req.body;
-  bookingCtrl.createBooking(username, bookingInfo, (err, user) => {
+  bookingCtrl.createBooking(username, bookingInfo, (err, bookings) => {
     if (err) {
       res.status(501).send('Could not create a booking');
     } else {
-      console.log(user.bookings);
-      res.send(user.bookings);
+      res.send(bookings);
     }
   });
 });
@@ -110,9 +106,7 @@ app.delete('/users/:username/booking/:bookingID', (req, res) => {
 });
 
 app.get('/users/:username/students', (req, res) => {
-  console.log('get tutor students endpoint');
   var username = req.user.username;
-  console.log(username);
   db.User.findOne({username: username}, (err, user) => {
     if (err) {
       res.status(501).send('Could not retrieve students');

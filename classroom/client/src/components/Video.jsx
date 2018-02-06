@@ -4,22 +4,22 @@ class Video extends Component {
   constructor(props) {
     super(props);
     this.webrtc = new SimpleWebRTC({
-        localVideoEl: 'localVideo',
-        remoteVideosEl: 'remoteVideos',
-        autoRequestMedia: true
-      });
+      localVideoEl: 'localVideo',
+      remoteVideosEl: 'remoteVideos',
+      autoRequestMedia: true
+    });
     this.startVideo = this.startVideo.bind(this);
     this.toggleVideo = this.toggleVideo.bind(this);
     this.state = {
       videoPaused: false,
       muted: false,
       isPlaying: false
-    }
+    };
   }
 
   startVideo() {
     var context = this;
-    if (this.props.channelId !== "" && !this.state.isPlaying) {
+    if (this.props.channelId !== '' && !this.state.isPlaying) {
       this.webrtc.on('readyToCall', function () {
         context.webrtc.joinRoom(context.props.channelId);
         context.setState({isPlaying: true});
@@ -33,7 +33,7 @@ class Video extends Component {
     } else {
       this.webrtc.pause();
     }
-    this.setState({videoPaused: !this.state.videoPaused})
+    this.setState({videoPaused: !this.state.videoPaused});
   }
 
   toggleAudio() {
@@ -42,7 +42,7 @@ class Video extends Component {
     } else {
       this.webrtc.mute();
     }
-    this.setState({muted: !this.state.muted})
+    this.setState({muted: !this.state.muted});
   }
 
   render() {

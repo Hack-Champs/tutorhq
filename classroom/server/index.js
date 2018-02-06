@@ -4,8 +4,8 @@ const mongoose = require('mongoose');
 const express = require('express');
 const socketIO = require('socket.io');
 const bodyParser = require('body-parser');
+const Booking = require('../../database/controllers/bookingController');
 const Message = require('../../database/controllers/messageController');
-const BookingController = require('../../database/controllers/bookingController');
 const mailer = require('../../mailServer/mailer');
 const cors = require('cors');
 
@@ -38,15 +38,12 @@ app.get('*', function (req, res) {
 io.on('connection', (socket) => {
   console.log('New user connected');
   socket.on('client:joinChannel', (channelId, callback) => {
-    BookingController.getBookingFromChannelId(channelId, (err, booking) => {
+    Booking.getChannelDetails(channelId, (err, messages, bookingId, userId) => {
       if (err) {
-        callback(err);
-      }
-      if (booking) {
+        return callback(err);
+      } else {
         socket.join(channelId);
-        Message.getMessages(channelId, (err, messages)=>{
-          callback(err, messages);
-        });
+        callback(err, messages, bookingId, userId);
       }
     });
   });
@@ -62,6 +59,14 @@ io.on('connection', (socket) => {
         console.error('Error saving message', err);
       } else {
         io.to(message.channelId).emit('server:newMessage', savedMessage);
+      }
+    });
+  });
+
+  socket.on('client:endSession', (bookingId, billableTime, callback) => {
+    Booking.updateWithBillableTime(bookingId, billableTime, (err) => {
+      if (err) {
+        console.error('Error updating booking', err);
       }
     });
   });
