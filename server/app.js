@@ -1,9 +1,10 @@
 var express = require('express');
 var bodyParser = require('body-parser');
 var passport = require('passport');
-var passportConfig = require('./config/passport-config')
+var passportConfig = require('./config/passport-config');
 var db = require('../database/models/index.js');
 var authCtrl = require('../database/controllers/authController.js');
+var studentCtrl = require('../database/controllers/studentController.js');
 var bookingCtrl = require('../database/controllers/bookingController.js');
 var session = require('express-session');
 var MongoStore = require('connect-mongo')(session);
@@ -117,6 +118,19 @@ app.get('/users/:username/students', (req, res) => {
       res.status(501).send('Could not retrieve students');
     } else {
       res.send(user.students);
+    }
+  });
+});
+
+app.post('/users/:username/students', (req, res) => {
+  console.log('create a new student endpoint');
+  var username = req.user.username;
+  var student = req.body;
+  studentCtrl.createNewStudent(username, student, (err, user) => {
+    if (err) {
+      res.status(501).send('Could not create the student');
+    } else {
+      res.send(user);
     }
   });
 });
