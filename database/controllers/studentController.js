@@ -1,6 +1,6 @@
 const db = require('../models/index.js');
 
-createNewStudent = (username, studentInfo, callback) => {
+var createNewStudent = (username, studentInfo, callback) => {
   db.User.findOne({username: username}, (err, user) => {
     if (err) {
       callback(err);
