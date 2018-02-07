@@ -7,6 +7,7 @@ import { Sidebar, Menu, Image} from 'semantic-ui-react';
 import AvailabilityView from './AvailabilityView.jsx';
 import ProfileView from './ProfileView.jsx';
 import StudentsView from './StudentsView.jsx';
+import InvoiceListView from './InvoiceListView.jsx';
 import InvoiceCreateView from './InvoiceCreateView.jsx'
 import HomeView from './HomeView.jsx';
 import axios from 'axios';
@@ -249,6 +250,12 @@ class DashboardView extends React.Component {
           <InvoiceCreateView />
         </div>
       )
+    } else if (this.state.view === 'invoices') {
+      currentView = (
+        <div className="dashboardviews">
+          <InvoiceListView />
+        </div>
+      )
     } else {
       currentView = (
         <div className="dashboardviews">
@@ -306,9 +313,9 @@ class DashboardView extends React.Component {
               <Icon name='users' />
               Students
             </Menu.Item>
-            <Menu.Item name='createInvoice' href="/#/dashboard" onClick={this.setView.bind(name, 'createInvoice')}>
-              <Icon name='users' />
-              Create Invoice
+            <Menu.Item name='invoices' href="/#/dashboard" onClick={this.setView.bind(name, 'invoices')}>
+              <Icon name='money' />
+              My Invoices
             </Menu.Item>
           </Sidebar>
           <Sidebar.Pusher>

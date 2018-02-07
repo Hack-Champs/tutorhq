@@ -1,43 +1,90 @@
 import React from 'react';
 import ReactDOM from 'react-dom';
+import { Link } from 'react-router-dom';
 import { Button, Container, Form, Icon, Input, Table, TextArea } from 'semantic-ui-react';
+import DayPickerInput from 'react-day-picker/DayPickerInput';
 import numeral from 'numeral';
+import axios from 'axios';
 
 class InvoiceCreateView extends React.Component {
   constructor(props) {
     super(props);
     this.state = {
+      name: '',
+      email: '',
+      address: '',
+      city: '',
+      state: '',
+      zip: '',
+      dueDate: '',
       description: '',
       rate: '',
       hours: '',
       amount: '',
       total: 0,
       lineItems: [],
-      lineItemCount: 0
+      lineItemCount: 0,
+      notes: ''
     };
+    this.captureName = this.captureName.bind(this);
+    this.captureEmail = this.captureEmail.bind(this);
+    this.captureAddress = this.captureAddress.bind(this);
+    this.captureCity = this.captureCity.bind(this);
+    this.captureState = this.captureState.bind(this);
+    this.captureZip = this.captureZip.bind(this);
     this.captureDescription = this.captureDescription.bind(this);
     this.captureRate = this.captureRate.bind(this);
     this.captureHours = this.captureHours.bind(this);
+    this.captureNotes = this.captureNotes.bind(this);
+    this.handleDayChange = this.handleDayChange.bind(this);
     this.addLineItem = this.addLineItem.bind(this);
     this.removeLineItem = this.removeLineItem.bind(this);
+    this.saveInvoice = this.saveInvoice.bind(this);
+    this.cancelInvoice = this.cancelInvoice.bind(this);
+  }
+
+  captureName(e) {
+    this.setState({ name: e.target.value })
+  }
+
+  captureEmail(e) {
+    this.setState({ email: e.target.value })
+  }
+
+  captureAddress(e) {
+    this.setState({ address: e.target.value })
+  }
+
+  captureCity(e) {
+    this.setState({ city: e.target.value })
+  }
+
+  captureState(e) {
+    this.setState({ state: e.target.value })
+  }
+
+  captureZip(e) {
+    this.setState({ zip: e.target.value })
   }
 
   captureDescription(e) {
-    this.setState({
-      description: e.target.value
-    })
+    this.setState({ description: e.target.value })
   }
 
   captureRate(e) {
-    this.setState({
-      rate: e.target.value
-    })
+    this.setState({ rate: e.target.value })
   }
 
   captureHours(e) {
-    this.setState({
-      hours: e.target.value
-    })
+    this.setState({ hours: e.target.value })
+  }
+
+  captureNotes(e) {
+    this.setState({ notes: e.target.value })
+  }
+
+  handleDayChange(day) {
+    this.setState({ dueDate: day });
   }
 
   addLineItem() {
@@ -67,6 +114,26 @@ class InvoiceCreateView extends React.Component {
     })
   }
 
+  saveInvoice() {
+    var newInvoice = {
+      name: this.state.name,
+      email: this.state.email,
+      address: this.state.address,
+      city: this.state.city,
+      state: this.state.state,
+      zip: this.state.zip,
+      dueDate: this.state.dueDate.toLocaleDateString(),
+      notes: this.state.notes,
+      lineItems: this.state.lineItems,
+      total: this.state.total
+    }
+    axios.post('/users/:username/invoices', newInvoice);
+  }
+
+  cancelInvoice() {
+
+  }
+
   render() {
     return (
       <Container>
@@ -74,14 +141,38 @@ class InvoiceCreateView extends React.Component {
         <Form>
           {/* Student Info Field */}
           <Form.Group widths='equal'>
-            <Form.Field control={ Input } label='Name'/>
-            <Form.Field control={ Input } label='Email'/>
+            <Form.Field>
+              <label>Due Date</label>
+              <DayPickerInput onDayChange={this.handleDayChange} />
+            </Form.Field>
           </Form.Group>
           <Form.Group widths='equal'>
-            <Form.Field control={ Input } label='Address'/>
-            <Form.Field control={ Input } label='City'/>
-            <Form.Field control={ Input } label='State'/>
-            <Form.Field control={ Input } label='Zip'/>
+            <Form.Field
+              control={ Input }
+              label='Name'
+              onChange={ this.captureName } />
+            <Form.Field
+              control={ Input }
+              label='Email'
+              onChange={ this.captureEmail }/>
+          </Form.Group>
+          <Form.Group widths='equal'>
+            <Form.Field
+              control={ Input }
+              label='Address'
+              onChange={ this.captureAddress } />
+            <Form.Field
+              control={ Input }
+              label='City'
+              onChange={ this.captureCity } />
+            <Form.Field
+              control={ Input }
+              label='State'
+              onChange={ this.captureState } />
+            <Form.Field
+              control={ Input }
+              label='Zip'
+              onChange={ this.captureZip } />
           </Form.Group>
 
           {/* Line Item Field */}
@@ -166,13 +257,16 @@ class InvoiceCreateView extends React.Component {
 
         {/* Additional Notes Field */}
         <Form>
-          <Form.TextArea label='Notes' placeholder='Additional Notes' />
+          <Form.TextArea
+            label='Notes'
+            placeholder='Additional Notes'
+            onChange={ this.captureNotes } />
         </Form>
 
         {/* Form Submit / Cancel Field */}
         <div id='invoiceButtons'>
           <Button color='red'>Cancel</Button>
-          <Button color='green'>Save</Button>
+          <Button color='green' onClick={ this.saveInvoice } as={Link} to='/invoiceList'>Save</Button>
         </div>
       </Container>
     )
