@@ -6,6 +6,7 @@ var db = require('../database/models/index.js');
 var authCtrl = require('../database/controllers/authController.js');
 var studentCtrl = require('../database/controllers/studentController.js');
 var bookingCtrl = require('../database/controllers/bookingController.js');
+var invoiceCtrl = require('../database/controllers/invoiceController.js');
 var session = require('express-session');
 var MongoStore = require('connect-mongo')(session);
 
@@ -128,6 +129,30 @@ app.post('/users/:username/students', (req, res) => {
       res.send(user);
     }
   });
+});
+
+app.get('/users/:username/invoices', (req, res) => {
+  invoiceCtrl.getInvoices((err, data) => {
+    if (err) {
+      res.send('Error getting invoice data');
+    } else {
+      res.send(data);
+    }
+  })
+})
+
+app.post('/users/:username/invoices', (req, res) => {
+  var username = req.user.username;
+  var newInvoice = req.body;
+  console.log(username);
+  console.log(newInvoice);
+  invoiceCtrl.saveInvoice(newInvoice, (err, data) => {
+    if (err) {
+      console.log(err);
+    } else {
+      res.send(data);
+    }
+  })
 });
 
 module.exports = app;

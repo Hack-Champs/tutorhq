@@ -82,3 +82,29 @@ form {
 .dashboardviews {
   min-height: 500px;
 }
+
+.invoiceDescription {
+  background-color: #f2f2f2;
+  padding: 20px 30px 8px 30px;
+}
+
+#removeListingButton {
+  background-color: #d44a48;
+  color: white;
+}
+
+#totalDueTable {
+  width: 30%;
+  float: right;
+  margin-bottom: 15px;
+}
+
+#invoiceButtons {
+  margin-top: 15px;
+  margin-bottom: 15px;
+  float: right;
+}
+
+#addLineItemButton, .trashButton {
+  padding-left: 11px;
+}

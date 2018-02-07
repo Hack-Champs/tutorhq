@@ -3,6 +3,8 @@ import ReactDOM from 'react-dom';
 import DashboardView from './DashboardView.jsx';
 import HomeView from './HomeView.jsx';
 import TutorsView from './TutorsView.jsx';
+import InvoiceListView from './InvoiceListView.jsx';
+import InvoiceCreateView from './InvoiceCreateView.jsx';
 import { Link, Route, Switch } from 'react-router-dom';
 import { Menu } from 'semantic-ui-react';
 import axios from 'axios';
@@ -135,10 +137,12 @@ class App extends React.Component {
         </Menu>
         <Switch>
           <Route exact path='/' render={() => <HomeView />} />
-          <Route path='/dashboard' render={() => <DashboardView displayName={this.state.user.name} tutor={this.state.user.username} students={this.state.user.students} email={this.state.user.email} createstudent={this.createStudent} />} />
+          <Route exact path='/dashboard' render={() => <DashboardView displayName={this.state.user.name} tutor={this.state.user.username} students={this.state.user.students} email={this.state.user.email} createstudent={this.createStudent} />} />
           <Route exact path='/tutors' render={() => <TutorsView />} />
           <Route path='/tutors/:tutor' render={() => <DashboardView tutor={this.state.user.username} email={this.state.user.email} />} />
           <Route path='/dashboard/:tutor' render={() => <DashboardView tutor={this.state.user.username} />} />
+          <Route path='/createInvoice' render={() => <InvoiceCreateView /> } />
+          <Route path='/invoiceList' render={() => <InvoiceListView /> } />
         </Switch>
       </div>
     );

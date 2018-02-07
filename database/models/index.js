@@ -55,6 +55,19 @@ const userSchema = mongoose.Schema({
   students: [studentSchema]
 });
 
+const invoiceSchema = mongoose.Schema({
+  name: String,
+  email: String,
+  address: String,
+  city: String,
+  state: String,
+  zip: String,
+  dueDate: String,
+  notes: String,
+  lineItems: [],
+  total: String
+})
+
 const ratingSchema = mongoose.Schema({
   tutorId: Number,
   rating: Number,
@@ -71,6 +84,7 @@ const Rating = mongoose.model('Rating', ratingSchema);
 const Subject = mongoose.model('Subject', subjectSchema);
 const Student = mongoose.model('Student', studentSchema);
 const Channel = mongoose.model('Channel', channelSchema);
+const Invoice = mongoose.model('Invoice', invoiceSchema);
 
 db.once('open', function() {
   console.log('Connected to mongo');
@@ -101,3 +115,4 @@ module.exports.User = User;
 module.exports.Student = Student;
 module.exports.Channel = Channel;
 module.exports.Message = Message;
+module.exports.Invoice = Invoice;
