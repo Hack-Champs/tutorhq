@@ -17,7 +17,28 @@ module.exports = {
         loader : 'babel-loader',
         query: {
           presets: ['react', 'es2015', 'env']
-       }
+        }
+      },
+      {
+        test: /\.(jpe?g|png|gif)$/i,
+        loader: 'file-loader',
+        query: {
+          name: '[name].[ext]',
+          outputPath: 'images/'
+        }
+      },
+      {
+        test: /\.(woff(2)?|ttf|eot|svg)(\?v=[0-9]\.[0-9]\.[0-9])?$/,
+        loader: 'url-loader',
+        query: {
+          limit: '10000',
+          name: '[name].[ext]',
+          outputPath: 'fonts/'
+        }
+      },
+      {
+        test: /\.css$/,
+        loaders: ['style-loader', 'css-loader']
       }
     ]
   }
