@@ -64,7 +64,6 @@ class AvailabilityView extends React.Component {
   }
 
   captureName(e) {
-    console.log('The e', e);
     var selected = this.state.students.find((student) => {
       return student.name === e.currentTarget.textContent;
     });
@@ -72,7 +71,6 @@ class AvailabilityView extends React.Component {
     this.setState({
       selectedStudent: selected
     });
-    console.log('Current student: ', this.state.selectedStudent);
   }
 
   captureTime(value) {
@@ -137,8 +135,6 @@ class AvailabilityView extends React.Component {
     students.forEach((student) => {
       options.push({text: student.name, value: student.name});
     });
-
-    console.log('List of the students ', options);
 
     return (
       <div>

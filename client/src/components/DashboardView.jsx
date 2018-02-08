@@ -225,8 +225,8 @@ class DashboardView extends React.Component {
 
     if (this.state.view === 'dashboard') {
       currentView = (
-        <div className="dashboardviews">
-          <Container >
+        <div >
+          <Container className="dashboardviews" >
             <AvailabilityView
               tutor={ this.props.tutor }
               students={ this.props.students }
@@ -237,8 +237,8 @@ class DashboardView extends React.Component {
       );
     } else if (this.state.view === 'students') {
       currentView = (
-        <div className="dashboardviews">
-          <Container>
+        <div>
+          <Container className="dashboardviews">
             <StudentsView
               students= { this.props.students }
               createstudent={this.props.createstudent}
@@ -266,8 +266,8 @@ class DashboardView extends React.Component {
       )
     } else {
       currentView = (
-        <div className="dashboardviews">
-          <Container>
+        <div>
+          <Container className="dashboardviews">
             <Header as='h2' className="profileheader">Tutor Profile</Header>
             <div style={{'textAlign': 'center'}}>{this.props.email}</div>
             <Rating
@@ -278,8 +278,6 @@ class DashboardView extends React.Component {
               clearable
             />
             {descriptionSection}
-          </Container>
-          <Container>
             <h2>Subjects</h2>
             <form onSubmit={this.onSubmit}>
               Add a subject
