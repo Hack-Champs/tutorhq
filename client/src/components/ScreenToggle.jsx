@@ -91,7 +91,7 @@ class ScreenToggle extends Component {
         <span>
           <button id ="timer" className="ui button basic positive" name="timer" onClick={this.handleTimerClick.bind(this)}>{ this.state.timerRunning ? 'Stop' : 'Start' } Timer <span id="timeString">{ `${this.state.timeString}` }</span></button>
           <button id ="end" className="ui button basic positive negative" name="end" onClick={this.handleEndSessionClick.bind(this)}>End Session</button>
-          </span>
+        </span>
       );
     }
     return (

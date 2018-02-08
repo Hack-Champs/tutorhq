@@ -1,4 +1,5 @@
 import React, { Component } from 'react';
+import SimpleWebRTC from 'simplewebrtc';
 
 class Video extends Component {
   constructor(props) {
@@ -6,7 +7,8 @@ class Video extends Component {
     this.webrtc = new SimpleWebRTC({
       localVideoEl: 'localVideo',
       remoteVideosEl: 'remoteVideos',
-      autoRequestMedia: true
+      autoRequestMedia: true,
+      url: 'https://tutorhq.herokuapp.com/'
     });
     this.startVideo = this.startVideo.bind(this);
     this.toggleVideo = this.toggleVideo.bind(this);

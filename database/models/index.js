@@ -66,7 +66,7 @@ const invoiceSchema = mongoose.Schema({
   notes: String,
   lineItems: [],
   total: String
-})
+});
 
 const ratingSchema = mongoose.Schema({
   tutorId: Number,
@@ -88,24 +88,6 @@ const Invoice = mongoose.model('Invoice', invoiceSchema);
 
 db.once('open', function() {
   console.log('Connected to mongo');
-  // For initial test setup: Add single student to tutor if there aren't any.
-  User.findOne({}, (err, user) => {
-    if (user) {
-      Student.findOne({}, (err, student) => {
-        if (!student) {
-          student = new Student({
-            name: 'John',
-            email: 'John@gmail.com',
-            notes: ''
-          });
-          student.save((err, student) => {
-            user.students.push(student);
-            user.save();
-          });
-        }
-      });
-    }
-  });
 });
 
 module.exports.Subject = Subject;

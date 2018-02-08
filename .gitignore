@@ -57,11 +57,9 @@ typings/
 
 # dotenv environment variables file
 .env
-classroom/.env
 
 # DS Store
 .DS_Store
 
 # bundle
 client/dist/bundle.js
-classroom/client/dist/bundle.js
