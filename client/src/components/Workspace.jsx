@@ -4,14 +4,14 @@ import Editor from './Editor.jsx';
 import Whiteboard from './Whiteboard.jsx';
 import ScreenToggle from './ScreenToggle.jsx';
 import Video from './Video.jsx';
-import axios from 'axios';
 import io from 'socket.io-client';
 import qs from 'qs';
 
 class Workspace extends Component {
   constructor(props) {
     super(props);
-    this.socket = io.connect(`http://localhost:8000`);
+    // const port = process.env.PORT || '3000' or window.location.hostname;
+    this.socket = io.connect('https://tutorhq.herokuapp.com/');
     this.handleClick = this.handleClick.bind(this);
     this.handleEndSession = this.handleEndSession.bind(this);
     this.state = {
@@ -59,6 +59,7 @@ class Workspace extends Component {
     var context = this;
     if (channelId) {
       this.socket.emit('client:joinChannel', channelId, (err, messages, bookingId, userId)=>{
+        console.log('Join channel;')
         if (!err) {
           context.setState({userId: userId, channelId: channelId, bookingId: bookingId, messages: messages});
         } else {

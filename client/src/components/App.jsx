@@ -7,6 +7,7 @@ import InvoiceListView from './InvoiceListView.jsx';
 import InvoiceCreateView from './InvoiceCreateView.jsx';
 import SubscriptionsView from './SubscriptionsView.jsx';
 import SubscriptionsPaymentView from './SubscriptionsPaymentView.jsx';
+import Workspace from './Workspace.jsx';
 import { Link, Route, Switch } from 'react-router-dom';
 import { Menu, Sticky } from 'semantic-ui-react';
 import axios from 'axios';
@@ -123,9 +124,9 @@ class App extends React.Component {
 
   render () {
     const activeItem = window.location.hash.slice(1);
-
-    return (
-      <div>
+    let menu = '';
+    if (!activeItem.includes('classroom')) {
+      menu = (
         <Menu pointing secondary>
           <Menu.Item name='home' as={Link} to='/' active={activeItem === '/'} onClick={this.handleItemClick} replace />
           { this.state.isSignedIn &&
@@ -139,6 +140,12 @@ class App extends React.Component {
             }
           </Menu.Menu>
         </Menu>
+      );
+    }
+
+    return (
+      <div>
+        { menu }
         <Switch>
           <Route exact path='/' render={() => <HomeView />} />
           <Route exact path='/dashboard' render={() => <DashboardView displayName={this.state.user.name} tutor={this.state.user.username} students={this.state.user.students} email={this.state.user.email} createstudent={this.createStudent} />} />
@@ -149,6 +156,7 @@ class App extends React.Component {
           <Route path='/invoiceList' render={() => <InvoiceListView /> } />
           <Route path='/pricing' render={() => <SubscriptionsView /> } />
           <Route path='/subscribe' render={() => <SubscriptionsPaymentView /> } />
+          <Route path='/classroom/:id' component={Workspace} />
         </Switch>
       </div>
     );

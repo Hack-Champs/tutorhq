@@ -1,4 +1,8 @@
+var http = require('http');
+var path = require('path');
 var express = require('express');
+var cors = require('cors');
+var socketIO = require('socket.io');
 var bodyParser = require('body-parser');
 var passport = require('passport');
 var passportConfig = require('./config/passport-config');
@@ -6,15 +10,37 @@ var db = require('../database/models/index.js');
 var authCtrl = require('../database/controllers/authController.js');
 var studentCtrl = require('../database/controllers/studentController.js');
 var bookingCtrl = require('../database/controllers/bookingController.js');
+var messageCtrl = require('../database/controllers/messageController.js');
 var invoiceCtrl = require('../database/controllers/invoiceController.js');
 var session = require('express-session');
 var MongoStore = require('connect-mongo')(session);
+var routes = require('./routes');
 
+var port = process.env.PORT || 3000;
 var app = express();
+var server = http.Server(app);
+var io = socketIO(server);
+// sockets(server, config);
+server.listen(port);
+
+// var port = process.env.PORT || 3000;
+// if (!module.parent){
+//   var server = app.listen(port, () => {
+//     console.log(`App listening on port ${ port }`);
+//   });
+//   // var server = http.Server(app);
+//   sockets(server, config);
+//   var io = socketIO.listen(server);
+
+//   ; // Assign server to socket var io = require('socket.io')(server); server.listen(4000)
+
 
 app.use(express.static(__dirname + '/../client/dist'));
 app.use(bodyParser.urlencoded({ extended: false }));
 app.use(bodyParser.json());
+app.use(cors());
+
+app.use('/', routes);
 
 // test end points
 app.get('/test', function(req, res) {
@@ -198,4 +224,66 @@ app.post('/users/:username/invoices', (req, res) => {
   })
 });
 
-module.exports = app;
+app.get('/joinChannel', (req, res) => {
+  var channelId = req.body.channelId;
+  bookingCtrl.getChannelDetails(channelId, (err, messages, bookingId, userId) => {
+    if (err) {
+      res.status(501).send('Could not retrieve channel info');
+    } else {
+      res.send({messages: messages, bookingId: bookingId, userId: userId});
+    }
+  });
+});
+
+app.get('*', function (req, res) {
+  res.sendFile('index.html', { root: path.join(__dirname, '../client/dist') });
+});
+
+io.on('connection', (socket) => {
+  console.log('New user connected');
+  socket.on('client:joinChannel', (channelId, callback) => {
+    bookingCtrl.getChannelDetails(channelId, (err, messages, bookingId, userId) => {
+      if (err) {
+        return callback(err);
+      } else {
+        socket.join(channelId);
+        callback(err, messages, bookingId, userId);
+      }
+    });
+  });
+
+  socket.on('client:createMessage', (message, callback) => {
+    var message = {
+      channelId: message.channelId,
+      body: message.body,
+      name: message.name
+    };
+    messageCtrl.saveMessage(message, (err, savedMessage) => {
+      if (err) {
+        console.error('Error saving message', err);
+      } else {
+        io.to(message.channelId).emit('server:newMessage', savedMessage);
+      }
+    });
+  });
+
+  socket.on('client:endSession', (bookingId, billableTime, callback) => {
+    bookingCtrl.updateWithBillableTime(bookingId, billableTime, (err) => {
+      if (err) {
+        console.error('Error updating booking', err);
+      }
+    });
+  });
+
+  socket.on('drawing', (data) => {
+    socket.broadcast.to(data.channelId).emit('drawing', data);
+  });
+
+  socket.on('client:updateCode', (data) => {
+    socket.broadcast.to(data.channelId).emit('server:newCode', data);
+  });
+
+  socket.on('disconnect', () => {
+    console.log('Disconnecting');
+  });
+});
