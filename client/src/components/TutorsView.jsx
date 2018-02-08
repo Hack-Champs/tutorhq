@@ -28,7 +28,7 @@ class TutorsView extends React.Component {
     return (
       <div>
         <Container>
-          <Header as='h2'>Tutors</Header>
+          <h1 className="viewHeader">Tutors</h1>
           <Item.Group divided>
             {this.state.tutors.map((tutor, i) =>
               <TutorsViewEntry key={i} tutor={this.state.tutors[i]} />

@@ -12,7 +12,7 @@ class StudentTableView extends React.Component {
   render() {
     let studentName = Object.keys(this.props.booking);
     return (
-      <Table fixed>
+      <Table color={'black'} fixed>
         <Table.Header>
           <Table.Row>
             <Table.HeaderCell>{studentName[0]}</Table.HeaderCell>

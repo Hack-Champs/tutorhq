@@ -227,6 +227,7 @@ class DashboardView extends React.Component {
       currentView = (
         <div >
           <Container className="dashboardviews" >
+            <h1 className="viewHeader">Dashboard</h1>
             <AvailabilityView
               tutor={ this.props.tutor }
               students={ this.props.students }
@@ -239,6 +240,7 @@ class DashboardView extends React.Component {
       currentView = (
         <div>
           <Container className="dashboardviews">
+          <h1 className="viewHeader">Students</h1>
             <StudentsView
               students= { this.props.students }
               createstudent={this.props.createstudent}
@@ -251,25 +253,27 @@ class DashboardView extends React.Component {
         <div className="dashboardviews">
           <InvoiceCreateView />
         </div>
-      )
+      );
     } else if (this.state.view === 'invoices') {
       currentView = (
         <div className="dashboardviews">
           <InvoiceListView />
         </div>
-      )
+      );
     } else if (this.state.view === 'subscriptions') {
       currentView = (
         <div className="dashboardviews">
           <SubscriptionsView />
         </div>
-      )
+      );
     } else {
       currentView = (
         <div>
           <Container className="dashboardviews">
-            <Header as='h2' className="profileheader">Tutor Profile</Header>
-            <div style={{'textAlign': 'center'}}>{this.props.email}</div>
+            <h1 className="profileHeader">Tutor Profile</h1>
+
+            <div>{this.props.email}</div>
+            <br />
             <Rating
               icon='star'
               rating={this.state.rating}
@@ -277,10 +281,11 @@ class DashboardView extends React.Component {
               onRate={this.onRate}
               clearable
             />
+            <br />
             {descriptionSection}
             <h2>Subjects</h2>
             <form onSubmit={this.onSubmit}>
-              Add a subject
+              <h4>Add a subject</h4>
               <Search
                 input={{ icon: 'search', iconPosition: 'left' }}
                 loading={isLoading}
@@ -290,6 +295,7 @@ class DashboardView extends React.Component {
                 value={newSubject}
                 {...this.props}
               />
+              <br/>
             </form>
             <div>
               {this.state.subjects.map((subject, i) => {

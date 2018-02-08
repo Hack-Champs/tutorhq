@@ -12,7 +12,7 @@ class SubscriptionsView extends React.Component {
     return (
       <Container>
         <div id='subscriptionsHeader'>
-          <h1 id='subscriptionTitle'>Pricing</h1>
+          <center><h1 className="profileHeader">Pricing</h1></center>
           <h3>TutorHQ is free to use.<br/>Upgrade your classroom to bolster it with even better features.</h3>
         </div>
         <div className='ui grid'>

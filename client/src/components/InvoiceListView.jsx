@@ -29,9 +29,9 @@ class InvoiceListView extends React.Component {
     const statusOptions = [ { value: 'Paid', text: 'Paid' }, { value: 'Unpaid', text: 'Unpaid' } ]
     return (
       <Container>
-        <h1>My Invoices</h1>
+        <h1 className="profileHeader">My Invoices</h1>
         <Button as={Link} to='/createInvoice' color='green' replace>New Invoice</Button>
-        <Table>
+        <Table color={'black'}>
           <Table.Header>
             <Table.Row>
               <Table.HeaderCell>Due Date</Table.HeaderCell>

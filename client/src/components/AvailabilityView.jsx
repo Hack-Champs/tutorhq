@@ -3,7 +3,7 @@ import ReactDOM from 'react-dom';
 import DayPicker from 'react-day-picker';
 import BookingView from './BookingView.jsx';
 import axios from 'axios';
-import { Dropdown, Grid, Button, Container, Input } from 'semantic-ui-react';
+import { Dropdown, Grid, Button, Container, Input, Segment } from 'semantic-ui-react';
 import moment from 'moment';
 import TimePicker from 'rc-time-picker';
 
@@ -138,11 +138,10 @@ class AvailabilityView extends React.Component {
 
     return (
       <div>
-        <Grid stackable>
-          <Grid.Row columns={3}>
-            <Grid.Column width={5} className="timeInput" id="timeInput" >
-              <div>
-
+        <Grid columns={2} divided>
+          <Grid.Row stretched>
+            <Grid.Column>
+              <Segment className="timeInput" id="timeInput">
                 <p>Name</p>
                 <Dropdown placeholder='Student' search selection options={options} onChange={ this.captureName.bind(options.value) }/>
                 <p className="formEntryTitle">Time</p>
@@ -154,33 +153,37 @@ class AvailabilityView extends React.Component {
                   format={ this.state.format }
                   use12Hours
                 />
-              </div>
+              </Segment>
+              <Segment className="dateInput">
+                <div>
+                  { this.state.date ? (
+                    <p>You picked { this.state.date.toLocaleDateString()}</p>
+                  ) : (
+                    <p align="left">Choose a date</p>
+                  )}
+                  <DayPicker onDayClick={ this.dateClick } />
+                </div>
+                <Button id="addBookingButton" primary onClick={ this.addBooking }>Add Booking</Button>
+
+              </Segment>
             </Grid.Column>
-            <Grid.Column width={5} className="dateInput">
-              <div>
-                { this.state.date ? (
-                  <p>You picked { this.state.date.toLocaleDateString()}</p>
-                ) : (
-                  <p align="right">Choose a date</p>
-                )}
-                <DayPicker onDayClick={ this.dateClick } />
-              </div>
-              <Button primary onClick={ this.addBooking }>Add Booking</Button>
-              <Button secondary onClick= { this.testFunction }>tester</Button>
-            </Grid.Column>
-            <Grid.Column width={5} className="bookings">
-              <BookingView
-                bookings={ this.state.bookings }
-                deleteBooking={ this.deleteBooking }
-                displayName={ this.props.displayName }
-              />
+            <Grid.Column>
+              <Segment className="bookings">
+                <BookingView
+                  bookings={ this.state.bookings }
+                  deleteBooking={ this.deleteBooking }
+                  displayName={ this.props.displayName }
+                />
+              </Segment>
             </Grid.Column>
           </Grid.Row>
         </Grid>
-
       </div>
     );
   }
 }
+
+//tester button HTML: add when needed
+//<Button secondary onClick= { this.testFunction }>tester</Button>
 
 export default AvailabilityView;
