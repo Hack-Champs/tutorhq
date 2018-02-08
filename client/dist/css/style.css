@@ -186,7 +186,6 @@ h4.tutorDescription {
   font-size: 40px !important;
 }
 
-<<<<<<< HEAD
 .viewHeader {
   padding-top: 30px;
   padding-bottom: 40px;
@@ -200,7 +199,6 @@ h4.tutorDescription {
   letter-spacing: 3px;
 }
 
-=======
 workspaceDiv ul {
     list-style-type: none;
     padding: 0;
@@ -322,4 +320,4 @@ workspaceDiv ul {
 #timeString {
   color: #21BA45;
 }
->>>>>>> Removed app.js
+
