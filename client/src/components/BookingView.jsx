@@ -4,7 +4,7 @@ import BookingViewEntry from './BookingViewEntry.jsx';
 import { Table } from 'semantic-ui-react';
 
 const BookingView = ({ bookings, deleteBooking, displayName }) => (
-  <Table striped>
+  <Table color={'black'}striped>
     <Table.Header>
       <Table.Row>
         <Table.HeaderCell>Student</Table.HeaderCell>

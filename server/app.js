@@ -81,6 +81,49 @@ app.get('/users/:username/bookings', (req, res) => {
   });
 });
 
+// Return list of tutor's bookings grouped by students
+app.get('/users/studentbookings', (req, res) => {
+  console.log('get all bookings grouped endpoint');
+  // var username = req.params.username;
+  var username = req.user.username;
+  db.User.findOne({username: username}, (err, user) => {
+    if (err) {
+      res.status(501).send();
+    } else {
+      bookingCtrl.getBookingsForUser(username, (err, bookings) => {
+
+        if (err) {
+          res.status(501).send('Could not get bookings');
+        } else {
+          var studentBookings = {};
+          bookings.forEach((booking) => {
+            if (studentBookings[booking.studentName]) {
+              studentBookings[booking.studentName].sessions.push(booking);
+            } else {
+              user.students.forEach((student) => {
+                if (student.name === booking.studentName) {
+                  studentBookings[booking.studentName] = {sessions: [booking],
+                    email: student.email,
+                    notes: student.notes
+                  };
+                }
+              });
+            }
+          });
+          var studentList = [];
+          for (var name in studentBookings) {
+            var obj = {};
+            obj[name] = studentBookings[name];
+            studentList.push(obj);
+          }
+          res.send(studentList);
+        }
+      });
+    }
+
+  });
+});
+
 // Add new booking to tutor's profile
 app.post('/users/:username/booking', (req, res) => {
   var username = req.user.username;

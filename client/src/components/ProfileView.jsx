@@ -9,13 +9,13 @@ class ProfileView extends React.Component {
 
   render () {
     return (
-      <Grid centered>
-        <Grid.Column mobile={12} tablet={8} computer={4}>
+      <Grid>
+        <Grid.Column mobile={12} tablet={8} computer={16}>
           <Form method='GET' action={`mailto:${this.props.email}`}>
             <Form.Input name='subject' fluid label='Your name' placeholder='Your name' />
             <Form.Input fluid label='Email' placeholder='Email' />
             <Form.TextArea name='body' label='Your message' placeholder='Request an appointment...' />
-            <Form.Button name='submit'>Submit</Form.Button>
+            <Form.Button id="addBookingButton" name='submit'>Submit</Form.Button>
           </Form>
         </Grid.Column>
       </Grid>

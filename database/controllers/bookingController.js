@@ -13,6 +13,7 @@ const getBookingsForUser = (username, cb) => {
   });
 };
 
+
 const createBooking = (username, bookingInfo, callback) => {
   db.User.findOne({ username: username }, (err, user) => {
     if (err) {
@@ -90,6 +91,7 @@ const getChannelDetails = (channelId, cb) => {
     });
   });
 };
+
 
 module.exports.createBooking = createBooking;
 module.exports.getBookingsForUser = getBookingsForUser;

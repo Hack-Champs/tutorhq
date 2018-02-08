@@ -1,12 +1,33 @@
 import React from 'react';
 import ReactDOM from 'react-dom';
 import StudentsViewEntry from './StudentsViewEntry.jsx';
+import StudentTableView from './StudentTableView.jsx';
 import CreateStudentView from './CreateStudentView.jsx';
 import { List, Container, Grid, Table, Button } from 'semantic-ui-react';
+import axios from 'axios';
 
 class StudentsView extends React.Component {
   constructor(props) {
     super(props);
+    this.state = {
+      bookings: [],
+    };
+    this.getBookings = this.getBookings.bind(this);
+  }
+  componentDidMount() {
+    this.getBookings();
+    console.log(this.state.bookings);
+  }
+  getBookings() {
+
+    axios.get('/users/studentbookings')
+      .then((res) => {
+        this.setState({bookings: res.data});
+        console.log('Bookings: ', this.state.bookings);
+      })
+      .catch((err) => {
+        console.log('Could not get bookings');
+      });
   }
   render () {
 
@@ -18,11 +39,12 @@ class StudentsView extends React.Component {
             <StudentsViewEntry key={ i } student = { student } />
           )}
         </List>
-
+        {this.state.bookings.map((booking, i) =>
+          <StudentTableView key={ i } booking = { booking } />
+        )}
       </div>
     );
   }
 }
 
 export default StudentsView;
-

@@ -8,7 +8,7 @@ import InvoiceCreateView from './InvoiceCreateView.jsx';
 import SubscriptionsView from './SubscriptionsView.jsx';
 import SubscriptionsPaymentView from './SubscriptionsPaymentView.jsx';
 import { Link, Route, Switch } from 'react-router-dom';
-import { Menu } from 'semantic-ui-react';
+import { Menu, Sticky } from 'semantic-ui-react';
 import axios from 'axios';
 import browserHistory from 'react-router-dom';
 import AOS from 'aos';
@@ -118,6 +118,8 @@ class App extends React.Component {
         console.log(err);
       });
   }
+
+
 
   render () {
     const activeItem = window.location.hash.slice(1);
