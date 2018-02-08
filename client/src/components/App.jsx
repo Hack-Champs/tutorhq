@@ -5,6 +5,7 @@ import HomeView from './HomeView.jsx';
 import TutorsView from './TutorsView.jsx';
 import InvoiceListView from './InvoiceListView.jsx';
 import InvoiceCreateView from './InvoiceCreateView.jsx';
+import SubscriptionsView from './SubscriptionsView.jsx';
 import { Link, Route, Switch } from 'react-router-dom';
 import { Menu } from 'semantic-ui-react';
 import axios from 'axios';

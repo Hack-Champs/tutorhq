@@ -1,36 +1,50 @@
-var InputField = React.createClass({
-  render: function() {
+import React from 'react';
+import ReactDOM from 'react-dom';
+import { Button, Container, List } from 'semantic-ui-react';
+
+class SubscriptionsView extends React.Component {
+  constructor(props) {
+    super(props);
+  }
+
+  render() {
     return (
-      <div className="field">
-        <label>{this.props.label}</label>
-        <input type="text" placeholder={this.props.placeholder} />
-      </div>
+      <Container>
+        <div id='subscriptionsHeader'>
+          <h1 id='subscriptionTitle'>Pricing</h1>
+          <h3>TutorHQ is free to use.<br/>Upgrade your classroom to bolster it with even better features.</h3>
+        </div>
+        <div className='ui grid'>
+          <div className='eight wide column subscriptions'>
+            <h1>TutorHQ</h1>
+            <h3>Free</h3>
+            <List as='ul'>
+              <List.Item as='li'>Scheduling Tool</List.Item>
+              <List.Item as='li'>Video Chat</List.Item>
+            </List>
+            <Button
+              className='subscriptionButtons'
+              color='grey'>
+              Get Started For Free
+            </Button>
+          </div>
+          <div className='eight wide column subscriptions'>
+            <h1>TutorHQ Premium</h1>
+            <h3>Only $4.99/mo</h3>
+            <List as='ul'>
+              <List.Item as='li'>Whiteboard</List.Item>
+              <List.Item as='li'>Text Editor</List.Item>
+            </List>
+            <Button
+              className='subscriptionButtons'
+              color='teal'>
+              Upgrade to TutorHQ Premium
+            </Button>
+          </div>
+        </div>
+      </Container>
     )
   }
-});
+}
 
-var PaymentForm = React.createClass({
-  render: function() {
-    return (
-      <form>
-        <ul className="card-list">
-          <li className="card visa"></li>
-          <li className="card mastercard"></li>
-          <li className="card amex"></li>
-        </ul>
-        <InputField label="Name on Card" />
-        <InputField label="Card number" />
-        <InputField label="Expiry Date" placeholder="MM / YY" />
-        <InputField label="Security code" />
-        <button>Pay $400.00</button>
-      </form>
-    )
-  }
-})
-
-ReactDOM.render(
-  <PaymentForm />,
-  document.getElementById('page')
-);
-
-// https://codepen.io/pandaduc/pen/zGawdY
+export default SubscriptionsView;

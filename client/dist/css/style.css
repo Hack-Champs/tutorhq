@@ -22,7 +22,6 @@
 }
 .profileheader {
   text-align: center;
-
 }
 
 h1.explanation {
@@ -107,4 +106,21 @@ form {
 
 #addLineItemButton, .trashButton {
   padding-left: 11px;
+}
+
+.eight.wide.column.subscriptions {
+  text-align: center;
+  border: 0.5px solid #f2f2f2;
+}
+
+#subscriptionsHeader {
+  text-align: center;
+}
+
+.subscriptionButtons {
+  font-size: 20px !important;
+}
+
+#subscriptionTitle {
+  font-size: 40px !important;
 }

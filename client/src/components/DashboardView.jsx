@@ -8,7 +8,8 @@ import AvailabilityView from './AvailabilityView.jsx';
 import ProfileView from './ProfileView.jsx';
 import StudentsView from './StudentsView.jsx';
 import InvoiceListView from './InvoiceListView.jsx';
-import InvoiceCreateView from './InvoiceCreateView.jsx'
+import InvoiceCreateView from './InvoiceCreateView.jsx';
+import SubscriptionsView from './SubscriptionsView.jsx';
 import HomeView from './HomeView.jsx';
 import axios from 'axios';
 import _ from 'lodash';
@@ -186,6 +187,7 @@ class DashboardView extends React.Component {
 
   setView(e) {
     this.setState({view: e});
+    this.toggleVisibility();
   }
 
   render () {
@@ -256,6 +258,12 @@ class DashboardView extends React.Component {
           <InvoiceListView />
         </div>
       )
+    } else if (this.state.view === 'subscriptions') {
+      currentView = (
+        <div className="dashboardviews">
+          <SubscriptionsView />
+        </div>
+      )
     } else {
       currentView = (
         <div className="dashboardviews">
@@ -314,8 +322,12 @@ class DashboardView extends React.Component {
               Students
             </Menu.Item>
             <Menu.Item name='invoices' href="/#/dashboard" onClick={this.setView.bind(name, 'invoices')}>
-              <Icon name='money' />
-              My Invoices
+              <Icon name='file text outline' />
+              Invoices
+            </Menu.Item>
+            <Menu.Item name='subscriptions' href="/#/dashboard" onClick={this.setView.bind(name, 'subscriptions')}>
+              <Icon name='credit card' />
+              Subscription
             </Menu.Item>
           </Sidebar>
           <Sidebar.Pusher>
