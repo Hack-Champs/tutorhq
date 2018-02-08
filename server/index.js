@@ -43,7 +43,7 @@ app.use(cors());
 app.use('/', routes);
 
 // test end points
-app.get('/test', function(req, res) {
+app.get('/test', function (req, res) {
   res.end();
 });
 
