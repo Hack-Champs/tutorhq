@@ -34,6 +34,11 @@ class CreateStudentView extends React.Component {
   }
   createStudent() {
     this.props.createstudent(this.props.tutor, this.state.name, this.state.email, this.state.notes);
+    this.setState({
+      name: '',
+      email: '',
+      notes: ''
+    })
   }
 
   render () {
@@ -41,9 +46,9 @@ class CreateStudentView extends React.Component {
     return (
       <Form>
         <Form.Group widths='equal' >
-          <Form.Input fluid label='Student Name' placeholder='Full name' required value={this.state.name} onChange={this.updateName} />
+          <Form.Input fluid label='Student Name' placeholder='Full name' value={this.state.name} onChange={this.updateName} />
 
-          <Form.Input fluid label='Student Email' placeholder='Email' required value={this.state.email} onChange={this.updateEmail}/>
+          <Form.Input fluid label='Student Email' placeholder='Email' value={this.state.email} onChange={this.updateEmail}/>
 
         </Form.Group>
 
