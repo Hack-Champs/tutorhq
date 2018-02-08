@@ -7,7 +7,7 @@ const StudentTableViewEntry = ({ session, i }) => {
     <Table.Row>
       <Table.Cell>{ session.date }</Table.Cell>
       <Table.Cell>{ session.time }</Table.Cell>
-      <Table.Cell>Session Length: { session.time.billableTime }</Table.Cell>
+      {/* <Table.Cell>Session Length: { session.time.billableTime }</Table.Cell> */}
     </Table.Row>
   );
 };

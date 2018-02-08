@@ -8,10 +8,15 @@ class SubscriptionsPaymentView extends React.Component {
   constructor(props) {
     super(props);
     this.state = {};
+    this.handlePayment = this.handlePayment.bind(this);
   }
 
   componentDidMount() {
     $('.ui.dropdown').dropdown();
+  }
+
+  handlePayment() {
+    alert('Your payment has been processed!');
   }
 
   render() {
@@ -936,8 +941,9 @@ class SubscriptionsPaymentView extends React.Component {
               </div>
             </div>
             <Button
-              color='green'>
-              Submit
+              color='blue'
+              onClick={ this.handlePayment }
+              >Submit
             </Button>
             <Button
               color='red'
