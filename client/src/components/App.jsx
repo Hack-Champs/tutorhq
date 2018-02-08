@@ -5,6 +5,8 @@ import HomeView from './HomeView.jsx';
 import TutorsView from './TutorsView.jsx';
 import InvoiceListView from './InvoiceListView.jsx';
 import InvoiceCreateView from './InvoiceCreateView.jsx';
+import SubscriptionsView from './SubscriptionsView.jsx';
+import SubscriptionsPaymentView from './SubscriptionsPaymentView.jsx';
 import { Link, Route, Switch } from 'react-router-dom';
 import { Menu } from 'semantic-ui-react';
 import axios from 'axios';
@@ -143,6 +145,8 @@ class App extends React.Component {
           <Route path='/dashboard/:tutor' render={() => <DashboardView tutor={this.state.user.username} />} />
           <Route path='/createInvoice' render={() => <InvoiceCreateView /> } />
           <Route path='/invoiceList' render={() => <InvoiceListView /> } />
+          <Route path='/pricing' render={() => <SubscriptionsView /> } />
+          <Route path='/subscribe' render={() => <SubscriptionsPaymentView /> } />
         </Switch>
       </div>
     );

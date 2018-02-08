@@ -265,8 +265,19 @@ class InvoiceCreateView extends React.Component {
 
         {/* Form Submit / Cancel Field */}
         <div id='invoiceButtons'>
-          <Button color='red'>Cancel</Button>
-          <Button color='green' onClick={ this.saveInvoice } as={Link} to='/invoiceList'>Save</Button>
+          <Button
+            color='red'
+            as={ Link }
+            to='/invoiceList'>
+            Cancel
+          </Button>
+          <Button
+            color='green'
+            onClick={ this.saveInvoice }
+            as={ Link }
+            to='/invoiceList'>
+            Save
+          </Button>
         </div>
       </Container>
     )

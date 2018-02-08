@@ -1,6 +1,7 @@
 import React from 'react';
 import ReactDOM from 'react-dom';
-import { Container } from 'semantic-ui-react';
+import { Link } from 'react-router-dom';
+import { Button, Container } from 'semantic-ui-react';
 import 'semantic-ui-css/semantic.min.css';
 
 class SubscriptionsPaymentView extends React.Component {
@@ -934,9 +935,16 @@ class SubscriptionsPaymentView extends React.Component {
                 </div>
               </div>
             </div>
-            <div className="positive ui button" tabIndex="0">
+            <Button
+              color='green'>
               Submit
-            </div>
+            </Button>
+            <Button
+              color='red'
+              as={Link}
+              to='/pricing'>
+              Cancel
+            </Button>
           </form>
         </Container>
       </div>
