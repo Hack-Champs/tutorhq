@@ -11,6 +11,7 @@
     "test:coverage": "jest --coverage",
     "react": "webpack -d --watch",
     "server": "nodemon server/index.js",
+    "signalmaster": "node signal_master/server.js",
     "build:production": "NODE_ENV=production webpack --config webpack.config.js",
     "start": "node server/index.js",
     "postinstall": "npm run build:production"
