@@ -327,7 +327,7 @@ class DashboardView extends React.Component {
             </Menu.Item>
             <Menu.Item name='subscriptions' href="/#/dashboard" onClick={this.setView.bind(name, 'subscriptions')}>
               <Icon name='credit card' />
-              Subscription
+              Subscriptions
             </Menu.Item>
           </Sidebar>
           <Sidebar.Pusher>

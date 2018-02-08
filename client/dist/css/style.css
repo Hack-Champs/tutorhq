@@ -72,10 +72,7 @@ form {
 }
 
 #getStartedButton {
-  width: 150px !important;
-  height: 50px !important;
-  background-color: #0fd392 !important;
-  font-size: 15px !important;
+  font-size: 17px !important;
 }
 
 .dashboardviews {
@@ -115,6 +112,7 @@ form {
 
 #subscriptionsHeader {
   text-align: center;
+  margin-bottom: 50px;
 }
 
 .subscriptionButtons {

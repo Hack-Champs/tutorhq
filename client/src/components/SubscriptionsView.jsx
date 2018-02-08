@@ -1,5 +1,6 @@
 import React from 'react';
 import ReactDOM from 'react-dom';
+import { Link } from 'react-router-dom';
 import { Button, Container, List } from 'semantic-ui-react';
 
 class SubscriptionsView extends React.Component {
@@ -23,6 +24,7 @@ class SubscriptionsView extends React.Component {
               <List.Item as='li'>Video Chat</List.Item>
             </List>
             <Button
+              href='/auth/google'
               className='subscriptionButtons'
               color='grey'>
               Get Started For Free
@@ -35,7 +37,10 @@ class SubscriptionsView extends React.Component {
               <List.Item as='li'>Whiteboard</List.Item>
               <List.Item as='li'>Text Editor</List.Item>
             </List>
+            <h3>Start your 30 day free trial!</h3>
             <Button
+              as={ Link }
+              to='/subscribe'
               className='subscriptionButtons'
               color='teal'>
               Upgrade to TutorHQ Premium
