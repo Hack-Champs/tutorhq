@@ -10,8 +10,8 @@ import qs from 'qs';
 class Workspace extends Component {
   constructor(props) {
     super(props);
-    // const port = process.env.PORT || '3000' or window.location.hostname || 'https://tutorhq.herokuapp.com/';
-    this.socket = io.connect('localhost:3000');
+    // const port = process.env.PORT || '3000' or window.location.hostname || 'https://tutorhq.herokuapp.com/' localhost:3000;
+    this.socket = io.connect('https://tutorhq.herokuapp.com/');
     this.handleClick = this.handleClick.bind(this);
     this.handleEndSession = this.handleEndSession.bind(this);
     this.state = {
