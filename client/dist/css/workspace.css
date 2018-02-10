@@ -10,19 +10,19 @@
   padding-right: 5px;
   color: #4682B4;
   font-weight: 400;
-  font-size: 0.8em;
+  /*font-size: 0.8em;*/
 }
 #messages {
   height: 100%;
   overflow-y: scroll;
   background-color: #eee;
-  font-size: 0.8em;
+  /*font-size: 0.8em;*/
   line-height: 1.3em;
 }
 #message-body {
   width: 77%;
   margin-right: 5px;
-  font-size: 0.8em;
+  /*font-size: 0.8em;*/
 }
 #send-message-btn {
   vertical-align: top;
