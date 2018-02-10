@@ -1,121 +1,33 @@
-.workspaceDiv ul {
-    list-style-type: none;
-    padding: 0;
+#editor h5 {
+  text-align: left;
+  color: white;
 }
-
-.workspaceDiv .header {
-    background: #2e3035;
-    padding: 20px;
+.whiteboard-placeholder,
+#editor h5 {
+  color: #c7d9e8;
 }
-
-.workspaceDiv .chat {
-    float:left;
-    width: calc(100% - 250px);
-    height: 100%;
-}
-
-.workspaceDiv .messages {
-    padding: 20px;
-    overflow: scroll;
-    height: calc(100% - 140px);
-}
-.workspaceDiv .messages::-webkit-scrollbar {
-   display: none;
-}
-
-.workspaceDiv hr {
-    border: solid #1a1c1c;
-    border-width: 1px 0 0;
-    margin-top: 0;
-    margin-bottom: 4px;
-}
-
-.workspaceDiv .footer {
-    padding: 20px;
-
-    position:fixed;
-    right:0px;
-    bottom:0px;
-    height:80px;
-    width: 100%;
-}
-
-.workspaceDiv textarea {
-    resize: none;
-    border-radius: 5px;
-
-    width: calc(100% - 85px);
-    margin-right: 5px;
-    float: left;
-    height: 41px;
-    padding:10px;
-}
-.workspaceDiv textarea::-webkit-scrollbar {
-   display: none;
-}
-
-.workspaceDiv .button {
-    padding: 10px 20px;
-}
-
-
 .message_name {
-    font-weight: 200;
-    padding-right: 10px;
+  padding-right: 5px;
+  color: #4682B4;
+  font-weight: 400;
+  font-size: 0.8em;
 }
-.message_body {
-    color: black;
+#messages {
+  height: 100%;
+  overflow-y: scroll;
+  background-color: #eee;
+  font-size: 0.8em;
+  line-height: 1.3em;
 }
-.message_row {
-    padding-bottom: 5px;
+#message-body {
+  width: 77%;
+  margin-right: 5px;
+  font-size: 0.8em;
 }
-.screenToggle {
-    padding-bottom: 20px;
+#send-message-btn {
+  vertical-align: top;
 }
-.whiteboard {
-  position: absolute;
-  left: 0;
-  right: 0;
-  bottom: 0;
-  top: 100px;
-}
-#remoteVideos video {
-  height: 150px;
-}
-#localVideo {
-  height: 150px;
-}
-.videoDiv {
-    top: 0;
-    right: 0;
-    position: fixed;
-}
-.workspaceDiv {
-    height: 100%;
-}
-.editorDiv {
-}
-.whiteboardDiv {
-  background-color: grey;
-}
-.colors {
-  position: fixed;
-}
-.color {
-  display: inline-block;
-  height: 30px;
-  width: 30px;
-  border-radius: 50%;
-  margin-left: 5px;
-}
-.color.black { background-color: black; }
-.color.red { background-color: red; }
-.color.green { background-color: green; }
-.color.blue { background-color: blue; }
-.color.yellow { background-color: yellow; }
-#timer {
-  margin-left: 5px;
-}
-#timeString {
-  color: #21BA45;
+#localVideo,
+#remoteVideos {
+  width: 100%;
 }

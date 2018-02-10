@@ -9,7 +9,7 @@ class Messages extends Component {
   render() {
     if (this.props.messages.length) {
       return (
-        <div className="container">
+        <div id="messages">
           {this.props.messages.map((message) => {
             return <Message message={ message } key={ message._id }/>;
           })}
