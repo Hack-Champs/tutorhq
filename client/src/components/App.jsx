@@ -65,6 +65,7 @@ class App extends React.Component {
         this.setState({
           activeItem: 'home',
           isSignedIn: res.data,
+          user: {},
         });
         window.location.hash = '#/';
       })
