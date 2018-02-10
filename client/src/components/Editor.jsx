@@ -74,8 +74,7 @@ class Editor extends Component {
           value={this.state.code}
           editorProps={{$blockScrolling: true}}
           width='100%'
-          height='90vh'
-          fontSize='0.7em'
+          height='95vh'
         />
       </div>
     );
