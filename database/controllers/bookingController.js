@@ -54,11 +54,14 @@ const updateWithBillableTime = (bookingId, billableTime, cb) => {
   });
 };
 
-const deleteBooking = (username, bookingID, callback) => {
-  db.Booking.remove({ _id: bookingID }, function (err) {
+const deleteBooking = (username, bookingID, status, callback) => {
+  console.log('deleting/put controller reached');
+  db.Booking.findById(bookingID, function (err, booking) {
     if (err) {
       return callback(err);
     } else {
+      booking.deleted = status;
+      booking.save();
       db.User.findOne({username: username}, (err, user) => {
         if (err) {
           return callback(err);

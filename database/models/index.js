@@ -41,7 +41,8 @@ const bookingSchema = mongoose.Schema({
   studentName: String,
   date: String,
   time: String,
-  billableTime: String
+  billableTime: String,
+  deleted: {type: Boolean, default: false}
 });
 
 const userSchema = mongoose.Schema({
