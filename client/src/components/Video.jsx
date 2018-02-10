@@ -1,4 +1,5 @@
 import React, { Component } from 'react';
+import SimpleWebRTC from 'simplewebrtc';
 
 class Video extends Component {
   constructor(props) {
