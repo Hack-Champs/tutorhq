@@ -84,14 +84,16 @@ const getChannelDetails = (channelId, cb) => {
     if (err) {
       return cb(err);
     }
-    db.User.findById(booking.userId, (err, user) => {
-      if (err) {
-        return cb(err);
-      }
-      Message.getMessages(channelId, (err, messages) => {
-        cb(null, messages, booking.id, user.id);
+    if (booking) {
+      db.User.findById(booking.userId, (err, user) => {
+        if (err) {
+          return cb(err);
+        }
+        Message.getMessages(channelId, (err, messages) => {
+          cb(null, messages, booking.id, user.id);
+        });
       });
-    });
+    }
   });
 };
 
