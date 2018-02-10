@@ -76,11 +76,11 @@ class Timer extends Component {
     if (this.props.isTutor) {
       controls = (
         <span>
-          <button id ="timer" className="ui labeled icon button primary mini" onClick={this.handleTimerClick.bind(this)}>
+          <button id ="timer" className="ui labeled icon button primary" onClick={this.handleTimerClick.bind(this)}>
             { this.state.timerRunning ? <i className="pause icon"></i> : <i className="play icon"></i> }
             { `${this.state.timeString}` }
           </button>
-          <button id ="end" className="ui labeled icon red button mini" name="end" onClick={this.handleEndSessionClick.bind(this)}>
+          <button id ="end" className="ui labeled icon red button" name="end" onClick={this.handleEndSessionClick.bind(this)}>
             <i className="stop icon"></i>
             End Session</button>
         </span>

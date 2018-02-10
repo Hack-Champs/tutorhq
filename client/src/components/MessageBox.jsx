@@ -40,7 +40,7 @@ class MessageBox extends Component {
           onKeyDown={this.handleKeyPress.bind(this)}
           autoFocus>
         </textarea>
-        <button id="send-message-btn" className="ui button mini primary" onClick={this.sendMessage.bind(this)}>Send</button>
+        <button id="send-message-btn" className="ui button primary" onClick={this.sendMessage.bind(this)}>Send</button>
       </div>
     );
   }
