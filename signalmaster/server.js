@@ -1,5 +1,6 @@
 /*global console*/
 var yetify = require('yetify'),
+    config = require('getconfig'),
     fs = require('fs'),
     sockets = require('./sockets'),
     port = parseInt(process.env.PORT || config.server.port, 10),
@@ -12,8 +13,8 @@ var yetify = require('yetify'),
 // Create an http(s) server instance to that socket.io can listen to
 if (config.server.secure) {
     server = require('https').Server({
-        key: fs.readFileSync(process.env.KEY),
-        cert: fs.readFileSync(process.env.CERT),
+        key: fs.readFileSync(config.server.key),
+        cert: fs.readFileSync(config.server.cert),
         passphrase: config.server.password
     }, server_handler);
 } else {

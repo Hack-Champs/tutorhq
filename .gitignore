@@ -63,4 +63,3 @@ typings/
 
 # bundle
 client/dist/bundle.js
-*.pem
