@@ -59,19 +59,22 @@ class Editor extends Component {
   setMode(e) {
     this.setState({
       mode: e.target.value
-    })
+    });
   }
 
   render() {
-    console.log('rendering')
+    console.log('rendering');
     return (
-      <div className="editorDiv">
+      <div id="editor">
+        <h5>Code Editor</h5>
         <AceEditor
           mode={this.state.mode}
           theme="kuroir"
           onChange={this.onChange.bind(this)}
           value={this.state.code}
           editorProps={{$blockScrolling: true}}
+          width='100%'
+          height='95vh'
         />
       </div>
     );

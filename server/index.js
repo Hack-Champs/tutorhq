@@ -20,20 +20,7 @@ var port = process.env.PORT || 3000;
 var app = express();
 var server = http.Server(app);
 var io = socketIO(server);
-// sockets(server, config);
 server.listen(port);
-
-// var port = process.env.PORT || 3000;
-// if (!module.parent){
-//   var server = app.listen(port, () => {
-//     console.log(`App listening on port ${ port }`);
-//   });
-//   // var server = http.Server(app);
-//   sockets(server, config);
-//   var io = socketIO.listen(server);
-
-//   ; // Assign server to socket var io = require('socket.io')(server); server.listen(4000)
-
 
 app.use(express.static(__dirname + '/../client/dist'));
 app.use(bodyParser.urlencoded({ extended: false }));

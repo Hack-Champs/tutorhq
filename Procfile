@@ -1,2 +1,2 @@
-webrtc: node signal_master/server.js
+webrtc: node signalmaster/server.js
 web: node server/index.js

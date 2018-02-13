@@ -1,11 +1,11 @@
 {
-  "isDev": false,
+  "isDev": true,
   "server": {
     "port": 8888,
     "/* secure */": "/* whether this connects via https */",
-    "secure": true,
-    "key": "config/sslcerts/key.pem",
-    "cert": "config/sslcerts/cert.pem",
+    "secure": false,
+    "key": null,
+    "cert": null,
     "password": null
   },
   "rooms": {
@@ -15,9 +15,9 @@
   "xirsys": {
     "gateway": "global.xirsys.net",
     "info": {
-      "ident": "grantspilsbury",
-      "secret": "8fbfd768-0c57-11e8-80c1-a8b65102d1f6",
-      "channel": "tutorhq"
+      "ident": "",
+      "secret": "",
+      "channel": ""
     }
   },
   "stunservers": [

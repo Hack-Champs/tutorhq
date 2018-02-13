@@ -8,14 +8,14 @@ class MessageBox extends Component {
   }
 
   sendMessage() {
-    const $messageBody = $('#message-body')
+    const $messageBody = $('#message-body');
     var body = $messageBody.val();
     if (body) {
       const socket = this.props.socket;
       socket.emit(`client:createMessage`, {
-          channelId: this.props.channelId,
-          body: body,
-          name: this.props.name
+        channelId: this.props.channelId,
+        body: body,
+        name: this.props.name
       });
       $messageBody.val('');
       $messageBody.focus();
@@ -31,7 +31,7 @@ class MessageBox extends Component {
 
   render() {
     return (
-      <div className="footer">
+      <div className="messagebox-container">
         <textarea
           id="message-body"
           name="message"
@@ -40,7 +40,7 @@ class MessageBox extends Component {
           onKeyDown={this.handleKeyPress.bind(this)}
           autoFocus>
         </textarea>
-        <button className="ui button primary" onClick={this.sendMessage.bind(this)}>Send</button>
+        <button id="send-message-btn" className="ui button primary" onClick={this.sendMessage.bind(this)}>Send</button>
       </div>
     );
   }

@@ -1,24 +1,18 @@
 import React, { Component } from 'react';
 import $ from 'jquery';
 
-class ScreenToggle extends Component {
+class Timer extends Component {
   constructor(props) {
     super(props);
-    this.handleClick = this.handleClick.bind(this);
     this.handleTimerClick = this.handleTimerClick.bind(this);
     this.handleEndSessionClick = this.handleEndSessionClick.bind(this);
     this.setTime = this.setTime.bind(this);
     this.timer = null;
     this.state = {
       totalSeconds: 0,
-      timeString: '',
+      timeString: '0.00',
       timerRunning: false
     };
-  }
-
-  handleClick(component) {
-    this.toggleButtons(component);
-    this.props.handleClick(component);
   }
 
   handleTimerClick() {
@@ -71,14 +65,6 @@ class ScreenToggle extends Component {
     }
   }
 
-  toggleButtons(component) {
-    var $chat = $('#chat').removeClass('primary');
-    var $whiteboard = $('#whiteboard').removeClass('primary');
-    var $editor = $('#editor').removeClass('primary');
-    var toggleButton = $('#' + component);
-    toggleButton.addClass('primary');
-  }
-
   handleEndSessionClick() {
     this.handleTimerClick();
     this.props.handleEndSession(this.state.totalSeconds);
@@ -86,28 +72,26 @@ class ScreenToggle extends Component {
 
   render() {
     var controls = '';
+
     if (this.props.isTutor) {
       controls = (
         <span>
-          <button id ="timer" className="ui button basic positive" name="timer" onClick={this.handleTimerClick.bind(this)}>{ this.state.timerRunning ? 'Stop' : 'Start' } Timer <span id="timeString">{ `${this.state.timeString}` }</span></button>
-          <button id ="end" className="ui button basic positive negative" name="end" onClick={this.handleEndSessionClick.bind(this)}>End Session</button>
+          <button id ="timer" className="ui labeled icon button primary" onClick={this.handleTimerClick.bind(this)}>
+            { this.state.timerRunning ? <i className="pause icon"></i> : <i className="play icon"></i> }
+            { `${this.state.timeString}` }
+          </button>
+          <button id ="end" className="ui labeled icon red button" name="end" onClick={this.handleEndSessionClick.bind(this)}>
+            <i className="stop icon"></i>
+            End Session</button>
         </span>
       );
     }
     return (
-      <div className="screenToggle">
-        <div className="ui buttons">
-          <button id ="chat" className="ui button primary" name="chat" onClick={this.handleClick.bind(this, 'chat')}>Chat</button>
-          <div className="or"></div>
-          <button id ="whiteboard" className="ui button" name="whiteboard" onClick={this.handleClick.bind(this, 'whiteboard')}>Whiteboard</button>
-          <div className="or"></div>
-          <button id ="editor" className="ui button" name="editor" onClick={this.handleClick.bind(this, 'editor')}>Editor</button>
-
-        </div>
+      <div>
         {controls}
       </div>
     );
   }
 }
 
-export default ScreenToggle;
+export default Timer;
