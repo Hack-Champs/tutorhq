@@ -15,9 +15,9 @@
   "xirsys": {
     "gateway": "global.xirsys.net",
     "info": {
-      "ident": "grantspilsbury",
-      "secret": "8fbfd768-0c57-11e8-80c1-a8b65102d1f6",
-      "channel": "tutorhq"
+      "ident": "",
+      "secret": "",
+      "channel": ""
     }
   },
   "stunservers": [
