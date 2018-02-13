@@ -15,20 +15,25 @@ class StudentTableView extends React.Component {
       <Table color={'black'} fixed>
         <Table.Header>
           <Table.Row>
-            <Table.HeaderCell>{studentName[0]}</Table.HeaderCell>
-            <Table.HeaderCell>{this.props.booking[studentName].email}</Table.HeaderCell>
-            <Table.HeaderCell>Notes: {this.props.booking[studentName].notes}</Table.HeaderCell>
+            <Table.HeaderCell>Student</Table.HeaderCell>
+            <Table.HeaderCell>Email</Table.HeaderCell>
+            <Table.HeaderCell>Appointment</Table.HeaderCell>
+            <Table.HeaderCell>Notes</Table.HeaderCell>
           </Table.Row>
         </Table.Header>
         <Table.Body>
-          {this.props.booking[studentName].sessions.map((session, i) =>
-            <StudentTableViewEntry session = { session } key = { i } /> )
-          }
+          {this.props.booking[studentName].sessions.map((session, i) => (
+            <StudentTableViewEntry
+              session={session}
+              student={studentName[0]}
+              booking={this.props.booking}
+              key={i}
+            />
+          ))}
         </Table.Body>
       </Table>
     );
   }
 }
-
 
 export default StudentTableView;
