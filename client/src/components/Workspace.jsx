@@ -14,7 +14,7 @@ class Workspace extends Component {
   constructor(props) {
     super(props);
     // const port = process.env.PORT || '3000' or window.location.hostname || 'https://tutorhq.herokuapp.com/' localhost:3000;
-    this.socket = io.connect('https://tutorhq.herokuapp.com/');
+    this.socket = io.connect('localhost:3000');
     this.handleEndSession = this.handleEndSession.bind(this);
     this.startVideo = this.startVideo.bind(this);
     this.toggleVideo = this.toggleVideo.bind(this);
