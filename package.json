@@ -5,7 +5,7 @@
   "main": "server/index.js",
   "scripts": {
     "test-client": "jest",
-    "test-server": "mocha spec/server/serverSpec",
+    "test-server": "jest spec/server",
     "test": "npm run test-server && npm run test-client",
     "test:watch": "jest --watch",
     "test:coverage": "jest --coverage",

@@ -1,4 +1,4 @@
-const db = require('../models/index.js')
+const db = require('../models/index.js');
 
 const findOrCreate = (query, callback) => {
   db.User.findOne({ googleId: query.googleId }, (err, user) => {
