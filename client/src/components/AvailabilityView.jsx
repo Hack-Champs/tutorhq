@@ -101,8 +101,6 @@ class AvailabilityView extends React.Component {
       .catch(err => {
         console.log(err);
       });
-    document.getElementById('nameInput').value = '';
-    document.getElementById('timeInput').value = '';
     this.setState({selectedStudent: null});
   }
 
