@@ -13,6 +13,7 @@ import SubscriptionsView from './SubscriptionsView.jsx';
 import HomeView from './HomeView.jsx';
 import axios from 'axios';
 import _ from 'lodash';
+import AOS from 'aos';
 
 
 const source = [
@@ -288,7 +289,7 @@ class DashboardView extends React.Component {
             <hr />
             <br />
             <br />
-            <Grid stackable>
+            <Grid stackable data-aos="fade-down">
               <Grid.Column mobile={8} tablet={12} computer={12}>
                 <Grid.Row>
                   <Icon name="user outline" size="large"/>About the Tutor
