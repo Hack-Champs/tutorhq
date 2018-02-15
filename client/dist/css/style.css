@@ -162,6 +162,20 @@ h4.tutorDescription {
   letter-spacing: 1px;
   color: white;
 }
+
+#classroomButton {
+  background-color: #7eceef !important;
+  color: white;
+}
+
+.bookingDeleteButton {
+  background-color: #afafaf !important; 
+}
+
+.trash.outline.icon {
+  padding-left: 1px !important;
+}
+
 /* Tutor Profile Styling */
 
 #sendEmailButton {
@@ -227,6 +241,7 @@ h4.tutorDescription {
 #subscriptionTitle {
   font-size: 40px !important;
 }
+
 /* ===================== */
 
 .viewHeader {
