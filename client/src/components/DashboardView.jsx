@@ -14,6 +14,7 @@ import HomeView from './HomeView.jsx';
 import axios from 'axios';
 import _ from 'lodash';
 
+
 const source = [
   {
     'title': 'English',
@@ -191,30 +192,34 @@ class DashboardView extends React.Component {
 
   render () {
     const { isLoading, results, newSubject, visible, view } = this.state;
+    const colors = [
+      'red', 'orange', 'yellow', 'green', 'teal',
+      'blue', 'violet', 'purple', 'pink',
+    ];
     let descriptionSection;
     let currentView;
-
+    console.log('Current subjects: ', this.state.subjects);
     if (this.state.editing) {
       descriptionSection = (
         <Form>
           <Form.TextArea onChange={this.changeDescription} label='Description' placeholder='Please add a description' value={this.state.description} />
-          <Form.Button basic color="blue" floated="right" onClick={this.submitDescription}>Save</Form.Button>
+          <Form.Button basic color="black" floated="right" onClick={this.submitDescription}>Save</Form.Button>
         </Form>
       );
     } else {
       if (this.props.tutor) {
         descriptionSection = (
           <div>
-            <Segment color="blue">
+            <Segment color="black">
               {this.state.description}
             </Segment>
-            <Button basic color="blue" floated="right" onClick={this.onEditClick}>Edit</Button>
+            <Button basic color="black" floated="right" onClick={this.onEditClick}>Edit</Button>
           </div>
         );
       } else {
         descriptionSection = (
           <div>
-            <Segment color="blue">
+            <Segment color="black">
               {this.state.description}
             </Segment>
           </div>
@@ -239,7 +244,7 @@ class DashboardView extends React.Component {
       currentView = (
         <div>
           <Container className="dashboardviews">
-          <h1 className="viewHeader">Students</h1>
+            <h1 className="viewHeader">Students</h1>
             <StudentsView
               students= { this.props.students }
               createstudent={this.props.createstudent}
@@ -270,9 +275,9 @@ class DashboardView extends React.Component {
         <div>
           <Container className="dashboardviews">
             <h1 className="profileHeader">Tutor Profile</h1>
-
-            <div>{this.props.email}</div>
-            <br />
+            <Icon name="mail outline" size="large"/>{this.props.email}
+            <br/>
+            <br/>
             <Rating
               icon='star'
               rating={this.state.rating}
@@ -280,28 +285,44 @@ class DashboardView extends React.Component {
               onRate={this.onRate}
               clearable
             />
+            <hr />
             <br />
-            {descriptionSection}
-            <h2>Subjects</h2>
-            <form onSubmit={this.onSubmit}>
-              <h4>Add a subject</h4>
-              <Search
-                input={{ icon: 'search', iconPosition: 'left' }}
-                loading={isLoading}
-                onResultSelect={this.handleResultSelect}
-                onSearchChange={this.handleSearchChange}
-                results={results}
-                value={newSubject}
-                {...this.props}
-              />
-              <br/>
-            </form>
-            <div>
-              {this.state.subjects.map((subject, i) => {
-                return <Label key={i} as='subject' basic>{subject}</Label>;
-              })}
-            </div>
-            <ProfileView email={this.props.email} />
+            <br />
+            <Grid stackable>
+              <Grid.Column mobile={8} tablet={12} computer={12}>
+                <Grid.Row>
+                  <Icon name="user outline" size="large"/>About the Tutor
+                  <br/>
+                  <br/>
+                  {descriptionSection}
+                </Grid.Row>
+                <Grid.Row>
+                  <Icon name="bookmark outline" size="large"/>Subjects
+                  <br/>
+                  <form onSubmit={this.onSubmit}>
+                    <h4>Add a subject</h4>
+                    <Search
+                      input={{ icon: 'search', iconPosition: 'left' }}
+                      loading={isLoading}
+                      onResultSelect={this.handleResultSelect}
+                      onSearchChange={this.handleSearchChange}
+                      results={results}
+                      value={newSubject}
+                      {...this.props}
+                    />
+                    <br/>
+                  </form>
+                  <div>
+                    {this.state.subjects.map((subject, i) => {
+                      return <Label circular color={colors[Math.floor(Math.random() * 8)]} size='huge' key={i} as='subject' basic>{subject}</Label>;
+                    })}
+                  </div>
+                </Grid.Row>
+              </Grid.Column>
+
+              <ProfileView email={this.props.email} />
+
+            </Grid>
           </Container>
         </div>
       );

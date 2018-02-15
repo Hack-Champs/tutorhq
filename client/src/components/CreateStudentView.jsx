@@ -54,7 +54,7 @@ class CreateStudentView extends React.Component {
 
         <Form.TextArea label='Notes' placeholder='Enter notes here...' value={this.state.notes} onChange={this.updateNotes}/>
 
-        <center><Form.Button id="addBookingButton" onClick={this.createStudent}>Create a new student</Form.Button></center>
+        <center><Form.Button id="createStudentButton" onClick={this.createStudent}>Create a new student</Form.Button></center>
       </Form>
     );
   }

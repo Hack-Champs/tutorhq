@@ -34,13 +34,8 @@ class StudentsView extends React.Component {
     return (
       <div>
         <CreateStudentView tutor = {this.props.tutor} createstudent={this.props.createstudent} />
-        <List horizontal relaxed>
-          {this.props.students.map((student, i) =>
-            <StudentsViewEntry key={ i } student = { student } />
-          )}
-        </List>
-        {this.state.bookings.map((booking, i) =>
-          <StudentTableView key={ i } booking = { booking } />
+        {this.props.students.map((student, i) =>
+          <StudentsViewEntry key={ i } student = { student } bookings={this.state.bookings}/>
         )}
       </div>
     );

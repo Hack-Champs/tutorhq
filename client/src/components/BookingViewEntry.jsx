@@ -22,6 +22,7 @@ class BookingViewEntry extends React.Component {
         <Table.Cell><a href={`/#/classroom/${this.props.booking.channelId}?tutor=${encodeURIComponent(this.props.displayName)}`} target="_blank">Link</a></Table.Cell>
         <Table.Cell>
           <Button
+            color='red'
             id={ this.props.booking._id }
             onClick={ this.handleDelete }
           >Delete</Button>
