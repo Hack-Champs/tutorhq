@@ -1,6 +1,6 @@
 import React from 'react';
 import ReactDOM from 'react-dom';
-import { Button, Table } from 'semantic-ui-react';
+import { Button, Icon, Table } from 'semantic-ui-react';
 
 class BookingViewEntry extends React.Component {
   constructor(props) {
@@ -19,13 +19,22 @@ class BookingViewEntry extends React.Component {
         <Table.Cell>{this.props.booking.studentName}</Table.Cell>
         <Table.Cell>{this.props.booking.date}</Table.Cell>
         <Table.Cell>{this.props.booking.time}</Table.Cell>
-        <Table.Cell><a href={`/#/classroom/${this.props.booking.channelId}?tutor=${encodeURIComponent(this.props.displayName)}`} target="_blank">Link</a></Table.Cell>
         <Table.Cell>
           <Button
-            color='red'
+            id='classroomButton'
+            href={`/#/classroom/${this.props.booking.channelId}?tutor=${encodeURIComponent(this.props.displayName)}`} 
+            target="_blank">
+            Link
+          </Button>
+        </Table.Cell>
+        <Table.Cell>
+          <Button circular
+            className='bookingDeleteButton'
+            color='grey'
             id={ this.props.booking._id }
             onClick={ this.handleDelete }
-          >Delete</Button>
+            icon='trash outline' >
+          </Button>
         </Table.Cell>
       </Table.Row>
     );
