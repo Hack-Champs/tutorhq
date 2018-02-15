@@ -11,4 +11,6 @@ router.put('/dashboard/:tutor', helpers.updateTutor);
 
 router.get('/tutors', helpers.getTutors);
 
+router.put('/users/:username/booking/:bookingID', helpers.deleteBooking);
+
 module.exports = router;

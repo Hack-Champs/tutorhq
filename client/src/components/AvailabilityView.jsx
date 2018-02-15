@@ -106,10 +106,13 @@ class AvailabilityView extends React.Component {
   }
 
   deleteBooking(bookingID) {
-    axios.put(`/users/${this.props.tutor}/booking/${bookingID}`, {deleted: true})
+    axios.put(`/users/${this.props.tutor}/booking/${bookingID}`, {bookingID: bookingID})
       .then(response => {
+        var activeBookings = this.state.bookings.filter((booking) => {
+          return booking._id !== bookingID;
+        });
         this.setState({
-          bookings: response.data
+          bookings: activeBookings
         });
       })
       .catch(err => {

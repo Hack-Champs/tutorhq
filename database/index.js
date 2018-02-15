@@ -80,22 +80,6 @@ const createBooking = (email, query, callback) => {
   });
 };
 
-const deleteBooking = (email, bookingId, callback) => {
-  Session.findOne({ email: email }, (err, user) => {
-    if (user) {
-      user.sessions.findOneandRemove({ _id: bookingId }, (err, booking) => {
-        updatedBookings = user.sessions.filter((bookings) => {
-          return bookings !== booking;
-        });
-        user.sessions = updatedBookings;
-        user.save((err, user) => {
-          callback(err, user.sessions);
-        });
-      });
-    }
-  });
-};
-
 const findOrCreate = (query, callback) => {
   User.findOne({ googleId: query.googleId }, (err, user) => {
     if (!user) {
