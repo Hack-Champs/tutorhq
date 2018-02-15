@@ -6,7 +6,7 @@ const getBookingsForUser = (username, cb) => {
     if (err) {
       return cb(err);
     } else {
-      db.Booking.find({'userId': user.id}, (err, bookings) => {
+      db.Booking.find({'userId': user.id, deleted: false}, (err, bookings) => {
         cb(null, bookings);
       });
     }
@@ -54,31 +54,6 @@ const updateWithBillableTime = (bookingId, billableTime, cb) => {
   });
 };
 
-const deleteBooking = (username, bookingID, status, callback) => {
-  console.log('deleting/put controller reached');
-  db.Booking.findById(bookingID, function (err, booking) {
-    if (err) {
-      return callback(err);
-    } else {
-      booking.deleted = status;
-      booking.save();
-      db.User.findOne({username: username}, (err, user) => {
-        if (err) {
-          return callback(err);
-        } else {
-          db.Booking.find({userId: user.id}, (err, bookings) => {
-            if (err) {
-              return callback(err);
-            } else {
-              callback(null, bookings);
-            }
-          });
-        }
-      });
-    }
-  });
-};
-
 const getChannelDetails = (channelId, cb) => {
   db.Booking.findOne({ channelId: channelId }, function (err, booking) {
     if (err) {
@@ -100,6 +75,5 @@ const getChannelDetails = (channelId, cb) => {
 
 module.exports.createBooking = createBooking;
 module.exports.getBookingsForUser = getBookingsForUser;
-module.exports.deleteBooking = deleteBooking;
 module.exports.updateWithBillableTime = updateWithBillableTime;
 module.exports.getChannelDetails = getChannelDetails;
