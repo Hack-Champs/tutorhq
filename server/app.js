@@ -145,26 +145,6 @@ app.post('/users/:username/booking', (req, res) => {
   });
 });
 
-// Delete booking from tutor's profile
-app.put('/users/:username/booking/:bookingID', (req, res) => {
-  var username = req.user.username;
-  var bookingID = req.params.bookingID;
-  var status = req.body.deleted;
-  bookingCtrl.deleteBooking(username, bookingID, status, (err, bookings) => {
-    if (err) {
-      res.status(501).send('Could not delete that booking');
-    } else {
-      let activeBookings = [];
-      bookings.forEach((booking) => {
-        if (!booking.deleted) {
-          activeBookings.push(booking);
-        }
-      });
-      res.send(activeBookings);
-    }
-  });
-});
-
 app.get('/users/:username/students', (req, res) => {
   var username = req.user.username;
   db.User.findOne({username: username}, (err, user) => {

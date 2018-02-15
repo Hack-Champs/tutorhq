@@ -67,4 +67,17 @@ exports.getTutors = (req, res) => {
     });
 };
 
+exports.deleteBooking = (req, res) => {
+  db.Booking.findOneAndUpdate(
+    { _id: req.params.bookingID },
+    { deleted: true }
+  )
+    .then(() => {
+      res.send('booking deleted');
+    })
+    .catch((err) => {
+      res.send(err);
+    });
+};
+
 module.exports = exports;
