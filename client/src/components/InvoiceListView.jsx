@@ -51,7 +51,6 @@ class InvoiceListView extends React.Component {
                 <Table.Cell>{ numeral(invoice.total).format('$0,0.00') }</Table.Cell>
                 <Table.Cell><Dropdown placeholder='Status' search selection options={statusOptions} /></Table.Cell>
                 <Table.Cell>
-                  <Button color='blue'>Edit</Button>
                   <Button color='red'>Remove</Button>
                 </Table.Cell>
               </Table.Row>
