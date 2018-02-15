@@ -262,7 +262,7 @@ class DashboardView extends React.Component {
     } else if (this.state.view === 'invoices') {
       currentView = (
         <div className="dashboardviews">
-          <InvoiceListView />
+          <InvoiceListView tutor={this.props.tutor} />
         </div>
       );
     } else if (this.state.view === 'subscriptions') {

@@ -13,4 +13,6 @@ router.get('/tutors', helpers.getTutors);
 
 router.put('/users/:username/booking/:bookingID', helpers.deleteBooking);
 
+router.put('/users/:username/invoices/:invoiceID', helpers.deleteInvoice);
+
 module.exports = router;

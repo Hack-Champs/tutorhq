@@ -66,7 +66,8 @@ const invoiceSchema = mongoose.Schema({
   dueDate: String,
   notes: String,
   lineItems: [],
-  total: String
+  total: String,
+  deleted: {type: Boolean, default: false}
 });
 
 const ratingSchema = mongoose.Schema({

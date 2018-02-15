@@ -80,4 +80,17 @@ exports.deleteBooking = (req, res) => {
     });
 };
 
+exports.deleteInvoice = (req, res) => {
+  db.Invoice.findOneAndUpdate(
+    { _id: req.params.invoiceID },
+    { deleted: true }
+  )
+    .then(() => {
+      res.send('invoice deleted');
+    })
+    .catch((err) => {
+      res.send(err);
+    });
+};
+
 module.exports = exports;
