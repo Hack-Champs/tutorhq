@@ -49,7 +49,7 @@ class DashboardView extends React.Component {
       newSubject: '',
       rating: 5,
       editing: false,
-      visible: false,
+      visible: true,
       view: 'dashboard',
     };
     this.resetComponent = this.resetComponent.bind(this);
@@ -187,7 +187,6 @@ class DashboardView extends React.Component {
 
   setView(e) {
     this.setState({view: e});
-    this.toggleVisibility();
   }
 
   render () {
@@ -310,27 +309,26 @@ class DashboardView extends React.Component {
 
     return (
       <div>
-        <Button icon='list layout' onClick={this.toggleVisibility} />
         <Sidebar.Pushable as={Segment}>
           <Sidebar as={Menu} animation='overlay' width='thin' visible={visible} icon='labeled' vertical inverted>
             <Menu.Item name='dashboard' href="/#/dashboard" onClick={this.setView.bind(name, 'dashboard')}>
-              <Icon name='calendar' />
+              <Image className="sidebarImage" src='https://i.imgur.com/KGxefXR.png' size='mini' centered />
               Dashboard
             </Menu.Item>
             <Menu.Item name='profile' href="/#/dashboard" onClick={this.setView.bind(name, 'profile')}>
-              <Icon name='user circle outline' />
+            <Image className="sidebarImage" src='https://i.imgur.com/NPTPrq1.png' size='mini' centered />
               Profile
             </Menu.Item>
             <Menu.Item name='students' href="/#/dashboard" onClick={this.setView.bind(name, 'students')}>
-              <Icon name='users' />
+            <Image className="sidebarImage" src='https://i.imgur.com/GoTXYmd.png' size='mini' centered />
               Students
             </Menu.Item>
             <Menu.Item name='invoices' href="/#/dashboard" onClick={this.setView.bind(name, 'invoices')}>
-              <Icon name='file text outline' />
+            <Image className="sidebarImage" src='https://i.imgur.com/7ZO6t7i.png' size='mini' centered />
               Invoices
             </Menu.Item>
             <Menu.Item name='subscriptions' href="/#/dashboard" onClick={this.setView.bind(name, 'subscriptions')}>
-              <Icon name='credit card' />
+            <Image className="sidebarImage" src='https://i.imgur.com/0vrLU3H.png' size='mini' centered />
               Subscriptions
             </Menu.Item>
           </Sidebar>

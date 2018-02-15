@@ -84,7 +84,9 @@ class HomeView extends React.Component {
                   </div>
                 </div>
                 <div class="ten column centered row">
-                  <div class="ten wide column" ><Button primary size="large" id="signUpButton" >Sign up!</Button></div>
+                  <div class="ten wide column" >
+                    <Button as={ Link } to={ '/pricing' } primary size="large" id="signUpButton">Sign up!</Button>
+                  </div>
                 </div>
               </div>
             </div>

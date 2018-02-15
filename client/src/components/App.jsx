@@ -128,7 +128,7 @@ class App extends React.Component {
     let menu = '';
     if (!activeItem.includes('classroom')) {
       menu = (
-        <Menu pointing secondary>
+        <Menu id="mainNavBar" pointing secondary>
           <Menu.Item name='home' as={Link} to='/' active={activeItem === '/'} onClick={this.handleItemClick} replace />
           { this.state.isSignedIn &&
             <Menu.Item name='dashboard' as={Link} to='/dashboard' active={activeItem === '/dashboard' || activeItem.includes('/tutors/')} onClick={this.handleItemClick} replace />
