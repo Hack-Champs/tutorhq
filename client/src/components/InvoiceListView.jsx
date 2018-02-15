@@ -4,7 +4,7 @@ import { Link } from 'react-router-dom';
 import { Button, Container, Dropdown, Table } from 'semantic-ui-react';
 import axios from 'axios';
 import numeral from 'numeral';
-
+import AOS from 'aos';
 class InvoiceListView extends React.Component {
   constructor(props) {
     super(props);
@@ -31,7 +31,7 @@ class InvoiceListView extends React.Component {
       <Container>
         <h1 className="profileHeader">My Invoices</h1>
         <Button as={Link} to='/createInvoice' color='green' replace>New Invoice</Button>
-        <Table color={'black'}>
+        <Table color={'black'} data-aos="fade-right">
           <Table.Header>
             <Table.Row>
               <Table.HeaderCell>Due Date</Table.HeaderCell>

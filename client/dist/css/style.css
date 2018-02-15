@@ -138,11 +138,42 @@ h4.tutorDescription {
   font-size: 18px;
   font-weight: normal;
 }
+/* Dashboard Styling */
 
 #addBookingButton {
-  background-color: #9acde5;
+  background-color: #5BC8AC !important;
+  font-weight: normal;
+  letter-spacing: 1px;
   color: #fff;
 }
+
+.bookingsDashboard {
+  min-width: 420px;
+}
+
+.ui.green.button {
+  background-color: #4fbc36 !important;
+  color: white;
+  letter-spacing: 1px;
+}
+.ui.red.button {
+  background-color: #f32121 !important;
+  font-weight: normal;
+  letter-spacing: 1px;
+  color: white;
+}
+/* Tutor Profile Styling */
+
+#sendEmailButton {
+  font-size: 15px !important;
+  background-color: #5BC8AC !important;
+  color: white !important;
+  font-weight: normal;
+  letter-spacing: 1px;
+}
+
+/* ===================== */
+
 #signUpButton {
   background-color: #9acde5;
   font-size: 22px !important;
@@ -177,28 +208,104 @@ h4.tutorDescription {
   text-align: center;
   margin-bottom: 50px;
 }
+/*Subcription Page Styling*/
 
 .subscriptionButtons {
-  font-size: 20px !important;
+  font-size: 16px !important;
+  font-weight: normal;
+  letter-spacing: 1px;
+}
+
+.upgradeButtons {
+  font-size: 16px !important;
+  background-color: #5BC8AC !important;
+  font-weight: normal;
+  letter-spacing: 1px;
+  color: white !important;
 }
 
 #subscriptionTitle {
   font-size: 40px !important;
 }
+/* ===================== */
 
 .viewHeader {
   padding-top: 30px;
-  padding-bottom: 40px;
-  text-transform: uppercase;
-  letter-spacing: 3px;
+  padding-bottom: 20px;
+  letter-spacing: 2px;
+  font-size: 36px;
+  color: #2c2c2c;
+  font-family: 'TipotypeRegular';
 }
 
 .profileHeader {
   padding-top: 30px;
-  text-transform: uppercase;
-  letter-spacing: 3px;
+  letter-spacing: 2px;
+  color: #2c2c2c;
+  font-size: 36px;
+  font-family: 'TipotypeRegular';
 }
 
+/*Pricing styling*/
+
+.pricingHeader {
+  padding-top: 30px;
+  letter-spacing: 2px;
+  font-size: 72px;
+  font-family: 'TipotypeRegular';
+  font-weight: normal;
+  font-style: normal;
+}
+
+.pricingDescription {
+  font-weight: normal;
+}
+
+.pricingSegment {
+  min-height: 400px;
+}
+
+.pricingInfo {
+  font-weight: normal;
+  padding-top: 60px;
+
+}
+
+/* Student Page Styling */
+
+.studentInfoColumn {
+  background-color: #8cd8c4;
+}
+.sessionInfoColumn {
+  width: 100%;
+}
+
+.studentName {
+  color: white;
+  font-size: 28px;
+  letter-spacing: 2px;
+  font-family: 'TipotypeRegular';
+  font-weight: normal;
+
+}
+
+#createStudentButton {
+  font-size: 14px !important;
+  background-color: #5BC8AC !important;
+  color: white !important;
+  margin-bottom: 40px;
+  margin-top: 15px;
+  font-weight: normal;
+  letter-spacing: 1px;
+}
+
+.studentEmail {
+  color: white;
+  font-size: 15px !important;
+  letter-spacing: 0.5px;
+  font-weight: lighter !important;
+
+}
 
 .thin {
   width: 125px !important;

@@ -6,6 +6,7 @@ import axios from 'axios';
 import { Dropdown, Grid, Button, Container, Input, Segment } from 'semantic-ui-react';
 import moment from 'moment';
 import TimePicker from 'rc-time-picker';
+import AOS from 'aos';
 
 class AvailabilityView extends React.Component {
   constructor(props) {
@@ -136,10 +137,10 @@ class AvailabilityView extends React.Component {
 
     return (
       <div>
-        <Grid columns={2} divided>
+        <Grid columns={2} stackable>
           <Grid.Row stretched>
             <Grid.Column>
-              <Segment className="timeInput" id="timeInput">
+              <Segment className="timeInput dateInput" id="timeInput" data-aos="fade-right" data-aos-duration="1000">
                 <p>Name</p>
                 <Dropdown placeholder='Student' search selection options={options} onChange={ this.captureName.bind(options.value) }/>
                 <p className="formEntryTitle">Time</p>
@@ -151,13 +152,11 @@ class AvailabilityView extends React.Component {
                   format={ this.state.format }
                   use12Hours
                 />
-              </Segment>
-              <Segment className="dateInput">
                 <div>
                   { this.state.date ? (
-                    <p>You picked { this.state.date.toLocaleDateString()}</p>
+                    <p><br />You picked { this.state.date.toLocaleDateString()}</p>
                   ) : (
-                    <p align="left">Choose a date</p>
+                    <p align="left"><br />Choose a date</p>
                   )}
                   <DayPicker onDayClick={ this.dateClick } />
                 </div>
@@ -166,7 +165,7 @@ class AvailabilityView extends React.Component {
               </Segment>
             </Grid.Column>
             <Grid.Column>
-              <Segment className="bookings">
+              <Segment className="bookingsDashboard" data-aos="fade-left" data-aos-duration="1000">
                 <BookingView
                   bookings={ this.state.bookings }
                   deleteBooking={ this.deleteBooking }
