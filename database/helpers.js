@@ -42,7 +42,7 @@ exports.newTutor = (req, res) => {
 
 exports.updateTutor = (req, res) => {
   db.User.findOneAndUpdate(
-    { username: req.user.username },
+    { username: req.params.tutor },
     {
       description: req.body.description,
       $addToSet: { subjects: { $each: req.body.subjects || [] } },

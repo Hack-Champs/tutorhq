@@ -53,6 +53,7 @@ class DashboardView extends React.Component {
       editing: false,
       visible: true,
       view: 'dashboard',
+      componentInitialized: false,
     };
     this.resetComponent = this.resetComponent.bind(this);
     this.handleResultSelect = this.handleResultSelect.bind(this);
@@ -68,13 +69,22 @@ class DashboardView extends React.Component {
     this.setView = this.setView.bind(this);
   }
 
-  componentDidMount() {
-    this.resetComponent();
-    this.getTutorInfo();
+  componentWillUpdate() {
+    if (!this.state.componentInitialized) {
+      this.resetComponent();
+      this.getTutorInfo();
+      this.setState({
+        componentInitialized: true,
+      });
+    }
   }
 
   getTutorInfo() {
-    axios.get(`/dashboard/${this.props.tutor}`)
+    axios.get(`/dashboard/${this.props.tutor}`, {
+      params: {
+        tutor: this.props.tutor,
+      }
+    })
       .then((response) => {
         this.setState({
           description: response.data[0].description,
@@ -133,6 +143,7 @@ class DashboardView extends React.Component {
     axios.put(`/dashboard/${this.props.tutor}`, {
       description: this.state.description,
       subjects: [...this.state.subjects, subject],
+      tutor: this.props.tutor,
     })
       .then((response) => {
         this.setState({
