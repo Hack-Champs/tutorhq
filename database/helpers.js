@@ -42,7 +42,7 @@ exports.newTutor = (req, res) => {
 
 exports.updateTutor = (req, res) => {
   db.User.findOneAndUpdate(
-    { username: req.user.username },
+    { username: req.params.tutor },
     {
       description: req.body.description,
       $addToSet: { subjects: { $each: req.body.subjects || [] } },
@@ -74,6 +74,19 @@ exports.deleteBooking = (req, res) => {
   )
     .then(() => {
       res.send('booking deleted');
+    })
+    .catch((err) => {
+      res.send(err);
+    });
+};
+
+exports.deleteInvoice = (req, res) => {
+  db.Invoice.findOneAndUpdate(
+    { _id: req.params.invoiceID },
+    { deleted: true }
+  )
+    .then(() => {
+      res.send('invoice deleted');
     })
     .catch((err) => {
       res.send(err);

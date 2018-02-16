@@ -5,12 +5,14 @@ import { Button, Container, Dropdown, Table } from 'semantic-ui-react';
 import axios from 'axios';
 import numeral from 'numeral';
 import AOS from 'aos';
+
 class InvoiceListView extends React.Component {
   constructor(props) {
     super(props);
     this.state = {
       invoices: []
     }
+    this.deleteInvoice = this.deleteInvoice.bind(this);
   }
 
   componentDidMount() {
@@ -23,6 +25,22 @@ class InvoiceListView extends React.Component {
       .catch(error => {
         console.log(error);
       })
+  }
+
+  deleteInvoice(e) {
+    const invoiceID = e.target.id;
+    axios.put(`/users/${this.props.tutor}/invoices/${invoiceID}`, {invoiceID: invoiceID})
+      .then(response => {
+        var activeInvoices = this.state.invoices.filter((invoice) => {
+          return invoice._id !== invoiceID;
+        });
+        this.setState({
+          invoices: activeInvoices
+        });
+      })
+      .catch(err => {
+        console.log(err);
+      });
   }
 
   render() {
@@ -51,7 +69,13 @@ class InvoiceListView extends React.Component {
                 <Table.Cell>{ numeral(invoice.total).format('$0,0.00') }</Table.Cell>
                 <Table.Cell><Dropdown placeholder='Status' search selection options={statusOptions} /></Table.Cell>
                 <Table.Cell>
-                  <Button color='red'>Remove</Button>
+                  <Button
+                    id={invoice._id}
+                    color='red'
+                    onClick={this.deleteInvoice}
+                  >
+                    Remove
+                  </Button>
                 </Table.Cell>
               </Table.Row>
             )}

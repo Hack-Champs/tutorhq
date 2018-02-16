@@ -22,7 +22,7 @@ const saveInvoice = (newInvoice, callback) => {
 
 const getInvoices = (callback) => {
   console.log('get invoices has been called');
-  db.Invoice.find({}, (err, data) => {
+  db.Invoice.find({deleted: false}, (err, data) => {
     if (err) {
       callback(err);
     } else {

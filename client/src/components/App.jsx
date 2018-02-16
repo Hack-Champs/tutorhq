@@ -154,7 +154,7 @@ class App extends React.Component {
           <Route path='/tutors/:tutor' render={() => <DashboardView tutor={this.state.user.username} email={this.state.user.email} />} />
           <Route path='/dashboard/:tutor' render={() => <DashboardView tutor={this.state.user.username} />} />
           <Route path='/createInvoice' render={() => <InvoiceCreateView /> } />
-          <Route path='/invoiceList' render={() => <InvoiceListView /> } />
+          <Route path='/invoiceList' render={() => <InvoiceListView tutor={this.state.user.username} />} />
           <Route path='/pricing' render={() => <SubscriptionsView /> } />
           <Route path='/subscribe' render={() => <SubscriptionsPaymentView /> } />
           <Route path='/classroom/:id' component={Workspace} />
