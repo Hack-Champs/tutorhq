@@ -5,7 +5,7 @@ class Whiteboard extends Component {
     super(props);
     this.socket = this.props.socket;
     this.current = {
-      color: 'black'
+      color: 'black',
     };
     this.drawing = false;
     this.drawLine = this.drawLine.bind(this);
@@ -24,7 +24,11 @@ class Whiteboard extends Component {
     this.canvas.addEventListener('mousedown', this.onMouseDown, false);
     this.canvas.addEventListener('mouseup', this.onMouseUp, false);
     this.canvas.addEventListener('mouseout', this.onMouseUp, false);
-    this.canvas.addEventListener('mousemove', this.throttle(this.onMouseMove, 10), false);
+    this.canvas.addEventListener(
+      'mousemove',
+      this.throttle(this.onMouseMove, 10),
+      false
+    );
 
     this.socket.on('drawing', this.onDrawingEvent);
 
@@ -42,7 +46,9 @@ class Whiteboard extends Component {
     context.stroke();
     context.closePath();
 
-    if (!emit) { return; }
+    if (!emit) {
+      return;
+    }
     var w = this.canvas.width;
     var h = this.canvas.height;
 
@@ -52,7 +58,7 @@ class Whiteboard extends Component {
       y0: y0 / h,
       x1: x1 / w,
       y1: y1 / h,
-      color: color
+      color: color,
     });
   }
 
@@ -63,14 +69,32 @@ class Whiteboard extends Component {
   }
 
   onMouseUp(e) {
-    if (!this.drawing) { return; }
+    if (!this.drawing) {
+      return;
+    }
     this.drawing = false;
-    this.drawLine(this.current.x, this.current.y, e.clientX, e.clientY, this.current.color, true);
+    this.drawLine(
+      this.current.x,
+      this.current.y,
+      e.clientX,
+      e.clientY,
+      this.current.color,
+      true
+    );
   }
 
   onMouseMove(e) {
-    if (!this.drawing) { return; }
-    this.drawLine(this.current.x, this.current.y, e.clientX, e.clientY, this.current.color, true);
+    if (!this.drawing) {
+      return;
+    }
+    this.drawLine(
+      this.current.x,
+      this.current.y,
+      e.clientX,
+      e.clientY,
+      this.current.color,
+      true
+    );
     this.current.x = e.clientX;
     this.current.y = e.clientY;
   }
@@ -80,7 +104,7 @@ class Whiteboard extends Component {
     return function() {
       var time = new Date().getTime();
 
-      if ((time - previousCall) >= delay) {
+      if (time - previousCall >= delay) {
         previousCall = time;
         callback.apply(null, arguments);
       }
@@ -90,7 +114,13 @@ class Whiteboard extends Component {
   onDrawingEvent(data) {
     var w = this.canvas.width;
     var h = this.canvas.height;
-    this.drawLine(data.x0 * w, data.y0 * h, data.x1 * w, data.y1 * h, data.color);
+    this.drawLine(
+      data.x0 * w,
+      data.y0 * h,
+      data.x1 * w,
+      data.y1 * h,
+      data.color
+    );
   }
 
   onResize() {
@@ -101,7 +131,7 @@ class Whiteboard extends Component {
   render() {
     return (
       <div>
-        <canvas className="whiteboard" ></canvas>
+        <canvas className="whiteboard" />
       </div>
     );
   }

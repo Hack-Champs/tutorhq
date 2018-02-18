@@ -41,7 +41,8 @@ class App extends React.Component {
   }
 
   checkSession() {
-    axios.get('/session')
+    axios
+      .get('/session')
       .then((response) => {
         this.login();
       })
@@ -60,7 +61,8 @@ class App extends React.Component {
   }
 
   logout() {
-    axios.get('/logout')
+    axios
+      .get('/logout')
       .then((res) => {
         this.setState({
           activeItem: 'home',
@@ -69,31 +71,33 @@ class App extends React.Component {
         });
         window.location.hash = '#/';
       })
-      .catch((err) => {
-
-      });
+      .catch((err) => {});
   }
 
   login() {
-    axios.get('/user')
+    axios
+      .get('/user')
       .then((user) => {
         console.log('current user', user);
-        this.setState({
-          isSignedIn: true,
-          user: user.data,
-        }, () => {
-          console.log('User', this.state);
-        });
+        this.setState(
+          {
+            isSignedIn: true,
+            user: user.data,
+          },
+          () => {
+            console.log('User', this.state);
+          }
+        );
         getStudents();
       })
       .catch(() => {
         console.log('could not sign in');
       });
-
   }
 
   getStudents() {
-    axios.get('/user/' + this.state.username + '/students')
+    axios
+      .get('/user/' + this.state.username + '/students')
       .then((res) => {
         this.setState({
           students: res.data.students,
@@ -101,19 +105,19 @@ class App extends React.Component {
       })
       .catch((err) => {
         console.log(err);
-
       });
   }
 
   createStudent(username, name, email, notes) {
-    axios.post('/users/' + username + '/students', {
-      name: name,
-      email: email,
-      notes: notes
-    })
+    axios
+      .post('/users/' + username + '/students', {
+        name: name,
+        email: email,
+        notes: notes,
+      })
       .then((res) => {
         this.setState({
-          user: {students: res.data.students}
+          user: { students: res.data.students },
         });
       })
       .catch((err) => {
@@ -121,24 +125,58 @@ class App extends React.Component {
       });
   }
 
-
-
-  render () {
+  render() {
     const activeItem = window.location.hash.slice(1);
     let menu = '';
     if (!activeItem.includes('classroom')) {
       menu = (
         <Menu id="mainNavBar" pointing secondary>
-          <Menu.Item name='home' as={Link} to='/' active={activeItem === '/'} onClick={this.handleItemClick} replace />
-          { this.state.isSignedIn &&
-            <Menu.Item name='dashboard' as={Link} to='/dashboard' active={activeItem === '/dashboard' || activeItem.includes('/tutors/')} onClick={this.handleItemClick} replace />
-          }
-          <Menu.Item name='tutors' as={Link} to='/tutors' active={activeItem === '/tutors'} onClick={this.handleItemClick} replace />
-          <Menu.Menu position='right'>
-            {this.state.isSignedIn ?
-              <Menu.Item name='logout' active={activeItem === '/logout'} onClick={this.logout} replace /> :
-              <a href='/auth/google'><Menu.Item name='login' active={activeItem === '/login'} onClick={this.login} replace /></a>
-            }
+          <Menu.Item
+            name="home"
+            as={Link}
+            to="/"
+            active={activeItem === '/'}
+            onClick={this.handleItemClick}
+            replace
+          />
+          {this.state.isSignedIn && (
+            <Menu.Item
+              name="dashboard"
+              as={Link}
+              to="/dashboard"
+              active={
+                activeItem === '/dashboard' || activeItem.includes('/tutors/')
+              }
+              onClick={this.handleItemClick}
+              replace
+            />
+          )}
+          <Menu.Item
+            name="tutors"
+            as={Link}
+            to="/tutors"
+            active={activeItem === '/tutors'}
+            onClick={this.handleItemClick}
+            replace
+          />
+          <Menu.Menu position="right">
+            {this.state.isSignedIn ? (
+              <Menu.Item
+                name="logout"
+                active={activeItem === '/logout'}
+                onClick={this.logout}
+                replace
+              />
+            ) : (
+              <a href="/auth/google">
+                <Menu.Item
+                  name="login"
+                  active={activeItem === '/login'}
+                  onClick={this.login}
+                  replace
+                />
+              </a>
+            )}
           </Menu.Menu>
         </Menu>
       );
@@ -146,18 +184,47 @@ class App extends React.Component {
 
     return (
       <div>
-        { menu }
+        {menu}
         <Switch>
-          <Route exact path='/' render={() => <HomeView />} />
-          <Route exact path='/dashboard' render={() => <DashboardView displayName={this.state.user.name} tutor={this.state.user.username} students={this.state.user.students} email={this.state.user.email} createstudent={this.createStudent} />} />
-          <Route exact path='/tutors' render={() => <TutorsView />} />
-          <Route path='/tutors/:tutor' render={() => <DashboardView tutor={this.state.user.username} email={this.state.user.email} />} />
-          <Route path='/dashboard/:tutor' render={() => <DashboardView tutor={this.state.user.username} />} />
-          <Route path='/createInvoice' render={() => <InvoiceCreateView /> } />
-          <Route path='/invoiceList' render={() => <InvoiceListView tutor={this.state.user.username} />} />
-          <Route path='/pricing' render={() => <SubscriptionsView /> } />
-          <Route path='/subscribe' render={() => <SubscriptionsPaymentView /> } />
-          <Route path='/classroom/:id' component={Workspace} />
+          <Route exact path="/" render={() => <HomeView />} />
+          <Route
+            exact
+            path="/dashboard"
+            render={() => (
+              <DashboardView
+                displayName={this.state.user.name}
+                tutor={this.state.user.username}
+                students={this.state.user.students}
+                email={this.state.user.email}
+                createstudent={this.createStudent}
+              />
+            )}
+          />
+          <Route exact path="/tutors" render={() => <TutorsView />} />
+          <Route
+            path="/tutors/:tutor"
+            render={() => (
+              <DashboardView
+                tutor={this.state.user.username}
+                email={this.state.user.email}
+              />
+            )}
+          />
+          <Route
+            path="/dashboard/:tutor"
+            render={() => <DashboardView tutor={this.state.user.username} />}
+          />
+          <Route path="/createInvoice" render={() => <InvoiceCreateView />} />
+          <Route
+            path="/invoiceList"
+            render={() => <InvoiceListView tutor={this.state.user.username} />}
+          />
+          <Route path="/pricing" render={() => <SubscriptionsView />} />
+          <Route
+            path="/subscribe"
+            render={() => <SubscriptionsPaymentView />}
+          />
+          <Route path="/classroom/:id" component={Workspace} />
         </Switch>
       </div>
     );

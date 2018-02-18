@@ -9,7 +9,6 @@ db.once('open', function() {
   console.log('Connected to mongo');
 });
 
-
 let bookingSchema = mongoose.Schema({
   name: String,
   date: String,
@@ -18,7 +17,7 @@ let bookingSchema = mongoose.Schema({
 
 let sessionSchema = mongoose.Schema({
   email: String,
-  sessions: [bookingSchema]
+  sessions: [bookingSchema],
 });
 
 //.find({});
@@ -30,7 +29,7 @@ let UserSchema = mongoose.Schema({
   description: String,
   subjects: [String],
   tutor: String,
-  email: String
+  email: String,
 });
 
 //way to update the subject (PUT)
@@ -111,7 +110,7 @@ const findOrCreate = (query, callback) => {
 };
 
 const logout = (sessionID, callback) => {
-  User.update({ sessionID: sessionID }, { $set: { sessionID: ''}}, callback);
+  User.update({ sessionID: sessionID }, { $set: { sessionID: '' } }, callback);
 };
 
 module.exports.createBooking = createBooking;

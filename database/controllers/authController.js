@@ -27,7 +27,11 @@ const findOrCreate = (query, callback) => {
 };
 
 const logout = (sessionID, callback) => {
-  db.User.update({ sessionID: sessionID }, { $set: { sessionID: ''}}, callback);
+  db.User.update(
+    { sessionID: sessionID },
+    { $set: { sessionID: '' } },
+    callback
+  );
 };
 
 module.exports.findOrCreate = findOrCreate;

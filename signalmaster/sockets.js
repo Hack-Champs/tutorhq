@@ -1,21 +1,21 @@
 var socketIO = require('socket.io'),
     uuid = require('node-uuid'),
     crypto = require('crypto');
-var https = require("https");
+var https = require('https');
 
-module.exports = function (server, config) {
+module.exports = function(server, config) {
     var io = socketIO.listen(server);
     var xirsys = config.xirsys;
 
-    io.sockets.on('connection', function (client) {
+    io.sockets.on('connection', function(client) {
         client.resources = {
             screen: false,
             video: true,
-            audio: false
+            audio: false,
         };
         console.log(options);
         // pass a message to another id
-        client.on('message', function (details) {
+        client.on('message', function(details) {
             if (!details) return;
 
             var otherClient = io.to(details.to);
@@ -25,11 +25,11 @@ module.exports = function (server, config) {
             otherClient.emit('message', details);
         });
 
-        client.on('shareScreen', function () {
+        client.on('shareScreen', function() {
             client.resources.screen = true;
         });
 
-        client.on('unshareScreen', function (type) {
+        client.on('unshareScreen', function(type) {
             client.resources.screen = false;
             removeFeed('screen');
         });
@@ -40,7 +40,7 @@ module.exports = function (server, config) {
             if (client.room) {
                 io.sockets.in(client.room).emit('remove', {
                     id: client.id,
-                    type: type
+                    type: type,
                 });
                 if (!type) {
                     client.leave(client.room);
@@ -53,8 +53,11 @@ module.exports = function (server, config) {
             // sanity check
             if (typeof name !== 'string') return;
             // check if maximum number of clients reached
-            if (config.rooms && config.rooms.maxClients > 0 &&
-                clientsInRoom(name) >= config.rooms.maxClients) {
+            if (
+                config.rooms &&
+                config.rooms.maxClients > 0 &&
+                clientsInRoom(name) >= config.rooms.maxClients
+            ) {
                 safeCb(cb)('full');
                 return;
             }
@@ -67,16 +70,16 @@ module.exports = function (server, config) {
 
         // we don't want to pass "leave" directly because the
         // event type string of "socket end" gets passed too.
-        client.on('disconnect', function () {
+        client.on('disconnect', function() {
             removeFeed();
         });
-        client.on('leave', function () {
+        client.on('leave', function() {
             removeFeed();
         });
 
-        client.on('create', function (name, cb) {
+        client.on('create', function(name, cb) {
             if (arguments.length == 2) {
-                cb = (typeof cb == 'function') ? cb : function () {};
+                cb = typeof cb == 'function' ? cb : function() {};
                 name = name || uuid();
             } else {
                 cb = name;
@@ -94,12 +97,19 @@ module.exports = function (server, config) {
 
         // support for logging full webrtc traces to stdout
         // useful for large-scale error monitoring
-        client.on('trace', function (data) {
-            console.log('trace', JSON.stringify(
-            [data.type, data.session, data.prefix, data.peer, data.time, data.value]
-            ));
+        client.on('trace', function(data) {
+            console.log(
+                'trace',
+                JSON.stringify([
+                    data.type,
+                    data.session,
+                    data.prefix,
+                    data.peer,
+                    data.time,
+                    data.value,
+                ])
+            );
         });
-
 
         // tell client about stun and turn servers and generate nonces
         //client.emit('stunservers', config.stunservers || []);
@@ -125,27 +135,35 @@ module.exports = function (server, config) {
 
         var options = {
             host: xirsys.gateway,
-            path: "/_turn/"+xirsys.info.channel,
-            method: "PUT",
+            path: '/_turn/' + xirsys.info.channel,
+            method: 'PUT',
             headers: {
-                "Authorization": "Basic " + new Buffer( xirsys.info.ident+":"+xirsys.info.secret ).toString("base64")
-            }
+                Authorization:
+                    'Basic ' +
+                    new Buffer(
+                        xirsys.info.ident + ':' + xirsys.info.secret
+                    ).toString('base64'),
+            },
         };
 
         var httpreq = https.request(options, function(httpres) {
-            var str = "";
-            httpres.on("data", function(data){ str += data; });
-            httpres.on("error", function(e){ console.log("error: ",e); });
-            httpres.on("end", function(){
+            var str = '';
+            httpres.on('data', function(data) {
+                str += data;
+            });
+            httpres.on('error', function(e) {
+                console.log('error: ', e);
+            });
+            httpres.on('end', function() {
                 //console.log("response: ", str);
                 var result = JSON.parse(str);
                 var iceServers = result.v.iceServers;
                 var turnservers = [],
                     stunservers = [];
-                iceServers.forEach(function (server) {
-                    if(server.url.indexOf("stun:") != -1){
+                iceServers.forEach(function(server) {
+                    if (server.url.indexOf('stun:') != -1) {
                         stunservers.push(server);
-                    }else{
+                    } else {
                         turnservers.push(server);
                     }
                 });
@@ -156,14 +174,13 @@ module.exports = function (server, config) {
         httpreq.end();
     });
 
-
     function describeRoom(name) {
         var adapter = io.nsps['/'].adapter;
         var clients = adapter.rooms[name] || {};
         var result = {
-            clients: {}
+            clients: {},
         };
-        Object.keys(clients).forEach(function (id) {
+        Object.keys(clients).forEach(function(id) {
             result.clients[id] = adapter.nsp.connected[id].resources;
         });
         return result;
@@ -172,13 +189,12 @@ module.exports = function (server, config) {
     function clientsInRoom(name) {
         return io.sockets.clients(name).length;
     }
-
 };
 
 function safeCb(cb) {
     if (typeof cb === 'function') {
         return cb;
     } else {
-        return function () {};
+        return function() {};
     }
 }

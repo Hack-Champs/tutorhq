@@ -13,7 +13,8 @@ class TutorsView extends React.Component {
   }
 
   componentWillMount() {
-    axios.get('/tutors')
+    axios
+      .get('/tutors')
       .then((response) => {
         this.setState({
           tutors: response.data,
@@ -24,15 +25,15 @@ class TutorsView extends React.Component {
       });
   }
 
-  render () {
+  render() {
     return (
       <div>
         <Container>
           <h1 className="viewHeader">Tutors</h1>
           <Item.Group divided>
-            {this.state.tutors.map((tutor, i) =>
+            {this.state.tutors.map((tutor, i) => (
               <TutorsViewEntry key={i} tutor={this.state.tutors[i]} />
-            )}
+            ))}
           </Item.Group>
         </Container>
       </div>

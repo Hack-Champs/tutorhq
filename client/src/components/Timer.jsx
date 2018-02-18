@@ -11,7 +11,7 @@ class Timer extends Component {
     this.state = {
       totalSeconds: 0,
       timeString: '0.00',
-      timerRunning: false
+      timerRunning: false,
     };
   }
 
@@ -22,16 +22,16 @@ class Timer extends Component {
       clearInterval(this.timer);
       this.timer = null;
     }
-    this.setState({timerRunning: !this.state.timerRunning});
+    this.setState({ timerRunning: !this.state.timerRunning });
   }
 
   setTime() {
     this.setState({
-      totalSeconds: this.state.totalSeconds + 1
+      totalSeconds: this.state.totalSeconds + 1,
     });
     var timeString = this.getTimeString();
     this.setState({
-      timeString: timeString
+      timeString: timeString,
     });
   }
 
@@ -76,21 +76,31 @@ class Timer extends Component {
     if (this.props.isTutor) {
       controls = (
         <span>
-          <button id ="timer" className="ui labeled icon button primary" onClick={this.handleTimerClick.bind(this)}>
-            { this.state.timerRunning ? <i className="pause icon"></i> : <i className="play icon"></i> }
-            { `${this.state.timeString}` }
+          <button
+            id="timer"
+            className="ui labeled icon button primary"
+            onClick={this.handleTimerClick.bind(this)}
+          >
+            {this.state.timerRunning ? (
+              <i className="pause icon" />
+            ) : (
+              <i className="play icon" />
+            )}
+            {`${this.state.timeString}`}
           </button>
-          <button id ="end" className="ui labeled icon red button" name="end" onClick={this.handleEndSessionClick.bind(this)}>
-            <i className="stop icon"></i>
-            End Session</button>
+          <button
+            id="end"
+            className="ui labeled icon red button"
+            name="end"
+            onClick={this.handleEndSessionClick.bind(this)}
+          >
+            <i className="stop icon" />
+            End Session
+          </button>
         </span>
       );
     }
-    return (
-      <div>
-        {controls}
-      </div>
-    );
+    return <div>{controls}</div>;
   }
 }
 

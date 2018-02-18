@@ -22,7 +22,7 @@ const languages = [
   'ruby',
   'html',
   'csharp',
-  'css'
+  'css',
 ];
 
 class Editor extends Component {
@@ -30,7 +30,7 @@ class Editor extends Component {
     super(props);
     this.state = {
       code: '',
-      mode: 'javascript'
+      mode: 'javascript',
     };
     this.setMode = this.setMode.bind(this);
     this.onChange = this.onChange.bind(this);
@@ -42,23 +42,23 @@ class Editor extends Component {
 
   updateCode(data) {
     this.setState({
-      code: data.newCode
+      code: data.newCode,
     });
   }
 
   onChange(newCode) {
     this.setState({
-      code: newCode
+      code: newCode,
     });
     this.props.socket.emit('client:updateCode', {
       channelId: this.props.channelId,
-      newCode: newCode
+      newCode: newCode,
     });
   }
 
   setMode(e) {
     this.setState({
-      mode: e.target.value
+      mode: e.target.value,
     });
   }
 
@@ -72,9 +72,9 @@ class Editor extends Component {
           theme="kuroir"
           onChange={this.onChange.bind(this)}
           value={this.state.code}
-          editorProps={{$blockScrolling: true}}
-          width='100%'
-          height='95vh'
+          editorProps={{ $blockScrolling: true }}
+          width="100%"
+          height="95vh"
         />
       </div>
     );
@@ -83,8 +83,8 @@ class Editor extends Component {
 
 export default Editor;
 
-        // <div>
-        //  <select className="langSelect" name="mode" onChange={this.setMode} value={this.state.mode}>
-        //    {languages.map((lang) => <option  key={lang} value={lang}>{lang}</option>)}
-        //  </select>
-        // </div>
+// <div>
+//  <select className="langSelect" name="mode" onChange={this.setMode} value={this.state.mode}>
+//    {languages.map((lang) => <option  key={lang} value={lang}>{lang}</option>)}
+//  </select>
+// </div>

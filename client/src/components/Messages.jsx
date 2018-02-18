@@ -11,14 +11,12 @@ class Messages extends Component {
       return (
         <div id="messages">
           {this.props.messages.map((message) => {
-            return <Message message={ message } key={ message._id }/>;
+            return <Message message={message} key={message._id} />;
           })}
         </div>
-      )
-    } else {
-      return (
-        <div></div>
       );
+    } else {
+      return <div />;
     }
   }
 }

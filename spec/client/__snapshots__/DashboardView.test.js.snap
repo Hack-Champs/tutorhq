@@ -2,11 +2,6 @@
 
 exports[`DashboardView should render correctly 1`] = `
 <div>
-  <Button
-    as="button"
-    icon="list layout"
-    onClick={[Function]}
-  />
   <SidebarPushable
     as={[Function]}
   >
@@ -17,7 +12,7 @@ exports[`DashboardView should render correctly 1`] = `
       icon="labeled"
       inverted={true}
       vertical={true}
-      visible={false}
+      visible={true}
       width="thin"
     >
       <MenuItem
@@ -25,9 +20,13 @@ exports[`DashboardView should render correctly 1`] = `
         name="dashboard"
         onClick={[Function]}
       >
-        <Icon
-          as="i"
-          name="calendar"
+        <Image
+          as="img"
+          centered={true}
+          className="sidebarImage"
+          size="mini"
+          src="https://i.imgur.com/KGxefXR.png"
+          ui={true}
         />
         Dashboard
       </MenuItem>
@@ -36,9 +35,13 @@ exports[`DashboardView should render correctly 1`] = `
         name="profile"
         onClick={[Function]}
       >
-        <Icon
-          as="i"
-          name="user circle outline"
+        <Image
+          as="img"
+          centered={true}
+          className="sidebarImage"
+          size="mini"
+          src="https://i.imgur.com/NPTPrq1.png"
+          ui={true}
         />
         Profile
       </MenuItem>
@@ -47,18 +50,57 @@ exports[`DashboardView should render correctly 1`] = `
         name="students"
         onClick={[Function]}
       >
-        <Icon
-          as="i"
-          name="users"
+        <Image
+          as="img"
+          centered={true}
+          className="sidebarImage"
+          size="mini"
+          src="https://i.imgur.com/GoTXYmd.png"
+          ui={true}
         />
         Students
       </MenuItem>
+      <MenuItem
+        href="/#/dashboard"
+        name="invoices"
+        onClick={[Function]}
+      >
+        <Image
+          as="img"
+          centered={true}
+          className="sidebarImage"
+          size="mini"
+          src="https://i.imgur.com/7ZO6t7i.png"
+          ui={true}
+        />
+        Invoices
+      </MenuItem>
+      <MenuItem
+        href="/#/dashboard"
+        name="subscriptions"
+        onClick={[Function]}
+      >
+        <Image
+          as="img"
+          centered={true}
+          className="sidebarImage"
+          size="mini"
+          src="https://i.imgur.com/0vrLU3H.png"
+          ui={true}
+        />
+        Subscriptions
+      </MenuItem>
     </Sidebar>
     <SidebarPusher>
-      <div
-        className="dashboardviews"
-      >
-        <Container>
+      <div>
+        <Container
+          className="dashboardviews"
+        >
+          <h1
+            className="viewHeader"
+          >
+            Dashboard
+          </h1>
           <AvailabilityView />
         </Container>
       </div>

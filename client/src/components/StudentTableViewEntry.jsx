@@ -8,7 +8,7 @@ const StudentTableViewEntry = ({ session, student, booking, i }) => {
       <Table.Body>
         <Table.Row>
           <Table.Cell>{`Session date: ${session.date}`}</Table.Cell>
-          <Table.Cell>{ `Session Time: ${session.time}`}</Table.Cell>
+          <Table.Cell>{`Session Time: ${session.time}`}</Table.Cell>
         </Table.Row>
       </Table.Body>
     </Table>

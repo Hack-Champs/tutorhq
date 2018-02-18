@@ -25,40 +25,46 @@ app.use(cors());
 app.use('/', routes);
 
 // test end points
-app.get('/test', function (req, res) {
+app.get('/test', function(req, res) {
   res.status(200).end();
 });
 
 let url = process.env.MONGODB_URI || 'mongodb://localhost/tutorhq';
-app.use(session({
-  secret: 'keyboard cat',
-  resave: false,
-  saveUninitialized: true,
-  store: new MongoStore({ url: url})
-}));
+app.use(
+  session({
+    secret: 'keyboard cat',
+    resave: false,
+    saveUninitialized: true,
+    store: new MongoStore({ url: url }),
+  })
+);
 
 app.use(passport.initialize());
 app.use(passport.session());
 
-app.get('/auth/google',
-  passport.authenticate('google', { scope: ['profile', 'email'] }));
+app.get(
+  '/auth/google',
+  passport.authenticate('google', { scope: ['profile', 'email'] })
+);
 
-app.get('/auth/google/redirect',
+app.get(
+  '/auth/google/redirect',
   passport.authenticate('google', {
-    failureRedirect: '/'
+    failureRedirect: '/',
   }),
   function(req, res) {
     res.redirect('/');
-  });
+  }
+);
 
 app.get('/user', (req, res) => {
   res.send(req.user);
 });
 
 app.get('/session', (req, res) => {
-  db.User.findOne({ sessionID: req.sessionID}, (err, user) => {
+  db.User.findOne({ sessionID: req.sessionID }, (err, user) => {
     if (user) {
-      res.send({isSignedin: true, sessionID: req.sessionID});
+      res.send({ isSignedin: true, sessionID: req.sessionID });
     } else {
       res.status(404).send(err);
     }
@@ -94,12 +100,11 @@ app.get('/users/studentbookings', (req, res) => {
   console.log('get all bookings grouped endpoint');
   // var username = req.params.username;
   var username = req.user.username;
-  db.User.findOne({username: username}, (err, user) => {
+  db.User.findOne({ username: username }, (err, user) => {
     if (err) {
       res.status(501).send();
     } else {
       bookingCtrl.getBookingsForUser(username, (err, bookings) => {
-
         if (err) {
           res.status(501).send('Could not get bookings');
         } else {
@@ -110,9 +115,10 @@ app.get('/users/studentbookings', (req, res) => {
             } else {
               user.students.forEach((student) => {
                 if (student.name === booking.studentName) {
-                  studentBookings[booking.studentName] = {sessions: [booking],
+                  studentBookings[booking.studentName] = {
+                    sessions: [booking],
                     email: student.email,
-                    notes: student.notes
+                    notes: student.notes,
                   };
                 }
               });
@@ -128,7 +134,6 @@ app.get('/users/studentbookings', (req, res) => {
         }
       });
     }
-
   });
 });
 
@@ -147,7 +152,7 @@ app.post('/users/:username/booking', (req, res) => {
 
 app.get('/users/:username/students', (req, res) => {
   var username = req.user.username;
-  db.User.findOne({username: username}, (err, user) => {
+  db.User.findOne({ username: username }, (err, user) => {
     if (err) {
       res.status(501).send('Could not retrieve students');
     } else {

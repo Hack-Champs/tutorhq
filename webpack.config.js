@@ -7,25 +7,25 @@ module.exports = {
   entry: `${SRC_DIR}/index.jsx`,
   output: {
     filename: 'bundle.js',
-    path: DIST_DIR
+    path: DIST_DIR,
   },
-  module : {
-    loaders : [
+  module: {
+    loaders: [
       {
-        test : /\.jsx?/,
-        include : SRC_DIR,
-        loader : 'babel-loader',
+        test: /\.jsx?/,
+        include: SRC_DIR,
+        loader: 'babel-loader',
         query: {
-          presets: ['react', 'es2015', 'env']
-        }
+          presets: ['react', 'es2015', 'env'],
+        },
       },
       {
         test: /\.(jpe?g|png|gif)$/i,
         loader: 'file-loader',
         query: {
           name: '[name].[ext]',
-          outputPath: 'images/'
-        }
+          outputPath: 'images/',
+        },
       },
       {
         test: /\.(woff(2)?|ttf|eot|svg)(\?v=[0-9]\.[0-9]\.[0-9])?$/,
@@ -33,13 +33,13 @@ module.exports = {
         query: {
           limit: '10000',
           name: '[name].[ext]',
-          outputPath: 'fonts/'
-        }
+          outputPath: 'fonts/',
+        },
       },
       {
         test: /\.css$/,
-        loaders: ['style-loader', 'css-loader']
-      }
-    ]
-  }
+        loaders: ['style-loader', 'css-loader'],
+      },
+    ],
+  },
 };
