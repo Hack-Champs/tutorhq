@@ -2,17 +2,16 @@ const db = require('../models/index.js');
 const Message = require('../../database/controllers/messageController');
 
 const getBookingsForUser = (username, cb) => {
-  db.User.findOne({username: username}, (err, user) => {
+  db.User.findOne({ username: username }, (err, user) => {
     if (err) {
       return cb(err);
     } else {
-      db.Booking.find({'userId': user.id, deleted: false}, (err, bookings) => {
+      db.Booking.find({ userId: user.id, deleted: false }, (err, bookings) => {
         cb(null, bookings);
       });
     }
   });
 };
-
 
 const createBooking = (username, bookingInfo, callback) => {
   db.User.findOne({ username: username }, (err, user) => {
@@ -48,14 +47,14 @@ const updateWithBillableTime = (bookingId, billableTime, cb) => {
       return cb(error);
     }
     booking.billableTime = billableTime;
-    booking.save(err => {
+    booking.save((err) => {
       cb(err);
     });
   });
 };
 
 const getChannelDetails = (channelId, cb) => {
-  db.Booking.findOne({ channelId: channelId }, function (err, booking) {
+  db.Booking.findOne({ channelId: channelId }, function(err, booking) {
     if (err) {
       return cb(err);
     }
@@ -71,7 +70,6 @@ const getChannelDetails = (channelId, cb) => {
     }
   });
 };
-
 
 module.exports.createBooking = createBooking;
 module.exports.getBookingsForUser = getBookingsForUser;

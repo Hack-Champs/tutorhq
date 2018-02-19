@@ -940,15 +940,10 @@ class SubscriptionsPaymentView extends React.Component {
                 </div>
               </div>
             </div>
-            <Button
-              color='blue'
-              onClick={ this.handlePayment }
-              >Submit
+            <Button color="blue" onClick={this.handlePayment}>
+              Submit
             </Button>
-            <Button
-              color='red'
-              as={Link}
-              to='/pricing'>
+            <Button color="red" as={Link} to="/pricing">
               Cancel
             </Button>
           </form>

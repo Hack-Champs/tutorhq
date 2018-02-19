@@ -9,28 +9,31 @@ var server = http.Server(app);
 var io = socketIO(server);
 server.listen(port);
 
-app.get('*', function (req, res) {
+app.get('*', function(req, res) {
   res.sendFile('index.html', { root: path.join(__dirname, '../client/dist') });
 });
 
 io.on('connection', (socket) => {
   console.log('New user connected');
   socket.on('client:joinChannel', (channelId, callback) => {
-    bookingCtrl.getChannelDetails(channelId, (err, messages, bookingId, userId) => {
-      if (err) {
-        return callback(err);
-      } else {
-        socket.join(channelId);
-        callback(err, messages, bookingId, userId);
+    bookingCtrl.getChannelDetails(
+      channelId,
+      (err, messages, bookingId, userId) => {
+        if (err) {
+          return callback(err);
+        } else {
+          socket.join(channelId);
+          callback(err, messages, bookingId, userId);
+        }
       }
-    });
+    );
   });
 
   socket.on('client:createMessage', (message, callback) => {
     var message = {
       channelId: message.channelId,
       body: message.body,
-      name: message.name
+      name: message.name,
     };
     messageCtrl.saveMessage(message, (err, savedMessage) => {
       if (err) {

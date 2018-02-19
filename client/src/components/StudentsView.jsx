@@ -19,24 +19,30 @@ class StudentsView extends React.Component {
     console.log(this.state.bookings);
   }
   getBookings() {
-
-    axios.get('/users/studentbookings')
+    axios
+      .get('/users/studentbookings')
       .then((res) => {
-        this.setState({bookings: res.data});
+        this.setState({ bookings: res.data });
         console.log('Bookings: ', this.state.bookings);
       })
       .catch((err) => {
         console.log('Could not get bookings');
       });
   }
-  render () {
-
+  render() {
     return (
       <div>
-        <CreateStudentView tutor = {this.props.tutor} createstudent={this.props.createstudent} />
-        {this.props.students.map((student, i) =>
-          <StudentsViewEntry key={ i } student = { student } bookings={this.state.bookings}/>
-        )}
+        <CreateStudentView
+          tutor={this.props.tutor}
+          createstudent={this.props.createstudent}
+        />
+        {this.props.students.map((student, i) => (
+          <StudentsViewEntry
+            key={i}
+            student={student}
+            bookings={this.state.bookings}
+          />
+        ))}
       </div>
     );
   }

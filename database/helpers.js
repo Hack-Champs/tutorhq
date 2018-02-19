@@ -68,10 +68,7 @@ exports.getTutors = (req, res) => {
 };
 
 exports.deleteBooking = (req, res) => {
-  db.Booking.findOneAndUpdate(
-    { _id: req.params.bookingID },
-    { deleted: true }
-  )
+  db.Booking.findOneAndUpdate({ _id: req.params.bookingID }, { deleted: true })
     .then(() => {
       res.send('booking deleted');
     })
@@ -81,10 +78,7 @@ exports.deleteBooking = (req, res) => {
 };
 
 exports.deleteInvoice = (req, res) => {
-  db.Invoice.findOneAndUpdate(
-    { _id: req.params.invoiceID },
-    { deleted: true }
-  )
+  db.Invoice.findOneAndUpdate({ _id: req.params.invoiceID }, { deleted: true })
     .then(() => {
       res.send('invoice deleted');
     })

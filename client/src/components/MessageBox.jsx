@@ -15,7 +15,7 @@ class MessageBox extends Component {
       socket.emit(`client:createMessage`, {
         channelId: this.props.channelId,
         body: body,
-        name: this.props.name
+        name: this.props.name,
       });
       $messageBody.val('');
       $messageBody.focus();
@@ -38,9 +38,15 @@ class MessageBox extends Component {
           type="text"
           placeholder="Message"
           onKeyDown={this.handleKeyPress.bind(this)}
-          autoFocus>
-        </textarea>
-        <button id="send-message-btn" className="ui button primary" onClick={this.sendMessage.bind(this)}>Send</button>
+          autoFocus
+        />
+        <button
+          id="send-message-btn"
+          className="ui button primary"
+          onClick={this.sendMessage.bind(this)}
+        >
+          Send
+        </button>
       </div>
     );
   }

@@ -15,17 +15,33 @@ passport.deserializeUser((_id, done) => {
   });
 });
 
-passport.use(new GoogleStrategy({
-  clientID: process.env.GOOGLE_CLIENT_ID,
-  clientSecret: process.env.GOOGLE_CLIENT_SECRET,
-  callbackURL: '/auth/google/redirect',
-  passReqToCallback: true
-},
-  (req, accessToken, refreshToken, profile, done) => {
-    console.log('THIS IS THE PROFILE: ', profile);
-    const username=profile.emails[0].value.slice(0, profile.emails[0].value.indexOf('@'))
-    authCtrl.findOrCreate({ googleId: profile.id, sessionID: req.sessionID, name: profile.displayName, email: profile.emails[0].value, username: username, description: '' }, function (err, user) {
-      return done(err, user);
-    });
-  }
-));
+passport.use(
+  new GoogleStrategy(
+    {
+      clientID: process.env.GOOGLE_CLIENT_ID,
+      clientSecret: process.env.GOOGLE_CLIENT_SECRET,
+      callbackURL: '/auth/google/redirect',
+      passReqToCallback: true,
+    },
+    (req, accessToken, refreshToken, profile, done) => {
+      console.log('THIS IS THE PROFILE: ', profile);
+      const username = profile.emails[0].value.slice(
+        0,
+        profile.emails[0].value.indexOf('@')
+      );
+      authCtrl.findOrCreate(
+        {
+          googleId: profile.id,
+          sessionID: req.sessionID,
+          name: profile.displayName,
+          email: profile.emails[0].value,
+          username: username,
+          description: '',
+        },
+        function(err, user) {
+          return done(err, user);
+        }
+      );
+    }
+  )
+);

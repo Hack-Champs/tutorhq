@@ -8,7 +8,14 @@ import io from 'socket.io-client';
 import qs from 'qs';
 import $ from 'jquery';
 import SimpleWebRTC from 'simplewebrtc';
-import { Dropdown, Grid, Button, Container, Input, Segment } from 'semantic-ui-react';
+import {
+  Dropdown,
+  Grid,
+  Button,
+  Container,
+  Input,
+  Segment
+} from 'semantic-ui-react';
 
 class Workspace extends Component {
   constructor(props) {
@@ -35,16 +42,18 @@ class Workspace extends Component {
       messages: [],
       videoPaused: false,
       muted: false,
-      isPlaying: false
+      isPlaying: false,
     };
   }
 
   componentDidMount() {
     const channelId = this.props.match.params.id;
-    const query = qs.parse(this.props.location.search, { ignoreQueryPrefix: true });
+    const query = qs.parse(this.props.location.search, {
+      ignoreQueryPrefix: true,
+    });
     const tutorName = query.tutor;
     if (tutorName) {
-      this.setState({name: tutorName, isTutor: true});
+      this.setState({ name: tutorName, isTutor: true });
     } else {
       if (!this.state.name.length) {
         this.getName();
@@ -60,13 +69,16 @@ class Workspace extends Component {
       console.log('Disconnected from io server');
     });
 
-    this.socket.on(`server:newMessage`, data => {
+    this.socket.on(`server:newMessage`, (data) => {
       var context = this;
-      context.setState({
-        messages: context.state.messages.concat([data])
-      }, () => {
-        context.scrollToLastMessage();
-      });
+      context.setState(
+        {
+          messages: context.state.messages.concat([data]),
+        },
+        () => {
+          context.scrollToLastMessage();
+        }
+      );
       console.log('Message received from server and added to state', data);
     });
   }
@@ -74,48 +86,69 @@ class Workspace extends Component {
   joinChannel(channelId) {
     var context = this;
     if (channelId) {
-      this.socket.emit('client:joinChannel', channelId, (err, messages, bookingId, userId)=>{
-        console.log('Join channel');
-        if (!err) {
-          context.setState({userId: userId, channelId: channelId, bookingId: bookingId, messages: messages}, () => {
-            context.scrollToLastMessage();
-          });
-        } else {
-          alert('Unknown channel id. Please check that you have the correct url');
-          this.socket.disconnect();
+      this.socket.emit(
+        'client:joinChannel',
+        channelId,
+        (err, messages, bookingId, userId) => {
+          console.log('Join channel');
+          if (!err) {
+            context.setState(
+              {
+                userId: userId,
+                channelId: channelId,
+                bookingId: bookingId,
+                messages: messages,
+              },
+              () => {
+                context.scrollToLastMessage();
+              }
+            );
+          } else {
+            alert(
+              'Unknown channel id. Please check that you have the correct url'
+            );
+            this.socket.disconnect();
+          }
         }
-      });
+      );
     }
   }
 
   scrollToLastMessage() {
-    $('#messages').scrollTop($('#messages').prop('scrollHeight') - $('#messages').height());
+    $('#messages').scrollTop(
+      $('#messages').prop('scrollHeight') - $('#messages').height()
+    );
   }
 
   getName() {
     var name = prompt('What is your name?');
     if (name) {
-      this.setState({name: name});
+      this.setState({ name: name });
     } else {
       this.getName();
     }
   }
 
   handleEndSession(totalSeconds) {
-    this.socket.emit('client:endSession', this.state.bookingId, totalSeconds, (err) => {
-      if (err) {
-        console.log('Error when ending session');
+    this.socket.emit(
+      'client:endSession',
+      this.state.bookingId,
+      totalSeconds,
+      (err) => {
+        if (err) {
+          console.log('Error when ending session');
+        }
       }
-    });
+    );
     close();
   }
 
   startVideo() {
     var context = this;
     if (this.state.channelId !== '' && !this.state.isPlaying) {
-      this.webrtc.on('readyToCall', function () {
+      this.webrtc.on('readyToCall', function() {
         context.webrtc.joinRoom(context.state.channelId);
-        context.setState({isPlaying: true});
+        context.setState({ isPlaying: true });
       });
     }
   }
@@ -126,7 +159,7 @@ class Workspace extends Component {
     } else {
       this.webrtc.pause();
     }
-    this.setState({videoPaused: !this.state.videoPaused});
+    this.setState({ videoPaused: !this.state.videoPaused });
   }
 
   toggleAudio() {
@@ -135,7 +168,7 @@ class Workspace extends Component {
     } else {
       this.webrtc.mute();
     }
-    this.setState({muted: !this.state.muted});
+    this.setState({ muted: !this.state.muted });
   }
 
   render() {
@@ -143,41 +176,46 @@ class Workspace extends Component {
     var audioBtnText = this.state.muted ? 'Unmute' : 'Mute';
     this.startVideo();
     return (
-      <Grid celled padded style={{height: '100vh', 'backgroundColor': '#4682B4'}}>
-        <Grid.Row style={{height: '100%'}}>
+      <Grid
+        celled
+        padded
+        style={{ height: '100vh', backgroundColor: '#4682B4' }}
+      >
+        <Grid.Row style={{ height: '100%' }}>
           <Grid.Column width={11}>
-            <Grid.Row style={{height: '65%', 'backgroundColor': 'white'}}>
+            <Grid.Row style={{ height: '65%', backgroundColor: 'white' }}>
               <Whiteboard
                 socket={this.socket}
                 channelId={this.state.channelId}
               />
             </Grid.Row>
-            <Grid.Row style={{height: '34%'}}>
-              <Grid celled style={{height: '100%'}}>
-                <Grid.Row style={{height: '70%'}}>
-                  <Grid.Column width={10} style={{'backgroundColor': 'white', 'padding': '5px'}}>
-                    <Messages
-                      messages={this.state.messages}
-                    />
+            <Grid.Row style={{ height: '34%' }}>
+              <Grid celled style={{ height: '100%' }}>
+                <Grid.Row style={{ height: '70%' }}>
+                  <Grid.Column
+                    width={10}
+                    style={{ backgroundColor: 'white', padding: '5px' }}
+                  >
+                    <Messages messages={this.state.messages} />
                   </Grid.Column>
-                  <Grid.Column width={3} style={{'backgroundColor': 'white'}}>
+                  <Grid.Column width={3} style={{ backgroundColor: 'white' }}>
                     <div>
-                      <video id="localVideo"></video>
+                      <video id="localVideo" />
                     </div>
                   </Grid.Column>
-                  <Grid.Column width={3} style={{'backgroundColor': 'white'}}>
-                    <div id="remoteVideos"></div>
+                  <Grid.Column width={3} style={{ backgroundColor: 'white' }}>
+                    <div id="remoteVideos" />
                   </Grid.Column>
                 </Grid.Row>
-                <Grid.Row style={{height: '30%'}}>
-                  <Grid.Column width={10} style={{'backgroundColor': 'white'}}>
+                <Grid.Row style={{ height: '30%' }}>
+                  <Grid.Column width={10} style={{ backgroundColor: 'white' }}>
                     <MessageBox
-                      socket ={this.socket}
+                      socket={this.socket}
                       channelId={this.state.channelId}
                       name={this.state.name}
                     />
                   </Grid.Column>
-                  <Grid.Column width={6} style={{'backgroundColor': 'white'}}>
+                  <Grid.Column width={6} style={{ backgroundColor: 'white' }}>
                     <Timer
                       handleEndSession={this.handleEndSession}
                       isTutor={this.state.isTutor}
@@ -187,11 +225,8 @@ class Workspace extends Component {
               </Grid>
             </Grid.Row>
           </Grid.Column>
-          <Grid.Column width={5} style={{'backgroundColor': '#4682B4'}}>
-            <Editor
-              socket={this.socket}
-              channelId={this.state.channelId}
-            />
+          <Grid.Column width={5} style={{ backgroundColor: '#4682B4' }}>
+            <Editor socket={this.socket} channelId={this.state.channelId} />
           </Grid.Column>
         </Grid.Row>
       </Grid>

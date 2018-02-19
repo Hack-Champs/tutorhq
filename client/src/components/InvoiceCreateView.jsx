@@ -1,7 +1,15 @@
 import React from 'react';
 import ReactDOM from 'react-dom';
 import { Link } from 'react-router-dom';
-import { Button, Container, Form, Icon, Input, Table, TextArea } from 'semantic-ui-react';
+import {
+  Button,
+  Container,
+  Form,
+  Icon,
+  Input,
+  Table,
+  TextArea
+} from 'semantic-ui-react';
 import DayPickerInput from 'react-day-picker/DayPickerInput';
 import numeral from 'numeral';
 import axios from 'axios';
@@ -24,7 +32,7 @@ class InvoiceCreateView extends React.Component {
       total: 0,
       lineItems: [],
       lineItemCount: 0,
-      notes: ''
+      notes: '',
     };
     this.captureName = this.captureName.bind(this);
     this.captureEmail = this.captureEmail.bind(this);
@@ -44,43 +52,43 @@ class InvoiceCreateView extends React.Component {
   }
 
   captureName(e) {
-    this.setState({ name: e.target.value })
+    this.setState({ name: e.target.value });
   }
 
   captureEmail(e) {
-    this.setState({ email: e.target.value })
+    this.setState({ email: e.target.value });
   }
 
   captureAddress(e) {
-    this.setState({ address: e.target.value })
+    this.setState({ address: e.target.value });
   }
 
   captureCity(e) {
-    this.setState({ city: e.target.value })
+    this.setState({ city: e.target.value });
   }
 
   captureState(e) {
-    this.setState({ state: e.target.value })
+    this.setState({ state: e.target.value });
   }
 
   captureZip(e) {
-    this.setState({ zip: e.target.value })
+    this.setState({ zip: e.target.value });
   }
 
   captureDescription(e) {
-    this.setState({ description: e.target.value })
+    this.setState({ description: e.target.value });
   }
 
   captureRate(e) {
-    this.setState({ rate: e.target.value })
+    this.setState({ rate: e.target.value });
   }
 
   captureHours(e) {
-    this.setState({ hours: e.target.value })
+    this.setState({ hours: e.target.value });
   }
 
   captureNotes(e) {
-    this.setState({ notes: e.target.value })
+    this.setState({ notes: e.target.value });
   }
 
   handleDayChange(day) {
@@ -93,16 +101,16 @@ class InvoiceCreateView extends React.Component {
       description: this.state.description,
       rate: this.state.rate,
       hours: this.state.hours,
-      amount: document.getElementById('lineItemAmount').value
-    }
+      amount: document.getElementById('lineItemAmount').value,
+    };
     this.setState({
       lineItems: [...this.state.lineItems, newLineItem],
-      lineItemCount: this.state.lineItemCount += 1,
+      lineItemCount: (this.state.lineItemCount += 1),
       description: '',
       rate: '',
       hours: '',
-      total: this.state.total += this.state.rate * this.state.hours
-    })
+      total: (this.state.total += this.state.rate * this.state.hours),
+    });
   }
 
   removeLineItem(e) {
@@ -110,8 +118,8 @@ class InvoiceCreateView extends React.Component {
     newLineItems.splice(e.target.id, 1);
     this.setState({
       lineItems: newLineItems,
-      lineItemCount: this.state.lineItemCount -= 1
-    })
+      lineItemCount: (this.state.lineItemCount -= 1),
+    });
   }
 
   saveInvoice() {
@@ -125,14 +133,12 @@ class InvoiceCreateView extends React.Component {
       dueDate: this.state.dueDate.toLocaleDateString(),
       notes: this.state.notes,
       lineItems: this.state.lineItems,
-      total: this.state.total
-    }
+      total: this.state.total,
+    };
     axios.post('/users/:username/invoices', newInvoice);
   }
 
-  cancelInvoice() {
-
-  }
+  cancelInvoice() {}
 
   render() {
     return (
@@ -140,43 +146,49 @@ class InvoiceCreateView extends React.Component {
         <h1>New Invoice</h1>
         <Form>
           {/* Student Info Field */}
-          <Form.Group widths='equal'>
+          <Form.Group widths="equal">
             <Form.Field>
               <label>Due Date</label>
               <DayPickerInput onDayChange={this.handleDayChange} />
             </Form.Field>
           </Form.Group>
-          <Form.Group widths='equal'>
+          <Form.Group widths="equal">
             <Form.Field
-              control={ Input }
-              label='Name'
-              onChange={ this.captureName } />
+              control={Input}
+              label="Name"
+              onChange={this.captureName}
+            />
             <Form.Field
-              control={ Input }
-              label='Email'
-              onChange={ this.captureEmail }/>
+              control={Input}
+              label="Email"
+              onChange={this.captureEmail}
+            />
           </Form.Group>
-          <Form.Group widths='equal'>
+          <Form.Group widths="equal">
             <Form.Field
-              control={ Input }
-              label='Address'
-              onChange={ this.captureAddress } />
+              control={Input}
+              label="Address"
+              onChange={this.captureAddress}
+            />
             <Form.Field
-              control={ Input }
-              label='City'
-              onChange={ this.captureCity } />
+              control={Input}
+              label="City"
+              onChange={this.captureCity}
+            />
             <Form.Field
-              control={ Input }
-              label='State'
-              onChange={ this.captureState } />
+              control={Input}
+              label="State"
+              onChange={this.captureState}
+            />
             <Form.Field
-              control={ Input }
-              label='Zip'
-              onChange={ this.captureZip } />
+              control={Input}
+              label="Zip"
+              onChange={this.captureZip}
+            />
           </Form.Group>
 
           {/* Line Item Field */}
-          <div className='invoiceDescription'>
+          <div className="invoiceDescription">
             <Form.Group>
               <Table>
                 <Table.Header>
@@ -185,57 +197,69 @@ class InvoiceCreateView extends React.Component {
                     <Table.HeaderCell>Rate ($/hr)</Table.HeaderCell>
                     <Table.HeaderCell>Hours</Table.HeaderCell>
                     <Table.HeaderCell>Amount</Table.HeaderCell>
-                    <Table.HeaderCell></Table.HeaderCell>
+                    <Table.HeaderCell />
                   </Table.Row>
                 </Table.Header>
                 <Table.Body>
-                  { this.state.lineItems.map((lineItem, i) =>
-                    <Table.Row key={ i }>
-                      <Table.Cell>{ lineItem.description }</Table.Cell>
-                      <Table.Cell>{ lineItem.rate }</Table.Cell>
-                      <Table.Cell>{ lineItem.hours }</Table.Cell>
-                      <Table.Cell>{ lineItem.amount }</Table.Cell>
+                  {this.state.lineItems.map((lineItem, i) => (
+                    <Table.Row key={i}>
+                      <Table.Cell>{lineItem.description}</Table.Cell>
+                      <Table.Cell>{lineItem.rate}</Table.Cell>
+                      <Table.Cell>{lineItem.hours}</Table.Cell>
+                      <Table.Cell>{lineItem.amount}</Table.Cell>
                       <Table.Cell>
-                        <Button id={ lineItem.id } color='red' onClick={ this.removeLineItem }>
-                          <Icon className='trashButton' name='trash outline' size='large' />
+                        <Button
+                          id={lineItem.id}
+                          color="red"
+                          onClick={this.removeLineItem}
+                        >
+                          <Icon
+                            className="trashButton"
+                            name="trash outline"
+                            size="large"
+                          />
                         </Button>
                       </Table.Cell>
                     </Table.Row>
-                  )}
+                  ))}
                   <Table.Row>
                     <Table.Cell>
                       <Form.Field
-                        control={ Input }
-                        value={ this.state.description }
-                        placeholder='Enter line item'
-                        onChange={ this.captureDescription } />
+                        control={Input}
+                        value={this.state.description}
+                        placeholder="Enter line item"
+                        onChange={this.captureDescription}
+                      />
                     </Table.Cell>
                     <Table.Cell>
                       <Form.Field
-                        control={ Input }
-                        value={ this.state.rate }
-                        placeholder='Enter rate'
-                        onChange={ this.captureRate } />
+                        control={Input}
+                        value={this.state.rate}
+                        placeholder="Enter rate"
+                        onChange={this.captureRate}
+                      />
                     </Table.Cell>
                     <Table.Cell>
                       <Form.Field
-                        control={ Input }
-                        value={ this.state.hours }
-                        placeholder='Enter hours'
-                        onChange={ this.captureHours } />
+                        control={Input}
+                        value={this.state.hours}
+                        placeholder="Enter hours"
+                        onChange={this.captureHours}
+                      />
                     </Table.Cell>
                     <Table.Cell>
                       <Form.Field
-                        id='lineItemAmount'
-                        control={ Input }
-                        placeholder='Total'
-                        value={ numeral(this.state.rate * this.state.hours).format('$0,0.00') } />
+                        id="lineItemAmount"
+                        control={Input}
+                        placeholder="Total"
+                        value={numeral(
+                          this.state.rate * this.state.hours
+                        ).format('$0,0.00')}
+                      />
                     </Table.Cell>
                     <Table.Cell>
-                      <Button
-                        color='green'
-                        onClick={ this.addLineItem }>
-                        <Icon id='addLineItemButton' name='add' size='large' />
+                      <Button color="green" onClick={this.addLineItem}>
+                        <Icon id="addLineItemButton" name="add" size="large" />
                       </Button>
                     </Table.Cell>
                   </Table.Row>
@@ -246,11 +270,13 @@ class InvoiceCreateView extends React.Component {
         </Form>
 
         {/* Total Due Field*/}
-        <Table id='totalDueTable' color='green' key='green'>
+        <Table id="totalDueTable" color="green" key="green">
           <Table.Body>
             <Table.Row>
               <Table.Cell>Total Due</Table.Cell>
-              <Table.Cell>{ numeral(this.state.total).format('$0,0.00') }</Table.Cell>
+              <Table.Cell>
+                {numeral(this.state.total).format('$0,0.00')}
+              </Table.Cell>
             </Table.Row>
           </Table.Body>
         </Table>
@@ -258,29 +284,28 @@ class InvoiceCreateView extends React.Component {
         {/* Additional Notes Field */}
         <Form>
           <Form.TextArea
-            label='Notes'
-            placeholder='Additional Notes'
-            onChange={ this.captureNotes } />
+            label="Notes"
+            placeholder="Additional Notes"
+            onChange={this.captureNotes}
+          />
         </Form>
 
         {/* Form Submit / Cancel Field */}
-        <div id='invoiceButtons'>
-          <Button
-            color='red'
-            as={ Link }
-            to='/invoiceList'>
+        <div id="invoiceButtons">
+          <Button color="red" as={Link} to="/invoiceList">
             Cancel
           </Button>
           <Button
-            color='green'
-            onClick={ this.saveInvoice }
-            as={ Link }
-            to='/invoiceList'>
+            color="green"
+            onClick={this.saveInvoice}
+            as={Link}
+            to="/invoiceList"
+          >
             Save
           </Button>
         </div>
       </Container>
-    )
+    );
   }
 }
 

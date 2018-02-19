@@ -1,16 +1,19 @@
 const db = require('../models/index.js');
 
 module.exports.saveMessage = (message, cb) => {
-  db.Message.create({
-    channelId: message.channelId,
-    name: message.name,
-    body: message.body
-  }, (err, message) => {
-    if (err) {
-      console.error(err);
+  db.Message.create(
+    {
+      channelId: message.channelId,
+      name: message.name,
+      body: message.body,
+    },
+    (err, message) => {
+      if (err) {
+        console.error(err);
+      }
+      cb(err, message);
     }
-    cb(err, message);
-  });
+  );
 };
 
 module.exports.getMessages = (channelId, cb) => {

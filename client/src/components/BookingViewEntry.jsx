@@ -21,20 +21,24 @@ class BookingViewEntry extends React.Component {
         <Table.Cell>{this.props.booking.time}</Table.Cell>
         <Table.Cell>
           <Button
-            id='classroomButton'
-            href={`/#/classroom/${this.props.booking.channelId}?tutor=${encodeURIComponent(this.props.displayName)}`} 
-            target="_blank">
+            id="classroomButton"
+            href={`/#/classroom/${
+              this.props.booking.channelId
+            }?tutor=${encodeURIComponent(this.props.displayName)}`}
+            target="_blank"
+          >
             Link
           </Button>
         </Table.Cell>
         <Table.Cell>
-          <Button circular
-            className='bookingDeleteButton'
-            color='grey'
-            id={ this.props.booking._id }
-            onClick={ this.handleDelete }
-            icon='trash outline' >
-          </Button>
+          <Button
+            circular
+            className="bookingDeleteButton"
+            color="grey"
+            id={this.props.booking._id}
+            onClick={this.handleDelete}
+            icon="trash outline"
+          />
         </Table.Cell>
       </Table.Row>
     );

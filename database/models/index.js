@@ -6,32 +6,31 @@ mongoose.connect(url, { useMongoClient: true });
 const db = mongoose.connection;
 db.on('error', console.error.bind(console, 'connection error:'));
 
-const channelSchema = mongoose.Schema({
-});
+const channelSchema = mongoose.Schema({});
 
 const messageSchema = mongoose.Schema({
   channelId: {
     type: String,
     unique: false,
-    required: true
+    required: true,
   },
   name: {
     type: String,
     unique: false,
-    required: true
+    required: true,
   },
   body: {
     type: String,
     required: true,
     minlength: 1,
-    trim: true
-  }
+    trim: true,
+  },
 });
 
 const studentSchema = mongoose.Schema({
   name: { type: String, unique: false, required: true },
   email: { type: String, unique: false, required: true },
-  notes: String
+  notes: String,
 });
 
 const bookingSchema = mongoose.Schema({
@@ -42,7 +41,7 @@ const bookingSchema = mongoose.Schema({
   date: String,
   time: String,
   billableTime: String,
-  deleted: {type: Boolean, default: false}
+  deleted: { type: Boolean, default: false },
 });
 
 const userSchema = mongoose.Schema({
@@ -53,7 +52,7 @@ const userSchema = mongoose.Schema({
   description: String,
   subjects: [String],
   email: String,
-  students: [studentSchema]
+  students: [studentSchema],
 });
 
 const invoiceSchema = mongoose.Schema({
@@ -67,7 +66,7 @@ const invoiceSchema = mongoose.Schema({
   notes: String,
   lineItems: [],
   total: String,
-  deleted: {type: Boolean, default: false}
+  deleted: { type: Boolean, default: false },
 });
 
 const ratingSchema = mongoose.Schema({
